@@ -1,0 +1,167 @@
+:root{
+  --navy:#002a5c;
+  --deep:#001f46;
+  --gold:#c9a24e;
+  --gold-dark:#a9822e;
+  --line:#e3e7ee;
+  --ink:#111827;
+  --bg:#edf1f6;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+.ecard{
+  width:min(100%,430px);
+  margin:0 auto;
+  background:#fff;
+  padding:22px 26px 24px;
+}
+.top{text-align:center}
+.logo{
+  display:block;
+  width:155px;
+  margin:0 auto 14px;
+}
+.company{
+  color:var(--navy);
+  font-size:21px;
+  line-height:1.15;
+  font-weight:850;
+  letter-spacing:.02em;
+}
+h1{
+  margin:10px 0 0;
+  color:var(--deep);
+  font-size:30px;
+  line-height:1.1;
+  font-weight:900;
+  letter-spacing:-.05em;
+}
+.tagline{
+  margin:15px 0 18px;
+  color:#222;
+  font-size:17px;
+  line-height:1.35;
+  font-weight:700;
+  letter-spacing:-.04em;
+}
+.contact{
+  padding:17px 0 18px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  text-align:center;
+}
+.contact p{
+  margin:5px 0;
+  font-size:16.5px;
+  line-height:1.35;
+  font-weight:720;
+  letter-spacing:-.03em;
+}
+.contact .address{
+  margin-top:9px;
+  line-height:1.45;
+}
+.services{
+  padding:18px 0 17px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-bottom:10px;
+  color:var(--navy);
+}
+.section-title span{
+  color:var(--gold-dark);
+  font-size:15px;
+  line-height:1;
+}
+.section-title strong{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.04em;
+}
+.services p{
+  margin:6px 0;
+  font-size:17px;
+  line-height:1.35;
+  font-weight:780;
+  letter-spacing:-.04em;
+}
+.trust{
+  padding:17px 0 18px;
+  text-align:center;
+  color:var(--navy);
+  border-bottom:1px solid var(--line);
+}
+.trust p{
+  margin:4px 0;
+  font-size:18px;
+  line-height:1.35;
+  font-weight:780;
+  letter-spacing:-.04em;
+}
+.action-zone{
+  padding-top:17px;
+}
+.quick-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+.quick{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  border-radius:14px;
+  text-decoration:none;
+  color:var(--navy);
+  font-size:15.5px;
+  font-weight:850;
+  border:1px solid rgba(0,42,92,.08);
+}
+.quick.call{background:#eef5fb}
+.quick.mail{background:#fbf6e9;border-color:rgba(201,162,78,.25)}
+.quick.map{background:#eff6ef}
+.quick.save{background:#f3f5f8}
+.reserve{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:58px;
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  color:#fff;
+  text-decoration:none;
+  font-size:20px;
+  font-weight:900;
+  box-shadow:0 9px 20px rgba(169,126,43,.22);
+}
+@media(max-height:760px){
+  .ecard{padding:16px 24px 18px}
+  .logo{width:142px;margin-bottom:10px}
+  .company{font-size:20px}
+  h1{font-size:28px;margin-top:8px}
+  .tagline{font-size:16px;margin:11px 0 13px}
+  .contact{padding:12px 0 13px}
+  .contact p{font-size:15px;margin:3px 0}
+  .services{padding:13px 0 12px}
+  .section-title{margin-bottom:7px}
+  .section-title strong{font-size:18px}
+  .services p{font-size:15.5px;margin:4px 0}
+  .trust{padding:12px 0 13px}
+  .trust p{font-size:16.5px;margin:2px 0}
+  .action-zone{padding-top:12px}
+  .quick{min-height:44px;font-size:14.5px}
+  .reserve{height:52px;font-size:18px}
+}

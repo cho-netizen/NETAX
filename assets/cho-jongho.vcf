@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+N:조;종호;;;
+FN:조종호 세무사
+ORG:이음세무컨설팅
+TITLE:세무사
+TEL;TYPE=WORK,VOICE:031-342-9354
+TEL;TYPE=CELL,VOICE:010-6341-9354
+TEL;TYPE=FAX:0508-118-0935
+EMAIL:tax@netax.kr
+URL:https://netax.kr
+ADR;TYPE=WORK:;;안양시 동안구 시민대로 273 효성인텔리안 215호;;;;
+END:VCARD
