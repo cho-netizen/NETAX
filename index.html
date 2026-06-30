@@ -1,4 +1,4 @@
-<!-- VERSION: NETAX eCard v1.0 -->
+<!-- VERSION: NETAX eCard v1.7 -->
 <!doctype html>
 <html lang="ko">
 <head>
@@ -11,19 +11,33 @@
 <body>
   <main class="ecard">
     <header class="top">
-      <img class="logo" src="assets/netax-logo-reverse.png" alt="NETAX">
+      <div class="wordmark" aria-label="NETAX">
+        <span>N</span><span>E</span><span class="gold">T</span><span>A</span><span>X</span>
+      </div>
       <div class="company">이음세무컨설팅</div>
       <h1>조종호 세무사</h1>
       <p class="tagline">상속준비와 자산승계의 든든한 파트너</p>
     </header>
 
     <section class="contact" aria-label="연락처">
-      <p>☎ 031-342-9354</p>
-      <p>📱 010-6341-9354</p>
-      <p>📠 0508-118-0935</p>
-      <p>✉ tax@netax.kr</p>
-      <p>🌐 netax.kr</p>
-      <p class="address">📍 안양시 동안구 시민대로 273<br>효성인텔리안 215호</p>
+      <button class="row" type="button" data-sheet="phone-office">
+        <b>T</b><span>031-342-9354</span><i>›</i>
+      </button>
+      <button class="row" type="button" data-sheet="phone-mobile">
+        <b>M</b><span>010-6341-9354</span><i>›</i>
+      </button>
+      <button class="row" type="button" data-sheet="fax">
+        <b>F</b><span>0508-118-0935</span><i>›</i>
+      </button>
+      <button class="row" type="button" data-sheet="email">
+        <b>E</b><span>tax@netax.kr</span><i>›</i>
+      </button>
+      <button class="row address" type="button" data-sheet="address">
+        <b>A</b><span>안양시 동안구 시민대로 273<br><em>효성인텔리안 215호</em></span><i>›</i>
+      </button>
+      <button class="row homepage" type="button" data-sheet="home">
+        <b>H</b><span>netax.kr</span><i>›</i>
+      </button>
     </section>
 
     <section class="services" aria-label="주요 서비스">
@@ -34,20 +48,19 @@
     </section>
 
     <section class="trust" aria-label="경력">
-      <p>국세청 37년 근무</p>
-      <p>(세무조사 25년)</p>
-      <p>동안양세무서장 역임</p>
-    </section>
-
-    <section class="action-zone" aria-label="실행 버튼">
-      <nav class="quick-actions">
-        <a class="quick call" href="tel:0313429354">전화</a>
-        <a class="quick mail" href="mailto:tax@netax.kr">이메일</a>
-        <a class="quick map" href="#">길찾기</a>
-        <a class="quick save" href="assets/cho-jongho.vcf">연락처</a>
-      </nav>
-      <a class="reserve" href="#">상담예약</a>
+      <p class="main-career">국세청 37년 근무</p>
+      <p class="sub-career">(세무조사 25년)</p>
+      <p class="office-career">동안양세무서장 역임</p>
     </section>
   </main>
+  <div class="sheet-backdrop" id="sheetBackdrop" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="동작 선택">
+      <div class="sheet-title" id="sheetTitle"></div>
+      <div class="sheet-actions" id="sheetActions"></div>
+      <button class="sheet-cancel" type="button" id="sheetCancel">취소</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
+
