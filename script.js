@@ -74,7 +74,9 @@ document.querySelectorAll("[data-sheet]").forEach(btn => {
 function openSheet(key){
   const data = sheets[key];
   if(!data) return;
-  titleEl.textContent = data.title;
+  // v2.0 fix3: 하단 액션시트에는 데이터 제목을 반복 표시하지 않습니다.
+  titleEl.textContent = "";
+  titleEl.hidden = true;
   actionsEl.innerHTML = "";
   data.actions.forEach(([label, action]) => {
     const el = typeof action === "string" ? document.createElement("a") : document.createElement("button");
