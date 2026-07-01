@@ -1,4 +1,6 @@
 const VCARD = "assets/cho-jongho.vcf";
+const KAKAO_CHANNEL_URL = "https://pf.kakao.com/_SixeWn";
+const KAKAO_CHAT_URL = "https://pf.kakao.com/_SixeWn/chat";
 
 const sheets = {
   "phone-office": {
@@ -16,6 +18,15 @@ const sheets = {
       ["문자 보내기", "sms:01063419354"],
       ["연락처 저장", VCARD],
       ["번호 복사", () => copyText("010-6341-9354")]
+    ]
+  },
+  "kakao": {
+    title: "카카오채널",
+    actions: [
+      ["카카오 상담 시작", KAKAO_CHAT_URL],
+      ["카카오채널 홈", KAKAO_CHANNEL_URL],
+      ["채팅 주소 복사", () => copyText(KAKAO_CHAT_URL)],
+      ["연락처 저장", VCARD]
     ]
   },
   "fax": {
