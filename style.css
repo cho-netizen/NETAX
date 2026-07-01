@@ -17,35 +17,81 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 @media (prefers-color-scheme: dark){:root{--bg:#101413;--card:#111615;--ink:#e9e5dc;--line:#263040;--button-text:#f1eee7}html{background:#101413;color-scheme:dark}body{background:#101413;color:#e9e5dc}.ecard{background:#111615}.company,h1,.section-title,.trust{color:#e9e5dc}.tagline{color:#e9e5dc}.contact,.services{border-color:#273246}.row{background:linear-gradient(180deg,#4a3100 0%,#332400 100%);border-color:rgba(200,162,68,.34);box-shadow:0 0 0 1px rgba(200,162,68,.08),5px 7px 14px rgba(0,0,0,.22)}.row b{color:#e6c26a}.row i{color:#f1eee7}.sheet{background:#272831}.sheet-actions a,.sheet-actions button,.sheet-cancel{background:#f7f7f8;color:#0d1b3d}}
 
 
-/* v2.3 size-preserve tweak: no layout/height changes */
-.row .kakao,
-.row .email,
-.row .url{
-  font-size:inherit;
-  font-weight:900;
-  letter-spacing:.045em;
+/* v2.4 compact correction: tagline one-line + thinner buttons */
+.logo{width:min(62%,255px)}
+.logo-wrap{margin-bottom:5px}
+.company{font-size:20px}
+h1{font-size:27px;margin-top:6px}
+.tagline{
+  white-space:nowrap;
+  font-size:16px;
+  line-height:1.22;
+  margin:9px 0 11px;
+  letter-spacing:-.06em;
 }
-.row .email,
-.row .url{
-  letter-spacing:.055em;
+.contact{padding:8px 0 8px}
+.row{
+  min-height:39px;
+  margin-bottom:6px;
+  padding:6px 10px;
 }
-.section-title span{
-  color:var(--gold);
-  font-weight:900;
-  opacity:.92;
+.row b{font-size:16px}
+.row span{font-size:16px;line-height:1.2}
+.row i{font-size:23px}
+.row.address{min-height:44px}
+.row.address b{align-self:start;margin-top:3px}
+.row.address span{font-size:14.2px;line-height:.84}
+.row.address em{margin-top:-5px}
+.services{padding:9px 0 8px}
+.section-title{margin-bottom:4px;gap:10px}
+.section-title strong{font-size:18px}
+.services p{font-size:15px;line-height:1.16;margin:1px 0}
+.trust{padding-top:8px}
+.trust p{font-size:15.5px;line-height:1.15}
+.trust .sub-career{margin-bottom:4px}
+
+@media(max-width:360px){
+  .ecard{padding-left:20px;padding-right:20px}
+  .tagline{font-size:15.2px;letter-spacing:-.07em}
+  .row span{font-size:15.2px}
+  .row.address span{font-size:13.7px}
 }
-.trust .sub-career{
-  letter-spacing:-.025em;
-}
+
 @media(max-height:760px){
-  .row .kakao,
-  .row .email,
-  .row .url{
-    font-size:inherit;
-    letter-spacing:.035em;
-  }
-  .row .email,
-  .row .url{
-    letter-spacing:.045em;
-  }
+  .ecard{padding:12px 22px 9px}
+  .logo{width:min(54%,220px)}
+  .logo-wrap{margin-bottom:3px}
+  .company{font-size:18.5px}
+  h1{font-size:25.5px;margin-top:4px}
+  .tagline{font-size:15px;margin:6px 0 7px;line-height:1.18;letter-spacing:-.07em;white-space:nowrap}
+  .contact{padding:6px 0 6px}
+  .row{min-height:33px;margin-bottom:4px;padding:4px 8px;border-radius:12px}
+  .row b{font-size:15px}
+  .row span{font-size:14.5px;line-height:1.12}
+  .row i{font-size:21px}
+  .row.address{min-height:38px}
+  .row.address b{margin-top:2px}
+  .row.address span{font-size:13.2px;line-height:.82}
+  .row.address em{margin-top:-5px}
+  .services{padding:6px 0 5px}
+  .section-title{margin-bottom:3px;gap:8px}
+  .section-title strong{font-size:16px}
+  .services p{font-size:13.8px;line-height:1.1;margin:1px 0}
+  .trust{padding-top:5px}
+  .trust p{font-size:14px;line-height:1.1}
+  .trust .sub-career{margin-bottom:2px}
+}
+
+@media(max-height:700px){
+  .ecard{padding:9px 20px 7px}
+  .logo{width:min(50%,205px)}
+  .company{font-size:18px}
+  h1{font-size:24px;margin-top:3px}
+  .tagline{font-size:14.5px;margin:5px 0 6px}
+  .row{min-height:31px;margin-bottom:3px;padding:3px 8px}
+  .row span{font-size:14px}
+  .row.address{min-height:36px}
+  .row.address span{font-size:12.8px;line-height:.8}
+  .services p{font-size:13.3px}
+  .trust p{font-size:13.5px}
 }
