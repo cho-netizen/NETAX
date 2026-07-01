@@ -95,3 +95,39 @@ h1{font-size:27px;margin-top:6px}
   .services p{font-size:13.3px}
   .trust p{font-size:13.5px}
 }
+
+
+/* v2.3 final tweak: alphabet readability, service diamonds, career dash */
+.row[data-sheet="kakao"] span,
+.row .email,
+.row .url{
+  font-size:17px !important;
+  line-height:1.18 !important;
+  font-weight:900 !important;
+  letter-spacing:.035em !important;
+}
+.row[data-sheet="kakao"] span{
+  letter-spacing:.012em !important;
+}
+.section-title span{
+  color:var(--gold) !important;
+  font-size:17px !important;
+  font-weight:900 !important;
+}
+.trust .sub-career{
+  letter-spacing:-.025em;
+}
+@media(max-height:760px){
+  .row[data-sheet="kakao"] span,
+  .row .email,
+  .row .url{
+    font-size:15.8px !important;
+  }
+}
+@media(max-height:690px){
+  .row[data-sheet="kakao"] span,
+  .row .email,
+  .row .url{
+    font-size:15.2px !important;
+  }
+}
