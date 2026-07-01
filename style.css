@@ -27,11 +27,17 @@ body{
   forced-color-adjust:none;
 }
 .top{text-align:center}
-.logo{
+.logo-wrap{
   display:block;
   width:min(64%,245px);
-  height:auto;
   margin:0 auto 8px;
+}
+.logo{
+  display:block;
+  width:100%;
+  height:auto;
+  margin:0 auto;
+  forced-color-adjust:none;
 }
 .company{
   color:var(--navy);
@@ -216,6 +222,7 @@ h1{
 @media(prefers-color-scheme:dark){
   html,body{background:var(--bg) !important;color:var(--ink) !important}
   .ecard{background:#fff !important;color:var(--ink) !important}
+  .logo{filter:none !important; opacity:1 !important;}
   .company,h1,.row span,.row i,.services,.trust,.section-title{color:var(--navy) !important}
   .tagline{color:#222 !important}
   .row{background:linear-gradient(180deg,#fffaf0 0%,#f5e8bf 100%) !important}
@@ -223,7 +230,7 @@ h1{
 
 @media(max-height:760px){
   .ecard{padding:15px 22px 15px}
-  .logo{width:min(60%,225px);margin-bottom:6px}
+  .logo-wrap{width:min(60%,225px);margin-bottom:6px}
   .company{font-size:20px}
   h1{font-size:27px;margin-top:7px}
   .tagline{font-size:16px;margin:9px 0 11px}
