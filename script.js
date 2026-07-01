@@ -3,13 +3,13 @@ const KAKAO_CHANNEL_URL = "https://pf.kakao.com/_SixeWn";
 const KAKAO_CHAT_URL = "https://pf.kakao.com/_SixeWn/chat";
 
 const sheets = {
-  "phone-office": {actions:[["전화하기","tel:0313429354"],["연락처 저장", VCARD],["번호 복사", () => copyText("031-342-9354")]]},
-  "phone-mobile": {actions:[["전화하기","tel:01063419354"],["문자 보내기","sms:01063419354"],["연락처 저장", VCARD],["번호 복사", () => copyText("010-6341-9354")]]},
-  "kakao": {actions:[["카카오 상담 시작", KAKAO_CHAT_URL],["카카오채널 홈", KAKAO_CHANNEL_URL],["채팅 주소 복사", () => copyText(KAKAO_CHAT_URL)],["연락처 저장", VCARD]]},
-  "fax": {actions:[["팩스번호 복사", () => copyText("0508-118-0935")],["연락처 저장", VCARD]]},
-  "email": {actions:[["이메일 보내기","mailto:tax@netax.kr"],["이메일 복사", () => copyText("tax@netax.kr")],["연락처 저장", VCARD]]},
-  "address": {actions:[["네이버지도 열기","https://map.naver.com/p/search/안양시%20동안구%20시민대로%20273%20효성인텔리안%20215호"],["주소 복사", () => copyText("안양시 동안구 시민대로 273 효성인텔리안 215호")],["연락처 저장", VCARD]]},
-  "home": {actions:[["홈페이지 열기","https://netax.kr"],["주소 복사", () => copyText("https://netax.kr")],["연락처 저장", VCARD]]}
+  "phone-office": {actions:[["전화하기","tel:0313429354"],["연락처 저장", VCARD]]},
+  "phone-mobile": {actions:[["전화하기","tel:01063419354"],["문자 보내기","sms:01063419354"],["연락처 저장", VCARD]]},
+  "kakao": {actions:[["카카오 상담 시작", KAKAO_CHAT_URL],["연락처 저장", VCARD]]},
+  "fax": {actions:[["번호 복사", () => copyText("0508-118-0935")],["연락처 저장", VCARD]]},
+  "email": {actions:[["이메일 보내기","mailto:tax@netax.kr"],["연락처 저장", VCARD]]},
+  "address": {actions:[["네이버지도 열기","https://map.naver.com/p/search/안양시%20동안구%20시민대로%20273%20효성인텔리안%20215호"],["연락처 저장", VCARD]]},
+  "home": {actions:[["홈페이지 열기","https://netax.kr"],["연락처 저장", VCARD]]}
 };
 
 const backdrop = document.getElementById("sheetBackdrop");
