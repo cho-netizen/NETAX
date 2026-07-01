@@ -1,20 +1,21 @@
-<!-- VERSION: NETAX eCard v2.0 fix5 -->
+<!-- VERSION: NETAX eCard v2.2 final -->
 <!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light only">
   <title>조종호 세무사 | 이음세무컨설팅 NETAX</title>
   <meta name="description" content="이음세무컨설팅 NETAX 조종호 세무사 전자명함">
-  <link rel="stylesheet" href="style.css?v=fix5">
+  <link rel="icon" href="assets/icon/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/icon/apple-touch-icon-dark.png">
+  <link rel="stylesheet" href="style.css?v=22">
 </head>
 <body>
   <main class="ecard">
     <header class="top">
       <picture class="logo-wrap">
-        <source srcset="assets/netax-logo-dark.png?v=fix5" media="(prefers-color-scheme: dark)">
-        <img class="logo" src="assets/netax-logo-light.png?v=fix5" alt="NETAX">
+        <source srcset="assets/logo/netax-wordmark-dark.png" media="(prefers-color-scheme: dark)">
+        <img class="logo" src="assets/logo/netax-wordmark-light.png" alt="NETAX">
       </picture>
       <div class="company">이음세무컨설팅</div>
       <h1>조종호 세무사</h1>
@@ -22,27 +23,13 @@
     </header>
 
     <section class="contact" aria-label="연락처">
-      <button class="row" type="button" data-sheet="phone-office">
-        <b>T</b><span class="readable number">031-342-9354</span><i>›</i>
-      </button>
-      <button class="row" type="button" data-sheet="phone-mobile">
-        <b>M</b><span class="readable number">010-6341-9354</span><i>›</i>
-      </button>
-      <button class="row" type="button" data-sheet="kakao">
-        <b>K</b><span>카카오채널</span><i>›</i>
-      </button>
-      <button class="row" type="button" data-sheet="fax">
-        <b>F</b><span class="readable number">0508-118-0935</span><i>›</i>
-      </button>
-      <button class="row" type="button" data-sheet="email">
-        <b>E</b><span class="readable email">tax@netax.kr</span><i>›</i>
-      </button>
-      <button class="row address" type="button" data-sheet="address">
-        <b>A</b><span class="addr-wrap"><span class="addr-line">안양시 동안구 시민대로 273</span><em>효성인텔리안 215호</em></span><i>›</i>
-      </button>
-      <button class="row" type="button" data-sheet="home">
-        <b>H</b><span class="readable url">netax.kr</span><i>›</i>
-      </button>
+      <button class="row" type="button" data-sheet="phone-office"><b>T</b><span class="readable number">031-342-9354</span><i>›</i></button>
+      <button class="row" type="button" data-sheet="phone-mobile"><b>M</b><span class="readable number">010-6341-9354</span><i>›</i></button>
+      <button class="row" type="button" data-sheet="kakao"><b>K</b><span>카카오채널</span><i>›</i></button>
+      <button class="row" type="button" data-sheet="fax"><b>F</b><span class="readable number">0508-118-0935</span><i>›</i></button>
+      <button class="row" type="button" data-sheet="email"><b>E</b><span class="readable email">tax@netax.kr</span><i>›</i></button>
+      <button class="row address" type="button" data-sheet="address"><b>A</b><span><span class="addr-line1">안양시 동안구 시민대로&nbsp;273</span><br><em>효성인텔리안 215호</em></span><i>›</i></button>
+      <button class="row" type="button" data-sheet="home"><b>H</b><span class="readable url">netax.kr</span><i>›</i></button>
     </section>
 
     <section class="services" aria-label="주요 서비스">
@@ -60,11 +47,10 @@
   </main>
   <div class="sheet-backdrop" id="sheetBackdrop" hidden>
     <div class="sheet" role="dialog" aria-modal="true" aria-label="동작 선택">
-      <div class="sheet-title" id="sheetTitle"></div>
       <div class="sheet-actions" id="sheetActions"></div>
       <button class="sheet-cancel" type="button" id="sheetCancel">취소</button>
     </div>
   </div>
-  <script src="script.js?v=fix5"></script>
+  <script src="script.js?v=22"></script>
 </body>
 </html>
