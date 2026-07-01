@@ -4,7 +4,6 @@ const KAKAO_CHAT_URL = "https://pf.kakao.com/_SixeWn/chat";
 
 const sheets = {
   "phone-office": {
-    title: "031-342-9354",
     actions: [
       ["전화하기", "tel:0313429354"],
       ["연락처 저장", VCARD],
@@ -12,7 +11,6 @@ const sheets = {
     ]
   },
   "phone-mobile": {
-    title: "010-6341-9354",
     actions: [
       ["전화하기", "tel:01063419354"],
       ["문자 보내기", "sms:01063419354"],
@@ -21,7 +19,6 @@ const sheets = {
     ]
   },
   "kakao": {
-    title: "카카오채널",
     actions: [
       ["카카오 상담 시작", KAKAO_CHAT_URL],
       ["카카오채널 홈", KAKAO_CHANNEL_URL],
@@ -30,14 +27,12 @@ const sheets = {
     ]
   },
   "fax": {
-    title: "0508-118-0935",
     actions: [
       ["팩스번호 복사", () => copyText("0508-118-0935")],
       ["연락처 저장", VCARD]
     ]
   },
   "email": {
-    title: "tax@netax.kr",
     actions: [
       ["이메일 보내기", "mailto:tax@netax.kr"],
       ["이메일 복사", () => copyText("tax@netax.kr")],
@@ -45,7 +40,6 @@ const sheets = {
     ]
   },
   "address": {
-    title: "안양시 동안구 시민대로 273",
     actions: [
       ["네이버지도 열기", "https://map.naver.com/p/search/안양시%20동안구%20시민대로%20273%20효성인텔리안%20215호"],
       ["주소 복사", () => copyText("안양시 동안구 시민대로 273 효성인텔리안 215호")],
@@ -53,7 +47,6 @@ const sheets = {
     ]
   },
   "home": {
-    title: "netax.kr",
     actions: [
       ["홈페이지 열기", "https://netax.kr"],
       ["주소 복사", () => copyText("https://netax.kr")],
@@ -63,7 +56,6 @@ const sheets = {
 };
 
 const backdrop = document.getElementById("sheetBackdrop");
-const titleEl = document.getElementById("sheetTitle");
 const actionsEl = document.getElementById("sheetActions");
 const cancelEl = document.getElementById("sheetCancel");
 
@@ -74,9 +66,6 @@ document.querySelectorAll("[data-sheet]").forEach(btn => {
 function openSheet(key){
   const data = sheets[key];
   if(!data) return;
-  // v2.0 fix3: 하단 액션시트에는 데이터 제목을 반복 표시하지 않습니다.
-  titleEl.textContent = "";
-  titleEl.hidden = true;
   actionsEl.innerHTML = "";
   data.actions.forEach(([label, action]) => {
     const el = typeof action === "string" ? document.createElement("a") : document.createElement("button");
