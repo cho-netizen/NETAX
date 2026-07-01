@@ -17,12 +17,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 @media (prefers-color-scheme: dark){:root{--bg:#101413;--card:#111615;--ink:#e9e5dc;--line:#263040;--button-text:#f1eee7}html{background:#101413;color-scheme:dark}body{background:#101413;color:#e9e5dc}.ecard{background:#111615}.company,h1,.section-title,.trust{color:#e9e5dc}.tagline{color:#e9e5dc}.contact,.services{border-color:#273246}.row{background:linear-gradient(180deg,#4a3100 0%,#332400 100%);border-color:rgba(200,162,68,.34);box-shadow:0 0 0 1px rgba(200,162,68,.08),5px 7px 14px rgba(0,0,0,.22)}.row b{color:#e6c26a}.row i{color:#f1eee7}.sheet{background:#272831}.sheet-actions a,.sheet-actions button,.sheet-cancel{background:#f7f7f8;color:#0d1b3d}}
 
 
-/* v2.3 exact tweak: keep previous layout size, adjust only requested text details */
-.row .number,
+/* v2.3 size-preserve tweak: no layout/height changes */
+.row .kakao,
 .row .email,
-.row .url,
-.row .kakao{
-  font-size:18px;
+.row .url{
+  font-size:inherit;
   font-weight:900;
   letter-spacing:.045em;
 }
@@ -32,7 +31,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
 }
 .section-title span{
   color:var(--gold);
-  font-size:17px;
   font-weight:900;
   opacity:.92;
 }
@@ -40,18 +38,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Bl
   letter-spacing:-.025em;
 }
 @media(max-height:760px){
-  .row .number,
+  .row .kakao,
   .row .email,
-  .row .url,
-  .row .kakao{
-    font-size:16.2px;
+  .row .url{
+    font-size:inherit;
     letter-spacing:.035em;
   }
   .row .email,
   .row .url{
     letter-spacing:.045em;
-  }
-  .section-title span{
-    font-size:16px;
   }
 }
