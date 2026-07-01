@@ -9,25 +9,27 @@
 }
 *{box-sizing:border-box}
 html{
-  background:var(--bg);
-  color-scheme:light;
+  background:var(--bg) !important;
+  color-scheme:light only;
 }
 body{
   margin:0;
-  background:var(--bg);
-  color:var(--ink);
+  background:var(--bg) !important;
+  color:var(--ink) !important;
   font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 .ecard{
   width:min(100%,430px);
   margin:0 auto;
-  background:#fff;
+  background:#fff !important;
+  color:var(--ink) !important;
   padding:20px 24px 16px;
+  forced-color-adjust:none;
 }
 .top{text-align:center}
 .logo{
   display:block;
-  width:min(68%,260px);
+  width:min(64%,245px);
   height:auto;
   margin:0 auto 8px;
 }
@@ -125,7 +127,9 @@ h1{
 }
 .row.address{min-height:56px}
 .row.address b{align-self:start;padding-top:4px}
-.row.address em{display:block;font-style:normal}
+.row.address .addr-wrap{line-height:1.32}
+.row.address .addr-line{display:block;white-space:nowrap;font-size:16px;letter-spacing:-.04em}
+.row.address em{display:block;font-style:normal;font-size:16.5px;letter-spacing:-.025em}
 .contact .row:last-child{margin-bottom:0}
 .services{
   padding:14px 0 12px;
@@ -188,13 +192,7 @@ h1{
   max-height:88dvh;
   overflow:auto;
 }
-.sheet-title{
-  text-align:center;
-  color:var(--navy);
-  font-weight:900;
-  font-size:16px;
-  margin:4px 0 10px;
-}
+.sheet-title{display:none}
 .sheet-actions{display:grid;gap:8px}
 .sheet-actions a,
 .sheet-actions button,
@@ -215,9 +213,17 @@ h1{
   box-shadow:0 4px 12px rgba(13,27,61,.08);
 }
 .sheet-cancel{margin-top:10px;color:#5d6675}
+@media(prefers-color-scheme:dark){
+  html,body{background:var(--bg) !important;color:var(--ink) !important}
+  .ecard{background:#fff !important;color:var(--ink) !important}
+  .company,h1,.row span,.row i,.services,.trust,.section-title{color:var(--navy) !important}
+  .tagline{color:#222 !important}
+  .row{background:linear-gradient(180deg,#fffaf0 0%,#f5e8bf 100%) !important}
+}
+
 @media(max-height:760px){
   .ecard{padding:15px 22px 15px}
-  .logo{width:min(64%,240px);margin-bottom:6px}
+  .logo{width:min(60%,225px);margin-bottom:6px}
   .company{font-size:20px}
   h1{font-size:27px;margin-top:7px}
   .tagline{font-size:16px;margin:9px 0 11px}
@@ -225,6 +231,8 @@ h1{
   .row{min-height:38px;margin-bottom:6px;padding:6px 9px;grid-template-columns:36px minmax(0,1fr) 23px}
   .row span{font-size:15.8px}
   .row.address{min-height:50px}
+  .row.address .addr-line{font-size:15px}
+  .row.address em{font-size:15.4px}
   .services{padding:11px 0 9px}
   .section-title{margin-bottom:5px}
   .section-title strong{font-size:18px}
