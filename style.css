@@ -1,7 +1,14 @@
+/* NETAX eCard v2.9 exact tune
+   - 하단 여백 확실히 축소
+   - 서비스/신뢰영역 자간 확장
+   - 줄간격/글자크기/버튼/로고는 변경하지 않음
+*/
+
 :root{
   --navy:#0d1b3d;
   --deep:#001f46;
   --gold:#c8a244;
+  --gold-text:#7d5d12;
   --gold-dark:#8f6a18;
   --line:#e3e7ee;
   --ink:#111827;
@@ -9,52 +16,129 @@
   --card:#ffffff;
   --button-text:#0d1b3d;
 }
-html{background:var(--bg);color-scheme:light}
+
+html{background:var(--bg);color-scheme:light;height:100%}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
-.ecard{width:min(100%,430px);margin:0 auto;background:var(--card);padding:20px 24px 14px;}
-.top{text-align:center}.logo-wrap{display:block;margin:0 auto 7px}.logo{display:block;width:min(68%,285px);height:auto;margin:0 auto;image-rendering:auto}.company{color:var(--navy);font-size:21px;line-height:1.15;font-weight:850;letter-spacing:.02em}h1{margin:9px 0 0;color:var(--deep);font-size:29px;line-height:1.1;font-weight:900;letter-spacing:-.05em}.tagline{margin:14px 0 16px;color:#222;font-size:17px;line-height:1.35;font-weight:750;letter-spacing:-.04em}.contact{padding:10px 0 12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.row{width:100%;display:grid;grid-template-columns:38px minmax(0,1fr) 22px;align-items:center;gap:10px;min-height:43px;margin:0 0 8px;padding:8px 11px;border-radius:13px;border:1px solid rgba(169,126,43,.35);background:linear-gradient(180deg,#fffaf0 0%,#f5e8bf 100%);color:var(--button-text);text-decoration:none;font:inherit;cursor:pointer;text-align:left;appearance:none;-webkit-appearance:none;box-shadow:5px 7px 14px rgba(169,126,43,.18), inset 0 1px 0 rgba(255,255,255,.95)}.row:active{transform:translate(2px,2px);box-shadow:2px 3px 8px rgba(13,27,61,.16), inset 0 1px 0 rgba(255,255,255,.9)}.row b{color:#8f6a18;font-size:17px;font-weight:900;text-align:center}.row span{display:block;text-align:left;justify-self:start;color:var(--button-text);font-size:17px;line-height:1.3;font-weight:850;letter-spacing:-.02em}.row .readable{letter-spacing:.015em}.row .email,.row .url{letter-spacing:.025em}.row .kakao,.row .email,.row .url{font-weight:900;letter-spacing:.038em}.row i{justify-self:end;width:22px;color:#0d1b3d;font-size:25px;font-weight:900;font-style:normal;line-height:1;text-align:right}.row.address{min-height:46px}.row.address b{align-self:start;margin-top:4px}.row.address span{font-size:15.4px;letter-spacing:-.065em;line-height:.88}.row.address em{display:block;font-style:normal;padding-left:0;margin-top:-5px}.addr-line1{white-space:nowrap;display:inline-block}.contact .row:last-child{margin-bottom:0}.services{padding:14px 0 12px;text-align:center;border-bottom:1px solid var(--line)}.section-title{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:7px;color:var(--navy)}.section-title span{color:#7d5d12;font-size:15px;font-weight:900}.section-title strong{font-size:20px;font-weight:900;letter-spacing:-.04em}.services p{margin:3px 0;font-size:16.3px;line-height:1.28;font-weight:800;letter-spacing:-.04em}.trust{padding:12px 0 0;text-align:center;color:var(--navy)}.trust p{margin:0;font-size:17px;line-height:1.25;font-weight:780;letter-spacing:-.04em}.trust .sub-career{margin-bottom:7px}.sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.32);display:flex;align-items:flex-end;justify-content:center;z-index:999}.sheet-backdrop[hidden]{display:none}.sheet{width:min(100%,430px);margin:0 auto;padding:14px 16px 18px;background:#f7f8fb;border-radius:22px 22px 0 0;box-shadow:0 -12px 34px rgba(0,0,0,.22)}.sheet-actions{display:grid;gap:8px}.sheet-actions a,.sheet-actions button,.sheet-cancel{width:100%;min-height:48px;border:0;border-radius:14px;background:#fff;color:var(--navy);font:inherit;font-size:16px;font-weight:850;text-decoration:none;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(13,27,61,.08)}.sheet-cancel{margin-top:10px;color:#5d6675}@media(max-height:760px){.ecard{padding:15px 22px 12px}.logo{width:min(62%,255px)}.company{font-size:20px}h1{font-size:27px;margin-top:7px}.tagline{font-size:16px;margin:10px 0 12px}.contact{padding:8px 0 9px}.row{min-height:38px;margin-bottom:6px;padding:6px 9px}.row span{font-size:15.5px}.row.address{min-height:54px}.row.address span{font-size:14.2px}.services{padding:11px 0 9px}.section-title{margin-bottom:5px}.section-title strong{font-size:18px}.services p{font-size:15.3px;margin:2px 0}.trust{padding-top:9px}.trust p{font-size:16px}.trust .sub-career{margin-bottom:5px}}
-@media (prefers-color-scheme: dark){:root{--bg:#101413;--card:#111615;--ink:#e9e5dc;--line:#263040;--button-text:#f1eee7}html{background:#101413;color-scheme:dark}body{background:#101413;color:#e9e5dc}.ecard{background:#111615}.company,h1,.section-title,.trust{color:#e9e5dc}.tagline{color:#e9e5dc}.contact,.services{border-color:#273246}.row{background:linear-gradient(180deg,#4a3100 0%,#332400 100%);border-color:rgba(200,162,68,.34);box-shadow:0 0 0 1px rgba(200,162,68,.08),5px 7px 14px rgba(0,0,0,.22)}.row b{color:#e6c26a}.row i{color:#f1eee7}.sheet{background:#272831}.sheet-actions a,.sheet-actions button,.sheet-cancel{background:#f7f7f8;color:#0d1b3d}}
+body{
+  margin:0;
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
 
+.ecard{
+  width:min(100%,430px);
+  height:min(100vh,900px);
+  height:min(100dvh,900px); /* 실제 폰 화면은 꽉 채우되, 데스크톱 창처럼 비정상적으로 긴 화면은 900px에서 상한 */
+  margin:0 auto;
+  background:var(--card);
+  padding:20px 24px 20px; /* v3.0: 하단 여백은 버튼 간격 확장으로 흡수 */
+  display:flex;
+  flex-direction:column;
+}
 
-
-/* v2.6 balanced correction: restore readable size, keep one-screen fit */
-.logo{width:min(60%,245px)}
-.logo-wrap{margin-bottom:4px}
-.company{font-size:19.4px}
-h1{font-size:26.4px;margin-top:5px}
+.top{text-align:center}
+.logo-wrap{display:block;margin:0 auto 4px}
+.logo{display:block;width:min(60%,245px);height:auto;margin:0 auto;image-rendering:auto}
+.company{color:var(--navy);font-size:19.4px;line-height:1.15;font-weight:850;letter-spacing:.02em}
+h1{margin:5px 0 0;color:var(--deep);font-size:26.4px;line-height:1.1;font-weight:900;letter-spacing:-.05em}
 .tagline{
-  white-space:nowrap;
+  margin:7px 0 9px;
+  color:#222;
   font-size:15.6px;
   line-height:1.2;
-  margin:7px 0 9px;
+  font-weight:750;
   letter-spacing:-.065em;
+  white-space:nowrap;
 }
-.contact{padding:7px 0 7px}
+
+.flex-spacer{
+  flex:1 1 0%;
+  min-height:0;
+}
+
+.contact{
+  flex:6 1 auto; /* 버튼 사이 간격 6칸과 동일한 비중으로, 위/아래 여백 스페이서와 같은 크기만큼 늘어남 */
+  padding:7px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:6px; /* 최소 버튼 간격, 남는 공간은 space-between이 채움 */
+}
 .row{
+  width:100%;
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr) 22px;
+  align-items:center;
+  gap:10px;
   min-height:36px;
-  margin-bottom:5px;
+  margin:0;
   padding:5px 9px;
+  border-radius:13px;
+  border:1px solid rgba(169,126,43,.35);
+  background:linear-gradient(180deg,#fffaf0 0%,#f5e8bf 100%);
+  color:var(--button-text);
+  text-decoration:none;
+  font:inherit;
+  cursor:pointer;
+  text-align:left;
+  appearance:none;
+  -webkit-appearance:none;
+  box-shadow:5px 7px 14px rgba(169,126,43,.18), inset 0 1px 0 rgba(255,255,255,.95);
 }
-.row b{font-size:15.6px}
-.row span{font-size:15.25px;line-height:1.15}
-.row .kakao,
-.row .email,
-.row .url{font-weight:900;letter-spacing:.035em}
+.row:active{transform:translate(2px,2px);box-shadow:2px 3px 8px rgba(13,27,61,.16), inset 0 1px 0 rgba(255,255,255,.9)}
+.row b{color:var(--gold-dark);font-size:15.6px;font-weight:900;text-align:center}
+.row span{display:block;text-align:left;justify-self:start;color:var(--button-text);font-size:15.25px;line-height:1.15;font-weight:850;letter-spacing:-.02em}
+.row .readable{letter-spacing:.015em}
+.row .kakao,.row .email,.row .url{font-weight:900;letter-spacing:.035em}
 .row .email,.row .url{letter-spacing:.045em}
-.row i{font-size:22px}
+.row i{justify-self:end;width:22px;color:var(--navy);font-size:22px;font-weight:900;font-style:normal;line-height:1;text-align:right}
 .row.address{min-height:40px}
 .row.address b{align-self:start;margin-top:2px}
-.row.address span{font-size:13.7px;line-height:.84}
-.row.address em{margin-top:-5px}
-.services{padding:7px 0 6px}
-.section-title{margin-bottom:3px;gap:9px}
-.section-title span{color:#7d5d12;font-size:15px;font-weight:900}
-.section-title strong{font-size:17px}
-.services p{font-size:14.3px;line-height:1.12;margin:1px 0}
-.trust{padding-top:6px}
-.trust p{font-size:14.6px;line-height:1.12}
-.trust .sub-career{margin-bottom:3px;letter-spacing:-.025em}
+.row.address span{font-size:13.7px;letter-spacing:-.065em;line-height:.84}
+.row.address em{display:block;font-style:normal;padding-left:0;margin-top:-5px}
+.addr-line1{white-space:nowrap;display:inline-block}
+.contact .row:last-child{margin-bottom:0}
+
+.services{
+  padding:7px 0 6px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+.section-title{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:3px;color:var(--navy)}
+.section-title span{color:var(--gold-text);font-size:15px;font-weight:900}
+.section-title strong{font-size:17px;font-weight:900;letter-spacing:-.04em}
+.services p{
+  margin:1px 0;
+  font-size:14.3px;
+  line-height:1.12;
+  font-weight:800;
+  letter-spacing:.05em; /* v2.9: 자간 확장 */
+}
+
+.trust{padding-top:6px;text-align:center;color:var(--navy)}
+.trust p{
+  margin:0;
+  font-size:14.6px;
+  line-height:1.12;
+  font-weight:780;
+  letter-spacing:.05em; /* v2.9: 자간 확장 */
+}
+.trust .sub-career{margin-bottom:3px;letter-spacing:-.01em}
+
+.sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.32);display:flex;align-items:flex-end;justify-content:center;z-index:999}
+.sheet-backdrop[hidden]{display:none}
+.sheet{width:min(100%,430px);margin:0 auto;padding:14px 16px 18px;background:#f7f8fb;border-radius:22px 22px 0 0;box-shadow:0 -12px 34px rgba(0,0,0,.22)}
+.sheet-actions{display:grid;gap:8px}
+.sheet-actions a,.sheet-actions button,.sheet-cancel{width:100%;min-height:48px;border:0;border-radius:14px;background:#fff;color:var(--navy);font:inherit;font-size:16px;font-weight:850;text-decoration:none;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(13,27,61,.08)}
+.sheet-cancel{margin-top:10px;color:#5d6675}
 
 @media(max-width:360px){
   .ecard{padding-left:20px;padding-right:20px}
@@ -64,37 +148,35 @@ h1{font-size:26.4px;margin-top:5px}
 }
 
 @media(max-height:760px){
-  .ecard{padding:11px 22px 8px}
+  .ecard{padding:11px 22px 12px} /* v3.0: 하단도 소량 여백 유지, 나머지는 버튼 간격이 흡수 */
   .logo{width:min(56%,230px)}
   .logo-wrap{margin-bottom:3px}
   .company{font-size:19px}
   h1{font-size:26px;margin-top:4px}
-  .tagline{font-size:15.3px;margin:6px 0 8px;line-height:1.18;letter-spacing:-.07em;white-space:nowrap}
-  .contact{padding:6px 0 6px}
-  .row{min-height:35px;margin-bottom:4px;padding:4px 8px;border-radius:12px}
+  .tagline{font-size:15.3px;margin:6px 0 8px;line-height:1.18;letter-spacing:-.07em}
+  .contact{padding:6px 0}
+  .row{min-height:35px;padding:4px 8px;border-radius:12px}
   .row b{font-size:15.3px}
   .row span{font-size:14.8px;line-height:1.12}
   .row i{font-size:21.5px}
   .row.address{min-height:39px}
-  .row.address b{margin-top:2px}
   .row.address span{font-size:13.3px;line-height:.82}
-  .row.address em{margin-top:-5px}
   .services{padding:6px 0 5px}
   .section-title{margin-bottom:3px;gap:8px}
   .section-title strong{font-size:16.4px}
-  .services p{font-size:14px;line-height:1.1;margin:1px 0}
+  .services p{font-size:14px;line-height:1.1;margin:1px 0;letter-spacing:.05em}
   .trust{padding-top:5px}
-  .trust p{font-size:14.3px;line-height:1.1}
-  .trust .sub-career{margin-bottom:2px}
+  .trust p{font-size:14.3px;line-height:1.1;letter-spacing:.05em}
+  .trust .sub-career{margin-bottom:2px;letter-spacing:-.01em}
 }
 
 @media(max-height:700px){
-  .ecard{padding:9px 20px 7px}
+  .ecard{padding:9px 20px 10px} /* v3.0: 하단도 소량 여백 유지, 나머지는 버튼 간격이 흡수 */
   .logo{width:min(53%,215px)}
   .company{font-size:18.4px}
   h1{font-size:24.8px;margin-top:3px}
   .tagline{font-size:14.8px;margin:5px 0 6px}
-  .row{min-height:33px;margin-bottom:3px;padding:3px 8px}
+  .row{min-height:33px;padding:3px 8px}
   .row span{font-size:14.4px}
   .row.address{min-height:37px}
   .row.address span{font-size:13px;line-height:.8}
@@ -102,4 +184,17 @@ h1{font-size:26.4px;margin-top:5px}
   .trust p{font-size:13.8px}
 }
 
-@media (prefers-color-scheme: dark){.section-title span{color:#e6c26a}}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#101413;--card:#111615;--ink:#e9e5dc;--line:#263040;--button-text:#f1eee7;--gold-text:#e6c26a}
+  html{background:#101413;color-scheme:dark}
+  body{background:#101413;color:#e9e5dc}
+  .ecard{background:#111615}
+  .company,h1,.section-title,.trust{color:#e9e5dc}
+  .tagline{color:#e9e5dc}
+  .contact,.services{border-color:#273246}
+  .row{background:linear-gradient(180deg,#4a3100 0%,#332400 100%);border-color:rgba(200,162,68,.34);box-shadow:0 0 0 1px rgba(200,162,68,.08),5px 7px 14px rgba(0,0,0,.22)}
+  .row b{color:#e6c26a}
+  .row i{color:#f1eee7}
+  .sheet{background:#272831}
+  .sheet-actions a,.sheet-actions button,.sheet-cancel{background:#f7f7f8;color:#0d1b3d}
+}
