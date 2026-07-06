@@ -1,79 +1,328 @@
-<!-- VERSION: NETAX eCard v3.1 -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>조종호 세무사 | 이음세무컨설팅 NETAX</title>
-  <meta name="description" content="상속준비와 자산승계의 든든한 파트너 · 국세청 37년 경력, 이음세무컨설팅 조종호 세무사">
-  <link rel="canonical" href="https://card.netax.kr/">
-  <meta name="theme-color" content="#edf1f6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#101413" media="(prefers-color-scheme: dark)">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이음세무컨설팅 NETAX | 세무사 조종호</title>
+<meta name="description" content="양도소득세·증여세·취득세, 특수관계자 거래와 조세불복까지 — 근거로 답하는 세무 자문. 이음세무컨설팅 NETAX.">
+<meta property="og:title" content="이음세무컨설팅 NETAX">
+<meta property="og:description" content="근거로 답하는 세무 자문, 세무사 조종호">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<style>
+  :root{
+    --navy:#3D5378;
+    --navy-deep:#26374F;
+    --gold:#C9A961;
+    --seal-red:#9E3B3B;
+    --ink:#22293A;
+    --paper:#F8F6F2;
+    --line:#E3DFD6;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.7;
+  }
+  h1,h2,h3,.serif{ font-family:'Noto Serif KR', serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
 
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="이음세무컨설팅 NETAX">
-  <meta property="og:title" content="조종호 세무사 · 이음세무컨설팅">
-  <meta property="og:description" content="자산승계의 든든한 파트너 · 국세청 37 년 경력">
-  <meta property="og:image" content="https://card.netax.kr/assets/og-image.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://card.netax.kr/">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="조종호 세무사 · 이음세무컨설팅">
-  <meta name="twitter:description" content="자산승계의 든든한 파트너 · 국세청 37 년 경력">
-  <meta name="twitter:image" content="https://card.netax.kr/assets/og-image.png">
+  /* ===== Nav ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(248,246,242,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:18px; letter-spacing:0.02em; color:var(--navy-deep); }
+  .brand small{ display:block; font-family:Pretendard, sans-serif; font-weight:500; font-size:11px; letter-spacing:0.12em; color:var(--gold); margin-top:2px; }
+  .nav-links{ display:flex; align-items:center; gap:20px; font-size:14px; }
+  .nav-links a.card-link{ color:var(--navy); border-bottom:1px solid var(--line); padding-bottom:1px; }
+  .btn-cta{
+    background:var(--navy-deep); color:#fff; padding:10px 20px; border-radius:2px;
+    font-weight:600; font-size:14px; letter-spacing:0.02em;
+    border-left:3px solid var(--gold);
+    transition:background .2s;
+  }
+  .btn-cta:hover{ background:var(--navy); }
 
-  <link rel="icon" href="assets/icon/favicon-64.png">
-  <link rel="apple-touch-icon" href="assets/icon/apple-touch-icon-dark.png">
-  <link rel="stylesheet" href="style.css?v=30">
+  /* ===== Hero ===== */
+  .hero{ padding:88px 0 64px; }
+  .hero .wrap{ display:grid; grid-template-columns:1.3fr 0.7fr; gap:48px; align-items:center; }
+  .eyebrow{ font-size:13px; letter-spacing:0.16em; color:var(--gold); font-weight:600; margin-bottom:18px; }
+  .hero h1{ font-size:40px; font-weight:700; color:var(--navy-deep); line-height:1.45; margin-bottom:22px; }
+  .hero p.lead{ font-size:16px; color:#54596B; max-width:44ch; margin-bottom:32px; }
+  .hero-actions{ display:flex; gap:12px; }
+  .btn-secondary{ padding:12px 22px; border:1px solid var(--navy); border-radius:2px; font-size:14px; font-weight:600; color:var(--navy); }
+  .hero .btn-cta{ padding:12px 24px; font-size:15px; }
+
+  /* signature seal element */
+  .seal-box{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .seal{
+    width:132px; height:132px; border-radius:50%;
+    border:2px solid var(--navy-deep);
+    outline:1px solid var(--gold); outline-offset:5px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    transform:rotate(-6deg);
+    color:var(--navy-deep);
+    position:relative;
+  }
+  .seal .name{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:17px; letter-spacing:0.05em; }
+  .seal .role{ font-size:10px; letter-spacing:0.14em; margin-top:4px; color:var(--seal-red); }
+  .stat-row{ display:flex; gap:22px; font-size:13px; color:#6B7189; }
+  .stat-row b{ display:block; font-family:'Noto Serif KR',serif; font-size:22px; color:var(--navy-deep); }
+
+  /* ===== Section shared ===== */
+  section{ padding:64px 0; }
+  .section-head{ margin-bottom:36px; }
+  .section-head .eyebrow{ margin-bottom:8px; }
+  .section-head h2{ font-size:28px; color:var(--navy-deep); }
+
+  /* ===== 전문분야 ===== */
+  .field-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .field-card{ background:var(--paper); padding:28px 24px; }
+  .field-card .no{ font-size:12px; color:var(--gold); font-weight:700; letter-spacing:0.1em; margin-bottom:10px; }
+  .field-card h3{ font-size:16px; color:var(--navy-deep); margin-bottom:8px; font-family:Pretendard; font-weight:700; }
+  .field-card p{ font-size:13.5px; color:#666C80; }
+
+  /* ===== 프로세스 (실제 순서이므로 번호 사용) ===== */
+  .process{ background:var(--navy-deep); color:#EDEFF4; }
+  .process .section-head h2, .process .eyebrow{ color:#fff; }
+  .process .eyebrow{ color:var(--gold); }
+  .steps{ display:flex; gap:0; counter-reset:step; }
+  .step{ flex:1; padding:0 20px; position:relative; }
+  .step:not(:last-child)::after{ content:''; position:absolute; top:14px; right:0; width:100%; height:1px; background:rgba(255,255,255,0.18); }
+  .step .num{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:14px; }
+  .step h4{ font-size:15px; margin-bottom:8px; font-weight:700; }
+  .step p{ font-size:13px; color:#B7BCCC; }
+
+  /* ===== 상담예약 ===== */
+  .booking{ }
+  .booking-box{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); padding:36px; }
+  .booking-grid{ display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  label{ display:block; font-size:13px; font-weight:600; color:var(--navy-deep); margin-bottom:8px; }
+  input[type="date"], input[type="text"], input[type="tel"], textarea{
+    width:100%; padding:11px 12px; border:1px solid #D8D4C9; border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:18px;
+  }
+  .slots{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; min-height:44px; }
+  .slot-btn{
+    padding:8px 14px; border:1px solid var(--navy); border-radius:2px; font-size:13px; background:#fff; cursor:pointer;
+    color:var(--navy);
+  }
+  .slot-btn.selected{ background:var(--navy-deep); color:#fff; border-color:var(--navy-deep); }
+  .slot-btn:disabled{ opacity:0.35; cursor:not-allowed; }
+  .booking-msg{ font-size:13px; color:#8A5A2B; margin-bottom:14px; min-height:18px; }
+  .submit-btn{ width:100%; padding:14px; background:var(--navy-deep); color:#fff; font-weight:700; font-size:15px; border-left:3px solid var(--gold); }
+  .submit-btn:disabled{ opacity:0.4; }
+
+  /* ===== Footer ===== */
+  footer{ border-top:1px solid var(--line); padding:40px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:flex-start; font-size:13px; color:#7A7F91; flex-wrap:wrap; gap:16px; }
+  footer .brand-line{ color:var(--navy-deep); font-weight:600; margin-bottom:6px; }
+  footer a.card-link{ color:var(--navy); }
+
+  @media (max-width:820px){
+    .hero .wrap{ grid-template-columns:1fr; }
+    .seal-box{ align-items:flex-start; }
+    .field-grid{ grid-template-columns:1fr; }
+    .steps{ flex-direction:column; gap:24px; }
+    .step:not(:last-child)::after{ display:none; }
+    .booking-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:480px){
+    body{ font-size:14.5px; }
+    .hero h1{ font-size:30px; }
+    nav .nav-links a.card-link{ display:none; }
+  }
+</style>
 </head>
 <body>
-  <main class="ecard">
-    <header class="top">
-      <picture class="logo-wrap">
-        <source srcset="assets/logo/netax-wordmark-dark.png" media="(prefers-color-scheme: dark)">
-        <img class="logo" src="assets/logo/netax-wordmark-light.png" alt="NETAX">
-      </picture>
-      <div class="company">이음세무컨설팅</div>
-      <h1>조종호 세무사</h1>
-      <p class="tagline">상속준비와 자산승계의 든든한 파트너</p>
-    </header>
 
-    <div class="flex-spacer" aria-hidden="true"></div>
+<header>
+  <nav class="wrap">
+    <div class="brand">이음세무컨설팅 <small>NETAX · 세무사 조종호</small></div>
+    <div class="nav-links">
+      <a class="card-link" href="https://card.netax.kr" target="_blank">전자명함</a>
+      <a class="btn-cta" href="#booking">상담예약</a>
+    </div>
+  </nav>
+</header>
 
-    <section class="contact" aria-label="연락처">
-      <button class="row" type="button" data-sheet="phone-office" aria-label="사무실 전화, 031-342-9354"><b aria-hidden="true">T</b><span class="readable number">031-342-9354</span><i aria-hidden="true">›</i></button>
-      <button class="row" type="button" data-sheet="phone-mobile" aria-label="휴대전화, 010-6341-9354"><b aria-hidden="true">M</b><span class="readable number">010-6341-9354</span><i aria-hidden="true">›</i></button>
-      <button class="row" type="button" data-sheet="kakao" aria-label="카카오 상담"><b aria-hidden="true">K</b><span class="readable kakao">Kakao 상담</span><i aria-hidden="true">›</i></button>
-      <button class="row" type="button" data-sheet="fax" aria-label="팩스, 0508-118-0935"><b aria-hidden="true">F</b><span class="readable number">0508-118-0935</span><i aria-hidden="true">›</i></button>
-      <button class="row" type="button" data-sheet="email" aria-label="이메일, tax@netax.kr"><b aria-hidden="true">E</b><span class="readable email">tax@netax.kr</span><i aria-hidden="true">›</i></button>
-      <button class="row address" type="button" data-sheet="address" aria-label="주소, 안양시 동안구 시민대로 273 효성인텔리안 215호"><b aria-hidden="true">A</b><span><span class="addr-line1">안양시 동안구 시민대로&nbsp;273</span><br><em>효성인텔리안 215호</em></span><i aria-hidden="true">›</i></button>
-      <button class="row" type="button" data-sheet="home" aria-label="홈페이지, netax.kr"><b aria-hidden="true">H</b><span class="readable url">netax.kr</span><i aria-hidden="true">›</i></button>
-    </section>
-
-    <div class="flex-spacer" aria-hidden="true"></div>
-
-    <section class="services" aria-label="주요 서비스">
-      <div class="section-title"><span>◇</span><strong>주요 서비스</strong><span>◇</span></div>
-      <p>상속세 · 증여세 · 양도소득세</p>
-      <p>세무조사 · 자료제출</p>
-      <p>불복청구 · 경정청구</p>
-    </section>
-
-    <div class="flex-spacer" aria-hidden="true"></div>
-
-    <section class="trust" aria-label="경력">
-      <p class="main-career">국세청 37년 근무</p>
-      <p class="sub-career">- 세무조사 25년 -</p>
-      <p class="office-career">동안양세무서장 역임</p>
-    </section>
-  </main>
-  <div class="sheet-backdrop" id="sheetBackdrop" hidden>
-    <div class="sheet" role="dialog" aria-modal="true" aria-label="동작 선택">
-      <div class="sheet-actions" id="sheetActions"></div>
-      <button class="sheet-cancel" type="button" id="sheetCancel">취소</button>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">TAX ADVISORY · NETAX</div>
+      <h1>숫자 뒤에 있는 근거를,<br>문서로 남깁니다.</h1>
+      <p class="lead">양도소득세·증여세·취득세의 교차점, 특수관계자 간 거래 구조, 조세불복까지 — 판단의 근거를 조문과 사례로 정리해 전자보고서로 전달합니다.</p>
+      <div class="hero-actions">
+        <a class="btn-cta" href="#booking">상담 예약하기</a>
+        <a class="btn-secondary" href="#fields">전문분야 보기</a>
+      </div>
+    </div>
+    <div class="seal-box">
+      <div class="seal">
+        <div class="name">趙 鍾 鎬</div>
+        <div class="role">TAX ACCOUNTANT</div>
+      </div>
+      <div class="stat-row">
+        <div><b>세무사</b>자격보유</div>
+        <div><b>조세심판원</b>불복 경험</div>
+      </div>
     </div>
   </div>
-  <script src="script.js?v=30"></script>
+</section>
+
+<section id="fields">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">FIELDS</div>
+      <h2>전문분야</h2>
+    </div>
+    <div class="field-grid">
+      <div class="field-card"><div class="no">01</div><h3>양도소득세</h3><p>비과세·감면 요건 검토, 특수관계자 간 거래의 증여추정 리스크 판단</p></div>
+      <div class="field-card"><div class="no">02</div><h3>증여세</h3><p>부담부증여 설계, 저가·고가 양수도 시가 이슈, 사전증여 전략</p></div>
+      <div class="field-card"><div class="no">03</div><h3>취득세</h3><p>조정대상지역·허가구역 등 규제 변화에 따른 중과 여부 검토</p></div>
+      <div class="field-card"><div class="no">04</div><h3>조세불복</h3><p>이의신청·심사청구·조세심판원 심판청구서 작성 및 대응</p></div>
+      <div class="field-card"><div class="no">05</div><h3>법인설립·현물출자</h3><p>과세이연 요건 검토, 가족법인 설립을 통한 자산 이전 설계</p></div>
+      <div class="field-card"><div class="no">06</div><h3>특수관계자 거래</h3><p>가족·친족 간 부동산 매매·임대차 구조의 세무 리스크 사전 검토</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">PROCESS</div>
+      <h2>상담부터 보고서까지</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h4>상담 예약</h4><p>아래 예약 위젯에서 원하는 날짜와 시간을 선택합니다.</p></div>
+      <div class="step"><div class="num">02</div><h4>사실관계 확인</h4><p>거래 구조·자료를 바탕으로 쟁점을 정리합니다.</p></div>
+      <div class="step"><div class="num">03</div><h4>세무검토보고서 전달</h4><p>조문·판례 근거를 담은 전자보고서를 발급해 드립니다.</p></div>
+      <div class="step"><div class="num">04</div><h4>사후관리</h4><p>신고·불복 등 후속 절차까지 이어서 자문합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="booking" class="booking">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">RESERVATION</div>
+      <h2>상담 예약</h2>
+    </div>
+    <div class="booking-box">
+      <div class="booking-grid">
+        <div>
+          <label for="bk-date">희망 날짜</label>
+          <input type="date" id="bk-date">
+          <label>희망 시간</label>
+          <div class="slots" id="bk-slots"><span style="color:#999; font-size:13px;">날짜를 먼저 선택해 주세요</span></div>
+        </div>
+        <div>
+          <label for="bk-name">성함</label>
+          <input type="text" id="bk-name" placeholder="홍길동">
+          <label for="bk-phone">연락처</label>
+          <input type="tel" id="bk-phone" placeholder="010-0000-0000">
+          <label for="bk-memo">상담 내용 (선택)</label>
+          <textarea id="bk-memo" rows="3" placeholder="간단한 상담 배경을 남겨주시면 준비에 도움이 됩니다"></textarea>
+        </div>
+      </div>
+      <div class="booking-msg" id="bk-msg"></div>
+      <button class="submit-btn" id="bk-submit" disabled>예약 확정하기</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="brand-line">이음세무컨설팅 NETAX</div>
+      <div>세무사 조종호 · 대표번호 000-0000-0000</div>
+    </div>
+    <div>
+      <a class="card-link" href="https://card.netax.kr" target="_blank">전자명함 →</a><br>
+      © 2026 NETAX. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== 설정: Apps Script 배포 후 이 URL을 교체하세요 =====
+const BOOKING_API = "https://script.google.com/macros/s/여기에_배포된_웹앱_ID/exec";
+
+const dateInput = document.getElementById('bk-date');
+const slotsBox  = document.getElementById('bk-slots');
+const submitBtn = document.getElementById('bk-submit');
+const msgBox    = document.getElementById('bk-msg');
+let selectedSlot = null;
+
+dateInput.addEventListener('change', async () => {
+  selectedSlot = null;
+  submitBtn.disabled = true;
+  slotsBox.innerHTML = '<span style="color:#999;font-size:13px;">불러오는 중...</span>';
+  try {
+    const res = await fetch(`${BOOKING_API}?action=availability&date=${dateInput.value}`);
+    const data = await res.json();
+    if (!data.slots || data.slots.length === 0) {
+      slotsBox.innerHTML = '<span style="color:#999;font-size:13px;">해당 날짜는 예약 가능한 시간이 없습니다</span>';
+      return;
+    }
+    slotsBox.innerHTML = '';
+    data.slots.forEach(time => {
+      const btn = document.createElement('button');
+      btn.className = 'slot-btn';
+      btn.type = 'button';
+      btn.textContent = time;
+      btn.onclick = () => {
+        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedSlot = time;
+        submitBtn.disabled = false;
+      };
+      slotsBox.appendChild(btn);
+    });
+  } catch (err) {
+    slotsBox.innerHTML = '<span style="color:#9E3B3B;font-size:13px;">불러오기 실패. 잠시 후 다시 시도해 주세요</span>';
+  }
+});
+
+submitBtn.addEventListener('click', async () => {
+  const name  = document.getElementById('bk-name').value.trim();
+  const phone = document.getElementById('bk-phone').value.trim();
+  const memo  = document.getElementById('bk-memo').value.trim();
+
+  if (!name || !phone || !selectedSlot) {
+    msgBox.textContent = '성함, 연락처, 시간을 모두 선택해 주세요.';
+    return;
+  }
+  submitBtn.disabled = true;
+  msgBox.textContent = '예약을 확정하는 중입니다...';
+
+  try {
+    const res = await fetch(BOOKING_API, {
+      method: 'POST',
+      body: JSON.stringify({ action:'book', date:dateInput.value, time:selectedSlot, name, phone, memo })
+    });
+    const data = await res.json();
+    if (data.success) {
+      msgBox.style.color = '#2E7D32';
+      msgBox.textContent = `예약이 확정되었습니다. (${dateInput.value} ${selectedSlot})`;
+    } else {
+      msgBox.style.color = '#9E3B3B';
+      msgBox.textContent = data.error || '예약에 실패했습니다. 다시 시도해 주세요.';
+      submitBtn.disabled = false;
+    }
+  } catch (err) {
+    msgBox.textContent = '네트워크 오류가 발생했습니다.';
+    submitBtn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
