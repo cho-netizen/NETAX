@@ -292,13 +292,30 @@ dateInput.addEventListener('change', async () => {
   }
 });
 
+// 전화번호 자동 하이픈 (010-0000-0000 규칙)
+const phoneInput = document.getElementById('bk-phone');
+phoneInput.addEventListener('input', () => {
+  let digits = phoneInput.value.replace(/[^0-9]/g, '').slice(0, 11); // 숫자만, 최대 11자리
+  let formatted = digits;
+  if (digits.length > 3 && digits.length <= 7) {
+    formatted = `${digits.slice(0,3)}-${digits.slice(3)}`;
+  } else if (digits.length > 7) {
+    formatted = `${digits.slice(0,3)}-${digits.slice(3,7)}-${digits.slice(7)}`;
+  }
+  phoneInput.value = formatted;
+});
+
 submitBtn.addEventListener('click', async () => {
   const name  = document.getElementById('bk-name').value.trim();
   const phone = document.getElementById('bk-phone').value.trim();
   const memo  = document.getElementById('bk-memo').value.trim();
 
-  if (!name || !phone || !selectedSlot) {
-    msgBox.textContent = '성함, 연락처, 시간을 모두 선택해 주세요.';
+  if (!name || !selectedSlot) {
+    msgBox.textContent = '성함과 시간을 모두 선택해 주세요.';
+    return;
+  }
+  if (!/^01[0-9]-\d{3,4}-\d{4}$/.test(phone)) {
+    msgBox.textContent = '연락처를 010-0000-0000 형식으로 입력해 주세요.';
     return;
   }
   submitBtn.disabled = true;
