@@ -72,12 +72,12 @@
 
   /* ===== Profile ===== */
   .profile-section{ display:flex; flex-direction:column; align-items:center; gap:24px; }
-  .profile-image{ width:160px; height:160px; border-radius:50%; border:3px solid var(--navy); outline:2px solid var(--gold); outline-offset:6px; overflow:hidden; background:#e8e4d8; display:flex; align-items:center; justify-content:center; font-size:48px; }
+  .profile-image{ width:160px; height:160px; border-radius:50%; border:3px solid var(--navy); outline:2px solid var(--gold); outline-offset:6px; overflow:hidden; background:#e8e4d8; display:flex; align-items:center; justify-content:center; object-fit:cover; }
   .profile-info{ text-align:center; }
   .profile-info .name{ font-family:'Noto Serif KR', serif; font-size:20px; font-weight:700; color:var(--navy); margin-bottom:8px; }
   .profile-info .title{ font-size:13px; letter-spacing:0.08em; color:var(--gold); font-weight:600; margin-bottom:12px; }
   .profile-info .career{ font-size:14px; color:#546170; line-height:1.6; margin-bottom:14px; }
-  .profile-info .tagline{ font-size:15px; font-weight:600; color:var(--navy); line-height:1.6; margin-bottom:14px; }
+  .profile-info .tagline{ font-size:15px; font-weight:600; color:var(--navy); line-height:1.6; }
 
   /* ===== Section shared ===== */
   section{ padding:72px 0; }
@@ -86,29 +86,29 @@
 
   /* ===== 상담신청 ===== */
   .booking-box{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); padding:40px; border-radius:2px; }
-  .booking-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:28px; }
-  label{ display:block; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+  .booking-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
+  label{ display:block; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:8px; }
   input[type="date"], input[type="text"], input[type="tel"], textarea, select{
-    width:100%; padding:12px 13px; border:1px solid #D8D4C9; border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:20px;
+    width:100%; padding:11px 12px; border:1px solid #D8D4C9; border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px;
   }
   textarea{ resize:vertical; }
   select{ background:#fff; cursor:pointer; }
-  .checkbox-row{ display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
-  .chk{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:400; color:#444; cursor:pointer; }
+  .checkbox-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+  .chk{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:400; color:#444; cursor:pointer; }
   .chk input{ width:auto; margin:0; cursor:pointer; }
-  .slots{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; min-height:48px; align-content:flex-start; }
+  .slots{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height:44px; align-content:flex-start; }
   .slot-btn{
-    padding:9px 15px; border:1px solid var(--navy); border-radius:2px; font-size:13px; background:#fff; cursor:pointer;
+    padding:8px 13px; border:1px solid var(--navy); border-radius:2px; font-size:12px; background:#fff; cursor:pointer;
     color:var(--navy); font-weight:500; transition:.15s;
   }
   .slot-btn:hover{ background:var(--navy); color:#fff; }
   .slot-btn.selected{ background:var(--navy); color:#fff; }
   .slot-btn:disabled{ opacity:0.35; cursor:not-allowed; }
-  .agreement{ background:var(--paper); border:1px solid var(--line); padding:20px 22px; margin-bottom:20px; font-size:13px; color:#666C80; border-radius:2px; }
-  .agreement ul{ padding-left:20px; margin-bottom:16px; }
-  .agreement li{ margin-bottom:6px; line-height:1.6; }
-  .booking-msg{ font-size:13px; color:#8A5A2B; margin-bottom:16px; min-height:20px; }
-  .submit-btn{ width:100%; padding:15px; background:var(--navy); color:#fff; font-weight:700; font-size:15px; border:none; border-left:3px solid var(--gold); border-radius:2px; cursor:pointer; transition:.2s; }
+  .agreement{ background:var(--paper); border:1px solid var(--line); padding:16px 18px; margin-bottom:16px; font-size:12px; color:#666C80; border-radius:2px; }
+  .agreement ul{ padding-left:18px; margin-bottom:12px; }
+  .agreement li{ margin-bottom:4px; line-height:1.5; }
+  .booking-msg{ font-size:12px; color:#8A5A2B; margin-bottom:14px; min-height:18px; }
+  .submit-btn{ width:100%; padding:14px; background:var(--navy); color:#fff; font-weight:700; font-size:15px; border:none; border-left:3px solid var(--gold); border-radius:2px; cursor:pointer; transition:.2s; }
   .submit-btn:hover:not(:disabled){ background:var(--navy-light); }
   .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
 
@@ -130,13 +130,10 @@
   .step p{ font-size:13px; color:#B7BCCC; line-height:1.6; }
 
   /* ===== 상세정보 ===== */
-  .detail-section{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center; }
-  .detail-section.active{ display:flex; }
-  .detail-box{ background:#fff; border-radius:3px; padding:40px; max-width:600px; max-height:80vh; overflow-y:auto; position:relative; }
-  .detail-close{ position:absolute; top:16px; right:16px; background:var(--navy); color:#fff; border:none; width:32px; height:32px; border-radius:50%; font-size:18px; cursor:pointer; }
+  .detail-section{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); padding:40px; border-radius:2px; }
   .detail-item{ margin-bottom:32px; }
   .detail-item:last-child{ margin-bottom:0; }
-  .detail-item h3{ font-size:16px; color:var(--navy); margin-bottom:14px; font-weight:700; }
+  .detail-item h3{ font-size:18px; color:var(--navy); margin-bottom:14px; font-weight:700; }
   .detail-item ul{ padding-left:20px; }
   .detail-item li{ margin-bottom:6px; font-size:13.5px; color:#546170; line-height:1.6; }
 
@@ -151,13 +148,25 @@
     .field-grid{ grid-template-columns:1fr; }
     .steps{ flex-direction:column; gap:24px; }
     .step:not(:last-child)::after{ display:none; }
-    .booking-grid{ grid-template-columns:1fr; }
+    .booking-grid{ grid-template-columns:1fr; gap:20px; }
     .side-nav{ display:none; }
+    .hero{ padding:80px 0 60px; }
+    .hero h1{ font-size:36px; margin-bottom:20px; }
+    section{ padding:60px 0; }
+    .booking-box{ padding:28px 20px; }
   }
   @media (max-width:480px){
-    body{ font-size:14.5px; }
-    .hero h1{ font-size:32px; line-height:1.4; }
+    body{ font-size:14px; }
+    .hero h1{ font-size:28px; line-height:1.4; margin-bottom:16px; }
+    .hero p.lead{ font-size:14px; margin-bottom:28px; }
     nav .nav-links a.card-link, nav .nav-links a.report-link{ display:none; }
+    .profile-image{ width:140px; height:140px; }
+    label{ font-size:12px; margin-bottom:6px; }
+    input, textarea, select{ font-size:13px; padding:10px 11px; margin-bottom:10px; }
+    .agreement{ padding:13px 15px; font-size:11px; }
+    .agreement li{ margin-bottom:3px; }
+    .chk{ font-size:12px; gap:8px; }
+    .slot-btn{ font-size:11px; padding:7px 11px; }
   }
 </style>
 </head>
@@ -177,7 +186,7 @@
   <button onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">상담신청</button>
   <button onclick="document.getElementById('fields').scrollIntoView({behavior:'smooth'})">전문분야</button>
   <button onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'})">프로세스</button>
-  <button onclick="toggleDetail()">상세이력</button>
+  <button onclick="document.getElementById('detail').scrollIntoView({behavior:'smooth'})">상세이력</button>
 </div>
 
 <section class="hero">
@@ -187,7 +196,7 @@
       <p class="lead">국세청 37년 경력의 세무사가 상속·증여·양도·세무조사까지 체계적으로 준비하고 관리해드립니다.</p>
     </div>
     <div class="profile-section">
-      <div class="profile-image">👤</div>
+      <img src="profile.jpg" alt="조종호 세무사" class="profile-image">
       <div class="profile-info">
         <div class="name">조종호</div>
         <div class="title">세무사</div>
@@ -216,7 +225,7 @@
           </select>
 
           <label for="bk-situation">현재 상황과 문제점</label>
-          <textarea id="bk-situation" rows="4" placeholder="상담이 필요한 사실관계를 구체적으로 적어주세요"></textarea>
+          <textarea id="bk-situation" rows="3" placeholder="상담이 필요한 사실관계를 구체적으로 적어주세요"></textarea>
 
           <label>현재 세무처리는 어떻게 하고 계신가요 (복수선택)</label>
           <div class="checkbox-row">
@@ -229,7 +238,7 @@
         <div>
           <label>상담 희망 일정</label>
           <input type="date" id="bk-date">
-          <div class="slots" id="bk-slots"><span style="color:#999; font-size:13px;">날짜를 먼저 선택해 주세요</span></div>
+          <div class="slots" id="bk-slots"><span style="color:#999; font-size:12px;">날짜를 먼저 선택해 주세요</span></div>
 
           <label for="bk-name">성함</label>
           <input type="text" id="bk-name" placeholder="홍길동">
@@ -318,46 +327,50 @@
   </div>
 </section>
 
-<div class="detail-section" id="detailSection">
-  <div class="detail-box">
-    <button class="detail-close" onclick="toggleDetail()">×</button>
-    <div class="detail-item">
-      <h3>근무경력</h3>
-      <ul>
-        <li>동안양 세무서장 ('25)</li>
-        <li>원주 세무서장 ('24)</li>
-        <li>제천 세무서장 ('23)</li>
-        <li>영동 세무서장 ('22)</li>
-        <li>국세청 정보보호과장 ('21)</li>
-        <li>대전지방국세청 조사관리과장 조사1과장 ('20)</li>
-        <li>청주 세무서 납세자보호담당관 ('19)</li>
-        <li>충주 세무서 조사과장 ('17)</li>
-      </ul>
+<section id="detail">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>상세이력</h2>
     </div>
-    <div class="detail-item">
-      <h3>학력</h3>
-      <ul>
-        <li>제천고등학교 34회 졸업</li>
-        <li>국립세무대학 내국세학과 6회 졸업</li>
-      </ul>
-    </div>
-    <div class="detail-item">
-      <h3>수상이력</h3>
-      <ul>
-        <li>홍조근정훈장 수상</li>
-        <li>우수공무원 대통령 표창</li>
-        <li>모범공무원 국세청장 표창</li>
-      </ul>
-    </div>
-    <div class="detail-item">
-      <h3>자격</h3>
-      <ul>
-        <li>세무사 자격증</li>
-        <li>행정사 자격증</li>
-      </ul>
+    <div class="detail-section">
+      <div class="detail-item">
+        <h3>근무경력</h3>
+        <ul>
+          <li>동안양 세무서장 ('25)</li>
+          <li>원주 세무서장 ('24)</li>
+          <li>제천 세무서장 ('23)</li>
+          <li>영동 세무서장 ('22)</li>
+          <li>국세청 정보보호과장 ('21)</li>
+          <li>대전지방국세청 조사관리과장 조사1과장 ('20)</li>
+          <li>청주 세무서 납세자보호담당관 ('19)</li>
+          <li>충주 세무서 조사과장 ('17)</li>
+        </ul>
+      </div>
+      <div class="detail-item">
+        <h3>학력</h3>
+        <ul>
+          <li>제천고등학교 34회 졸업</li>
+          <li>국립세무대학 내국세학과 6회 졸업</li>
+        </ul>
+      </div>
+      <div class="detail-item">
+        <h3>수상이력</h3>
+        <ul>
+          <li>홍조근정훈장 수상</li>
+          <li>우수공무원 대통령 표창</li>
+          <li>모범공무원 국세청장 표창</li>
+        </ul>
+      </div>
+      <div class="detail-item">
+        <h3>자격</h3>
+        <ul>
+          <li>세무사 자격증</li>
+          <li>행정사 자격증</li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <footer>
   <div class="wrap">
@@ -380,17 +393,6 @@ const submitBtn = document.getElementById('bk-submit');
 const msgBox    = document.getElementById('bk-msg');
 let selectedSlot = null;
 
-function toggleDetail() {
-  const detail = document.getElementById('detailSection');
-  detail.classList.toggle('active');
-}
-
-document.getElementById('detailSection').addEventListener('click', (e) => {
-  if (e.target === document.getElementById('detailSection')) {
-    toggleDetail();
-  }
-});
-
 const phoneInput = document.getElementById('bk-phone');
 phoneInput.addEventListener('input', () => {
   let digits = phoneInput.value.replace(/[^0-9]/g, '').slice(0, 11);
@@ -406,12 +408,12 @@ phoneInput.addEventListener('input', () => {
 dateInput.addEventListener('change', async () => {
   selectedSlot = null;
   submitBtn.disabled = true;
-  slotsBox.innerHTML = '<span style="color:#999;font-size:13px;">불러오는 중...</span>';
+  slotsBox.innerHTML = '<span style="color:#999;font-size:12px;">불러오는 중...</span>';
   try {
     const res = await fetch(`${BOOKING_API}?action=availability&date=${dateInput.value}`);
     const data = await res.json();
     if (!data.slots || data.slots.length === 0) {
-      slotsBox.innerHTML = '<span style="color:#999;font-size:13px;">해당 날짜는 상담 가능한 시간이 없습니다</span>';
+      slotsBox.innerHTML = '<span style="color:#999;font-size:12px;">해당 날짜는 상담 가능한 시간이 없습니다</span>';
       return;
     }
     slotsBox.innerHTML = '';
@@ -429,7 +431,7 @@ dateInput.addEventListener('change', async () => {
       slotsBox.appendChild(btn);
     });
   } catch (err) {
-    slotsBox.innerHTML = '<span style="color:#9E3B3B;font-size:13px;">불러오기 실패. 잠시 후 다시 시도해 주세요</span>';
+    slotsBox.innerHTML = '<span style="color:#9E3B3B;font-size:12px;">불러오기 실패. 잠시 후 다시 시도해 주세요</span>';
   }
 });
 
