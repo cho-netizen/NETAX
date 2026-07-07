@@ -42,9 +42,7 @@
   .brand{ display:flex; align-items:center; height:100%; gap:12px; }
   .brand img{ height:40px; width:auto; }
   .brand-text{ display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; }
-  .brand-text .name{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1; }
-  .brand-text .name::after{ content:''; width:1px; height:10px; background:var(--gold); margin-left:8px; }
-  .brand-text .title{ font-size:11px; color:var(--navy); font-weight:500; letter-spacing:0.05em; }
+  .brand-text .name{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:16px; color:var(--navy); line-height:1; }
   .nav-links{ display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; }
   .nav-links a{ color:var(--navy); }
   .btn-cta{
@@ -80,8 +78,8 @@
   .hero h1{ font-size:44px; font-weight:700; color:var(--navy); line-height:1.42; margin-bottom:28px; }
   .hero p.lead{ font-size:16px; color:#546170; max-width:48ch; margin-bottom:38px; line-height:1.65; }
   .hero-buttons{ display:flex; gap:16px; margin-bottom:40px; }
-  .hero-btn{ padding:11px 28px; background:transparent; border:1.5px solid var(--navy); border-radius:3px; font-size:13px; font-weight:600; color:var(--navy); cursor:pointer; transition:.2s; }
-  .hero-btn:hover{ background:var(--navy); color:#fff; }
+  .hero-btn{ padding:11px 28px; background:var(--navy); border:1.5px solid var(--navy); border-radius:3px; font-size:13px; font-weight:600; color:#fff; cursor:pointer; transition:.2s; }
+  .hero-btn:hover{ background:var(--navy-light); }
 
   /* ===== Profile ===== */
   .profile-section{ display:flex; flex-direction:column; align-items:center; gap:24px; }
@@ -133,9 +131,9 @@
   .fields{ background:#fff; color:var(--ink); padding:72px 0; }
   .fields .section-head h2{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); color:var(--navy); }
   .field-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:none; }
-  .field-card{ padding:0 20px; position:relative; border-right:1px solid var(--line); }
+  .field-card{ padding:0 20px 48px 20px; position:relative; border-right:1px solid var(--line); }
   .field-card:last-child{ border-right:none; }
-  .field-card h4{ font-family:'Noto Serif KR',serif; font-size:22px; color:var(--gold); margin-bottom:10px; font-weight:700; }
+  .field-card h4{ font-family:'Noto Serif KR',serif; font-size:22px; color:var(--gold); margin-bottom:12px; font-weight:700; }
   .field-card p{ font-size:13.5px; color:#666C80; line-height:1.6; }
 
   /* ===== 프로세스 ===== */
@@ -147,15 +145,13 @@
   .step .num{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:14px; font-weight:700; }
   .step h4{ font-size:15px; margin-bottom:10px; font-weight:700; }
   .step p{ font-size:13px; color:#B7BCCC; line-height:1.6; }
-  .process .report-btn-container{ position:absolute; right:25%; top:50%; transform:translateY(-50%); display:flex; align-items:center; }
-  .process .report-btn{ background:#fff; color:var(--navy); padding:12px 14px; border:1px solid #fff; border-radius:3px; font-weight:600; font-size:12px; cursor:pointer; transition:.2s; white-space:nowrap; }
-  .process .report-btn:hover{ background:#F0F0F0; }
+  .step .report-btn-inline{ background:#fff; color:var(--navy); padding:8px 16px; border:1px solid #fff; border-radius:3px; font-weight:600; font-size:11px; cursor:pointer; transition:.2s; white-space:nowrap; margin-top:10px; display:inline-block; }
+  .step .report-btn-inline:hover{ background:#F0F0F0; }
 
   /* ===== 상세정보 ===== */
-  .detail-section{ padding:0; }
-  .detail-item{ margin-bottom:32px; }
-  .detail-item:last-child{ margin-bottom:0; }
-  .detail-item h3{ font-size:18px; color:var(--navy); margin-bottom:14px; font-weight:700; }
+  .detail-section{ padding:0; display:grid; grid-template-columns:1fr 1fr; gap:52px; }
+  .detail-item{ margin-bottom:0; }
+  .detail-item h3{ font-size:15px; color:var(--navy); margin-bottom:14px; font-weight:700; }
   .detail-item ul{ padding-left:20px; }
   .detail-item li{ margin-bottom:6px; font-size:13.5px; color:#546170; line-height:1.6; }
 
@@ -173,8 +169,8 @@
     .field-card:nth-child(n+5){ border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:20px; }
     .steps{ flex-direction:column; gap:24px; }
     .step:not(:last-child)::after{ display:none; }
-    .process .report-btn-container{ position:static; transform:none; margin-top:20px; }
     .booking-grid{ grid-template-columns:1fr; gap:20px; }
+    .detail-section{ grid-template-columns:1fr; gap:32px; }
     .side-nav{ right:16px; gap:10px; }
     .side-nav button{ padding:10px 12px; font-size:11px; }
     .hero{ padding:80px 0 60px; }
@@ -201,6 +197,7 @@
     .field-grid{ grid-template-columns:1fr; gap:20px; }
     .field-card{ border-right:none !important; border-bottom:1px solid var(--line); padding:0 0 20px 0; margin-bottom:20px; }
     .field-card:last-child{ border-bottom:none; padding-bottom:0; margin-bottom:0; }
+    .detail-section{ grid-template-columns:1fr; gap:32px; }
   }
 </style>
 </head>
@@ -211,8 +208,7 @@
     <div class="brand">
       <img src="logo-dark.png" alt="NETAX">
       <div class="brand-text">
-        <div class="name">이음세무컨설팅</div>
-        <div class="title">조종호 세무사</div>
+        <div class="name">세무사 조종호</div>
       </div>
     </div>
     <div class="nav-links">
@@ -260,11 +256,12 @@
         <div>
           <label for="bk-name">성함</label>
           <input type="text" id="bk-name" placeholder="홍길동">
-          <label for="bk-phone">연락 가능한 스마트폰 번호</label>
+          <label for="bk-phone">전화번호</label>
           <input type="tel" id="bk-phone" placeholder="010-0000-0000">
 
           <label>상담 희망 일정</label>
-          <input type="date" id="bk-date">
+          <button type="button" id="bk-date-btn" style="width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px; background:rgba(255,255,255,0.05); color:#fff; cursor:pointer; text-align:left;">날짜 선택</button>
+          <input type="date" id="bk-date" style="display:none;">
           <div class="slots" id="bk-slots"><span style="color:#B7BCCC; font-size:12px;">날짜를 먼저 선택해 주세요</span></div>
         </div>
 
@@ -359,14 +356,12 @@
         <div class="num">03</div>
         <h4>자문용역보고서 제공</h4>
         <p>조문·판례 근거를 담은 세무검토보고서를 발급합니다</p>
+        <button class="report-btn-inline" onclick="window.open('https://rpt.netax.kr', '_blank')">전자보고서</button>
       </div>
       <div class="step">
         <div class="num">04</div>
         <h4>사후관리</h4>
         <p>신고·납부·불복 등 후속 절차까지 이어서 자문합니다</p>
-      </div>
-      <div class="report-btn-container">
-        <button class="report-btn" onclick="window.open('https://rpt.netax.kr', '_blank')">전자보고서</button>
       </div>
     </div>
   </div>
@@ -392,18 +387,18 @@
         </ul>
       </div>
       <div class="detail-item">
-        <h3>학력</h3>
-        <ul>
-          <li>제천고등학교 34회 졸업</li>
-          <li>국립세무대학 내국세학과 6회 졸업</li>
-        </ul>
-      </div>
-      <div class="detail-item">
         <h3>수상이력</h3>
         <ul>
           <li>홍조근정훈장 수상</li>
           <li>우수공무원 대통령 표창</li>
           <li>모범공무원 국세청장 표창</li>
+        </ul>
+      </div>
+      <div class="detail-item">
+        <h3>학력</h3>
+        <ul>
+          <li>제천고등학교 34회 졸업</li>
+          <li>국립세무대학 내국세학과 6회 졸업</li>
         </ul>
       </div>
       <div class="detail-item">
@@ -433,11 +428,40 @@
 <script>
 const BOOKING_API = "https://script.google.com/macros/s/AKfycby0HSS6KMvcJVVIkHBWORdMFQOKlEehOVw5ckIgZPfS7I3oaREv5MKyRF_lboYQwWU8rw/exec";
 const dateInput = document.getElementById('bk-date');
+const dateBtn = document.getElementById('bk-date-btn');
 const slotsBox  = document.getElementById('bk-slots');
 const submitBtn = document.getElementById('bk-submit');
 const msgBox    = document.getElementById('bk-msg');
 const sideNav   = document.querySelector('.side-nav');
 let selectedSlot = null;
+
+// 페이지 로드 시 첫 예약가능 날짜 찾기
+window.addEventListener('load', async () => {
+  let found = false;
+  for (let i = 0; i < 30; i++) {
+    const checkDate = new Date();
+    checkDate.setDate(checkDate.getDate() + i);
+    const dateStr = checkDate.toISOString().split('T')[0];
+    const dow = checkDate.getDay();
+    if (dow === 0 || dow === 6) continue;
+    
+    try {
+      const res = await fetch(`${BOOKING_API}?action=availability&date=${dateStr}`);
+      const data = await res.json();
+      if (data.slots && data.slots.length > 0) {
+        dateInput.value = dateStr;
+        dateBtn.textContent = dateStr;
+        found = true;
+        break;
+      }
+    } catch (err) {}
+  }
+});
+
+// 버튼 클릭 시 input[type=date] 클릭
+dateBtn.addEventListener('click', () => {
+  dateInput.click();
+});
 
 function updateSideNavColor() {
   const scrollTop = window.scrollY;
