@@ -44,15 +44,11 @@
   .brand-text{ display:flex; flex-direction:row; align-items:center; }
   .brand-text .brand-company{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1; }
   .nav-links{ display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; }
-  .nav-links a{ color:var(--navy); }
-  .btn-cta{
-    background:var(--navy); color:#fff; padding:11px 24px; border-radius:3px;
-    font-weight:700; font-size:14px;
-    border-left:3px solid var(--gold);
-    transition:background .2s; cursor:pointer; border:none;
-  }
-  .btn-cta:hover{ background:var(--navy-light); }
-  .nav-links a.card-link, .nav-links a.report-link{ border-bottom:1.5px solid var(--gold); padding-bottom:2px; display:none; }
+  .nav-links a{ color:var(--navy); display:none; }
+  .nav-buttons{ display:flex; align-items:center; gap:12px; }
+  .nav-btn{ background:var(--navy); color:#fff; padding:11px 20px; border-radius:3px; font-weight:600; font-size:13px; cursor:pointer; border:none; transition:.2s; }
+  .nav-btn:hover{ background:var(--navy-light); }
+  .nav-btn.card-btn{ border-left:3px solid var(--gold); }
 
   /* ===== Side Nav ===== */
   .side-nav{
@@ -95,8 +91,12 @@
   .section-head{ margin-bottom:40px; }
   .section-head h2{ font-size:32px; color:var(--navy); background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); padding:16px 20px; border-radius:2px; display:inline-block; }
 
-  /* ===== 상담신청 (다크 배경) ===== */
-  .booking{ background:var(--navy); color:#EDEFF4; padding:72px 0; }
+  /* ===== 모달 ===== */
+  .modal{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:100; justify-content:center; align-items:center; }
+  .modal.show{ display:flex; }
+  .modal-content{ background:var(--navy); color:#EDEFF4; padding:40px; border-radius:8px; max-width:600px; width:90%; max-height:90vh; overflow-y:auto; position:relative; }
+  .modal-close{ position:absolute; top:20px; right:20px; background:transparent; border:none; color:#fff; font-size:24px; cursor:pointer; padding:0; width:30px; height:30px; display:flex; align-items:center; justify-content:center; }
+  .modal-close:hover{ color:#FFD700; }
   .booking .section-head h2{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff; }
   .booking-box{ padding:0; }
   .booking-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
@@ -128,25 +128,25 @@
   .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
 
   /* ===== 전문분야 ===== */
-  .fields{ background:#fff; color:var(--ink); padding:72px 0; }
-  .fields .section-head h2{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); color:var(--navy); }
+  .fields{ background:var(--navy); color:#EDEFF4; padding:72px 0; }
+  .fields .section-head h2{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff; }
   .field-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:none; }
-  .field-card{ padding:0 20px 48px 20px; position:relative; border-right:1px solid var(--line); }
+  .field-card{ padding:0 20px 48px 20px; position:relative; border-right:1px solid rgba(255,255,255,0.15); }
   .field-card:last-child{ border-right:none; }
   .field-card h4{ font-family:'Noto Serif KR',serif; font-size:22px; color:var(--gold); margin-bottom:12px; font-weight:700; }
-  .field-card p{ font-size:13.5px; color:#666C80; line-height:1.6; }
+  .field-card p{ font-size:13.5px; color:#B7BCCC; line-height:1.6; }
 
   /* ===== 프로세스 ===== */
-  .process{ background:var(--navy); color:#EDEFF4; padding:72px 0; }
-  .process .section-head h2{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff; }
+  .process{ background:#fff; color:var(--ink); padding:72px 0; }
+  .process .section-head h2{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); color:var(--navy); }
   .steps{ display:flex; gap:0; position:relative; }
   .step{ flex:1; padding:0 20px; position:relative; }
-  .step:not(:last-child)::after{ content:''; position:absolute; top:14px; right:0; width:1px; height:60px; background:rgba(255,255,255,0.15); }
+  .step:not(:last-child)::after{ content:''; position:absolute; top:14px; right:0; width:1px; height:60px; background:#E3DFD6; }
   .step .num{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:14px; font-weight:700; }
-  .step h4{ font-size:14px; margin-bottom:10px; font-weight:700; }
-  .step p{ font-size:13px; color:#B7BCCC; line-height:1.6; }
-  .step .report-btn-inline{ background:#fff; color:var(--navy); padding:8px 16px; border:1px solid #fff; border-radius:3px; font-weight:600; font-size:11px; cursor:pointer; transition:.2s; white-space:nowrap; margin-top:10px; display:inline-block; }
-  .step .report-btn-inline:hover{ background:#F0F0F0; }
+  .step h4{ font-size:14px; margin-bottom:10px; font-weight:700; color:var(--navy); }
+  .step p{ font-size:13px; color:#546170; line-height:1.6; }
+  .step .report-btn-inline{ background:var(--navy); color:#fff; padding:8px 16px; border:1px solid var(--navy); border-radius:3px; font-weight:600; font-size:11px; cursor:pointer; transition:.2s; white-space:nowrap; margin-top:10px; display:inline-block; }
+  .step .report-btn-inline:hover{ background:var(--navy-light); }
 
   /* ===== 상세정보 ===== */
   .detail-section{ padding:0; display:grid; grid-template-columns:1fr 1fr; gap:52px; }
@@ -164,9 +164,6 @@
     .hero .wrap{ grid-template-columns:1fr; }
     .profile-section{ order:2; }
     .field-grid{ grid-template-columns:repeat(2,1fr); gap:0; }
-    .field-card{ border-right:1px solid var(--line); padding:0 20px; }
-    .field-card:nth-child(2n){ border-right:none; }
-    .field-card:nth-child(n+5){ border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:20px; }
     .steps{ flex-direction:column; gap:24px; }
     .step:not(:last-child)::after{ display:none; }
     .booking-grid{ grid-template-columns:1fr; gap:20px; }
@@ -195,9 +192,11 @@
     .booking .chk{ font-size:12px; gap:6px; }
     .slot-btn{ font-size:11px; padding:7px 11px; }
     .field-grid{ grid-template-columns:1fr; gap:20px; }
-    .field-card{ border-right:none !important; border-bottom:1px solid var(--line); padding:0 0 20px 0; margin-bottom:20px; }
+    .field-card{ border-right:none !important; border-bottom:1px solid rgba(255,255,255,0.15); padding:0 0 20px 0; margin-bottom:20px; }
     .field-card:last-child{ border-bottom:none; padding-bottom:0; margin-bottom:0; }
     .detail-section{ grid-template-columns:1fr; gap:32px; }
+    .nav-btn{ padding:9px 16px; font-size:12px; }
+    .modal-content{ padding:30px; max-width:90%; }
   }
 </style>
 </head>
@@ -211,19 +210,12 @@
         <div class="brand-company">이음세무컨설팅</div>
       </div>
     </div>
-    <div class="nav-links">
-      <a class="card-link" href="https://card.netax.kr" target="_blank">전자명함</a>
-      <a class="report-link" href="https://rpt.netax.kr" target="_blank">전자보고서</a>
+    <div class="nav-buttons">
+      <button class="nav-btn card-btn" onclick="window.open('https://card.netax.kr', '_blank')">전자명함</button>
+      <button class="nav-btn" onclick="document.getElementById('booking-modal').style.display='flex'">상담신청</button>
     </div>
   </nav>
 </header>
-
-<div class="side-nav light">
-  <button onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">상담신청</button>
-  <button onclick="document.getElementById('fields').scrollIntoView({behavior:'smooth'})">전문분야</button>
-  <button onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'})">프로세스</button>
-  <button onclick="document.getElementById('detail').scrollIntoView({behavior:'smooth'})">상세이력</button>
-</div>
 
 <section class="hero">
   <div class="wrap">
@@ -246,10 +238,11 @@
   </div>
 </section>
 
-<section id="booking" class="booking">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>상담 신청</h2>
+<div id="booking-modal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="document.getElementById('booking-modal').style.display='none'">✕</button>
+    <div class="section-head" style="margin-top:0;">
+      <h2 style="background:transparent; border:none; padding:0; color:#fff;">상담 신청</h2>
     </div>
     <div class="booking-box">
       <div class="booking-grid">
@@ -300,7 +293,7 @@
       <button class="submit-btn" id="bk-submit" disabled>상담 신청하기</button>
     </div>
   </div>
-</section>
+</div>
 
 <section id="fields" class="fields">
   <div class="wrap">
@@ -367,15 +360,15 @@
   </div>
 </section>
 
-<section id="detail">
+<section id="detail" style="background:var(--navy); color:#EDEFF4;">
   <div class="wrap">
     <div class="section-head">
-      <h2>상세이력</h2>
+      <h2 style="background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff;">상세이력</h2>
     </div>
-    <div class="detail-section">
+    <div class="detail-section" style="color:#EDEFF4;">
       <div class="detail-item">
-        <h3>근무경력</h3>
-        <ul>
+        <h3 style="color:#fff;">근무경력</h3>
+        <ul style="color:#B7BCCC;">
           <li>동안양 세무서장 ('25)</li>
           <li>원주 세무서장 ('24)</li>
           <li>제천 세무서장 ('23)</li>
@@ -387,23 +380,23 @@
         </ul>
       </div>
       <div class="detail-item">
-        <h3>수상이력</h3>
-        <ul>
+        <h3 style="color:#fff;">수상이력</h3>
+        <ul style="color:#B7BCCC;">
           <li>홍조근정훈장 수상</li>
           <li>우수공무원 대통령 표창</li>
           <li>모범공무원 국세청장 표창</li>
         </ul>
       </div>
       <div class="detail-item">
-        <h3>학력</h3>
-        <ul>
+        <h3 style="color:#fff;">학력</h3>
+        <ul style="color:#B7BCCC;">
           <li>제천고등학교 34회 졸업</li>
           <li>국립세무대학 내국세학과 6회 졸업</li>
         </ul>
       </div>
       <div class="detail-item">
-        <h3>자격</h3>
-        <ul>
+        <h3 style="color:#fff;">자격</h3>
+        <ul style="color:#B7BCCC;">
           <li>세무사 자격증</li>
           <li>행정사 자격증</li>
         </ul>
@@ -432,7 +425,6 @@ const dateBtn = document.getElementById('bk-date-btn');
 const slotsBox  = document.getElementById('bk-slots');
 const submitBtn = document.getElementById('bk-submit');
 const msgBox    = document.getElementById('bk-msg');
-const sideNav   = document.querySelector('.side-nav');
 let selectedSlot = null;
 
 // 페이지 로드 시 첫 예약가능 날짜 찾기
@@ -468,30 +460,16 @@ dateBtn.addEventListener('click', () => {
   }
 });
 
+// 모달 외부 클릭 시 닫기
+document.getElementById('booking-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'booking-modal') {
+    document.getElementById('booking-modal').style.display = 'none';
+  }
+});
+
 function updateSideNavColor() {
-  const scrollTop = window.scrollY;
-  let isDarkBg = false;
-
-  const bookingSection = document.getElementById('booking');
-  const processSection = document.getElementById('process');
-  const bookingRect = bookingSection.getBoundingClientRect();
-  const processRect = processSection.getBoundingClientRect();
-
-  if ((bookingRect.top <= window.innerHeight / 2 && bookingRect.bottom > window.innerHeight / 2) ||
-      (processRect.top <= window.innerHeight / 2 && processRect.bottom > window.innerHeight / 2)) {
-    isDarkBg = true;
-  }
-
-  if (isDarkBg) {
-    sideNav.classList.remove('light');
-    sideNav.classList.add('dark');
-  } else {
-    sideNav.classList.remove('dark');
-    sideNav.classList.add('light');
-  }
+  // side-nav 제거됨
 }
-
-window.addEventListener('scroll', updateSideNavColor);
 
 const phoneInput = document.getElementById('bk-phone');
 phoneInput.addEventListener('input', () => {
