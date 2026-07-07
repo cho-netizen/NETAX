@@ -160,7 +160,7 @@
   .field-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:none; }
   .field-card{ padding:0 20px 48px 20px; position:relative; border-right:1px solid rgba(255,255,255,0.15); }
   .field-card:last-child{ border-right:none; }
-  .field-card h4{ font-family:'Noto Serif KR',serif; font-size:22px; color:var(--gold); margin-bottom:12px; font-weight:700; }
+  .field-card h4{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:12px; font-weight:700; }
   .field-card p{ font-size:13.5px; color:#B7BCCC; line-height:1.6; }
 
   /* ===== 프로세스 ===== */
@@ -176,9 +176,9 @@
   .step .report-btn-inline:hover{ background:rgba(255,255,255,0.1); }
 
   /* ===== 상세정보 ===== */
-  .detail-section{ padding:0; display:grid; grid-template-columns:1fr 1fr; gap:52px; }
+  .detail-section{ padding:0; display:grid; grid-template-columns:1fr 1fr; gap:80px 60px; }
   .detail-item{ margin-bottom:0; }
-  .detail-item h3{ font-size:15px; color:var(--navy); margin-bottom:14px; font-weight:700; }
+  .detail-item h3{ font-family:'Noto Serif KR',serif !important; font-size:26px !important; color:#FFD700 !important; margin-bottom:14px; font-weight:700; }
   .detail-item ul{ padding-left:20px; }
   .detail-item li{ margin-bottom:6px; font-size:13.5px; color:#546170; line-height:1.6; }
 
@@ -191,10 +191,13 @@
     .hero .wrap{ grid-template-columns:1fr; }
     .profile-section{ order:2; }
     .field-grid{ grid-template-columns:repeat(2,1fr); gap:0; }
+    .field-card h4{ font-size:22px; }
     .steps{ flex-direction:column; gap:24px; }
+    .step h4{ font-size:22px; }
     .step:not(:last-child)::after{ display:none; }
     .booking-grid{ grid-template-columns:1fr; gap:20px; }
     .detail-section{ grid-template-columns:1fr; gap:32px; }
+    .detail-item h3{ font-size:22px; }
     .side-nav{ right:16px; gap:10px; }
     .side-nav button{ padding:10px 12px; font-size:11px; }
     .modal-grid{ grid-template-columns:1fr; gap:20px; }
@@ -220,10 +223,13 @@
     .booking input, .booking textarea, .booking select{ font-size:13px; padding:10px 11px; margin-bottom:10px; }
     .booking .chk{ font-size:12px; gap:6px; }
     .slot-btn{ font-size:11px; padding:7px 11px; }
+    .step h4{ font-size:20px; }
     .field-grid{ grid-template-columns:1fr; gap:20px; }
     .field-card{ border-right:none !important; border-bottom:1px solid rgba(255,255,255,0.15); padding:0 0 20px 0; margin-bottom:20px; }
+    .field-card h4{ font-size:20px; }
     .field-card:last-child{ border-bottom:none; padding-bottom:0; margin-bottom:0; }
     .detail-section{ grid-template-columns:1fr; gap:32px; }
+    .detail-item h3{ font-size:20px; }
     .nav-btn{ padding:9px 16px; font-size:12px; }
     .modal-content{ padding:30px; max-width:90%; }
     .modal-grid{ grid-template-columns:1fr; gap:20px; }
@@ -386,7 +392,7 @@
     </div>
     <div class="detail-section" style="color:#fff !important;">
       <div class="detail-item">
-        <h3 style="font-family:'Noto Serif KR',serif; font-size:26px; color:#FFD700 !important;">근무경력</h3>
+        <h3>근무경력</h3>
         <ul style="color:#ffffff !important;">
           <li style="color:#ffffff !important;">동안양 세무서장 ('25)</li>
           <li style="color:#ffffff !important;">원주 세무서장 ('24)</li>
@@ -399,7 +405,7 @@
         </ul>
       </div>
       <div class="detail-item">
-        <h3 style="font-family:'Noto Serif KR',serif; font-size:26px; color:#FFD700 !important;">수상이력</h3>
+        <h3>수상이력</h3>
         <ul style="color:#ffffff !important;">
           <li style="color:#ffffff !important;">홍조근정훈장 수상</li>
           <li style="color:#ffffff !important;">우수공무원 대통령 표창</li>
@@ -407,14 +413,14 @@
         </ul>
       </div>
       <div class="detail-item">
-        <h3 style="font-family:'Noto Serif KR',serif; font-size:26px; color:#FFD700 !important;">학력</h3>
+        <h3>학력</h3>
         <ul style="color:#ffffff !important;">
           <li style="color:#ffffff !important;">제천고등학교 34회 졸업</li>
           <li style="color:#ffffff !important;">국립세무대학 내국세학과 6회 졸업</li>
         </ul>
       </div>
       <div class="detail-item">
-        <h3 style="font-family:'Noto Serif KR',serif; font-size:26px; color:#FFD700 !important;">자격</h3>
+        <h3>자격</h3>
         <ul style="color:#ffffff !important;">
           <li style="color:#ffffff !important;">세무사 자격증</li>
           <li style="color:#ffffff !important;">행정사 자격증</li>
