@@ -129,13 +129,13 @@
   .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
 
   /* ===== 전문분야 ===== */
-  .fields{ background:var(--navy); color:#EDEFF4; padding:72px 0; }
-  .fields .section-head h2{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff; }
-  .field-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:36px; }
-  .field-card{ padding:0; }
-  .field-card .num{ font-family:'Noto Serif KR',serif; font-size:22px; color:var(--gold); margin-bottom:12px; font-weight:700; }
-  .field-card h3{ font-size:16px; color:#fff; margin-bottom:10px; font-weight:700; }
-  .field-card p{ font-size:13.5px; color:#B7BCCC; line-height:1.6; }
+  .fields{ background:#fff; color:var(--ink); padding:72px 0; }
+  .fields .section-head h2{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); color:var(--navy); }
+  .field-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:none; }
+  .field-card{ padding:0 20px; position:relative; border-right:1px solid var(--line); }
+  .field-card:last-child{ border-right:none; }
+  .field-card h4{ font-family:'Noto Serif KR',serif; font-size:22px; color:var(--gold); margin-bottom:10px; font-weight:700; }
+  .field-card p{ font-size:13.5px; color:#666C80; line-height:1.6; }
 
   /* ===== 프로세스 ===== */
   .process{ background:var(--navy); color:#EDEFF4; padding:72px 0; }
@@ -166,7 +166,10 @@
   @media (max-width:820px){
     .hero .wrap{ grid-template-columns:1fr; }
     .profile-section{ order:2; }
-    .field-grid{ grid-template-columns:repeat(2,1fr); gap:20px; }
+    .field-grid{ grid-template-columns:repeat(2,1fr); gap:0; }
+    .field-card{ border-right:1px solid var(--line); padding:0 20px; }
+    .field-card:nth-child(2n){ border-right:none; }
+    .field-card:nth-child(n+5){ border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:20px; }
     .steps{ flex-direction:column; gap:24px; }
     .step:not(:last-child)::after{ display:none; }
     .process .report-btn-container{ position:static; transform:none; margin-top:20px; }
@@ -195,6 +198,8 @@
     .booking .chk{ font-size:12px; gap:6px; }
     .slot-btn{ font-size:11px; padding:7px 11px; }
     .field-grid{ grid-template-columns:1fr; gap:20px; }
+    .field-card{ border-right:none !important; border-bottom:1px solid var(--line); padding:0 0 20px 0; margin-bottom:20px; }
+    .field-card:last-child{ border-bottom:none; padding-bottom:0; margin-bottom:0; }
   }
 </style>
 </head>
@@ -306,33 +311,27 @@
     </div>
     <div class="field-grid">
       <div class="field-card">
-        <div class="num">01</div>
-        <h3>상속세</h3>
+        <h4>상속세</h4>
         <p>상속재산 평가, 상속세 절세 구조 설계, 상속세 신고 및 납부 전략</p>
       </div>
       <div class="field-card">
-        <div class="num">02</div>
-        <h3>증여세</h3>
+        <h4>증여세</h4>
         <p>증여세 리스크 관리, 부담부증여·일반증여 구조 설계, 증여세 최소화 전략</p>
       </div>
       <div class="field-card">
-        <div class="num">03</div>
-        <h3>양도소득세</h3>
+        <h4>양도소득세</h4>
         <p>양도소득세 비과세·감면 요건 검토, 부동산 매매 시 절세 전략</p>
       </div>
       <div class="field-card">
-        <div class="num">04</div>
-        <h3>세무조사</h3>
+        <h4>세무조사</h4>
         <p>세무조사 사전 대비, 조사 중 대응, 자료 제출 및 이의 제기</p>
       </div>
       <div class="field-card">
-        <div class="num">05</div>
-        <h3>불복청구·경정청구</h3>
+        <h4>불복청구·경정청구</h4>
         <p>이의신청, 심사청구, 조세심판원 심판청구, 경정청구 진행</p>
       </div>
       <div class="field-card">
-        <div class="num">06</div>
-        <h3>법인·자산승계</h3>
+        <h4>법인·자산승계</h4>
         <p>가족법인 설립, 현물출자, 법인전환, 가업승계 구조 설계</p>
       </div>
     </div>
@@ -445,14 +444,11 @@ function updateSideNavColor() {
 
   const bookingSection = document.getElementById('booking');
   const processSection = document.getElementById('process');
-  const fieldsSection = document.getElementById('fields');
   const bookingRect = bookingSection.getBoundingClientRect();
   const processRect = processSection.getBoundingClientRect();
-  const fieldsRect = fieldsSection.getBoundingClientRect();
 
   if ((bookingRect.top <= window.innerHeight / 2 && bookingRect.bottom > window.innerHeight / 2) ||
-      (processRect.top <= window.innerHeight / 2 && processRect.bottom > window.innerHeight / 2) ||
-      (fieldsRect.top <= window.innerHeight / 2 && fieldsRect.bottom > window.innerHeight / 2)) {
+      (processRect.top <= window.innerHeight / 2 && processRect.bottom > window.innerHeight / 2)) {
     isDarkBg = true;
   }
 
