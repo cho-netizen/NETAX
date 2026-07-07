@@ -41,8 +41,10 @@
   nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
   .brand{ display:flex; align-items:center; height:100%; gap:12px; }
   .brand img{ height:40px; width:auto; }
-  .brand-text{ display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; }
-  .brand-text .name{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:16px; color:var(--navy); line-height:1; }
+  .brand-text{ display:flex; flex-direction:row; align-items:center; justify-content:center; gap:0; }
+  .brand-text .brand-company{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1; margin-right:8px; }
+  .brand-text .brand-company::after{ content:''; width:1px; height:12px; background:var(--gold); margin-left:8px; }
+  .brand-text .brand-name{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1; }
   .nav-links{ display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; }
   .nav-links a{ color:var(--navy); }
   .btn-cta{
@@ -208,7 +210,8 @@
     <div class="brand">
       <img src="logo-dark.png" alt="NETAX">
       <div class="brand-text">
-        <div class="name">세무사 조종호</div>
+        <div class="brand-company">이음세무컨설팅</div>
+        <div class="brand-name">세무사 조종호</div>
       </div>
     </div>
     <div class="nav-links">
@@ -259,10 +262,10 @@
           <label for="bk-phone">전화번호</label>
           <input type="tel" id="bk-phone" placeholder="010-0000-0000">
 
-          <label>상담 희망 일정</label>
+          <label>상담 희망 일정 선택</label>
           <button type="button" id="bk-date-btn" style="width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px; background:rgba(255,255,255,0.05); color:#fff; cursor:pointer; text-align:left;">날짜 선택</button>
           <input type="date" id="bk-date" style="display:none;">
-          <div class="slots" id="bk-slots"><span style="color:#B7BCCC; font-size:12px;">날짜를 먼저 선택해 주세요</span></div>
+          <div class="slots" id="bk-slots" style="display:none;"></div>
         </div>
 
         <div>
@@ -458,9 +461,14 @@ window.addEventListener('load', async () => {
   }
 });
 
-// 버튼 클릭 시 input[type=date] 클릭
+// 버튼 클릭 시 input[type=date] 달력 호출
 dateBtn.addEventListener('click', () => {
-  dateInput.click();
+  dateInput.focus();
+  if (dateInput.showPicker) {
+    dateInput.showPicker();
+  } else {
+    dateInput.click();
+  }
 });
 
 function updateSideNavColor() {
@@ -503,6 +511,10 @@ phoneInput.addEventListener('input', () => {
 dateInput.addEventListener('change', async () => {
   selectedSlot = null;
   submitBtn.disabled = true;
+  if (dateInput.value) {
+    dateBtn.textContent = dateInput.value;
+  }
+  slotsBox.style.display = 'flex';
   slotsBox.innerHTML = '<span style="color:#B7BCCC;font-size:12px;">불러오는 중...</span>';
   try {
     const res = await fetch(`${BOOKING_API}?action=availability&date=${dateInput.value}`);
