@@ -63,6 +63,18 @@
     transition:.2s; white-space:nowrap;
   }
   .side-nav button:hover{ background:var(--navy-light); }
+  .side-nav.light button{
+    background:var(--navy); color:#fff;
+  }
+  .side-nav.light button:hover{
+    background:var(--navy-light);
+  }
+  .side-nav.dark button{
+    background:#fff; color:var(--navy); border-color:#fff;
+  }
+  .side-nav.dark button:hover{
+    background:#F0F0F0;
+  }
 
   /* ===== Hero ===== */
   .hero{ padding:100px 0 72px; }
@@ -190,7 +202,7 @@
   </nav>
 </header>
 
-<div class="side-nav">
+<div class="side-nav light">
   <button onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">상담신청</button>
   <button onclick="document.getElementById('fields').scrollIntoView({behavior:'smooth'})">전문분야</button>
   <button onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'})">프로세스</button>
@@ -223,6 +235,17 @@
     <div class="booking-box">
       <div class="booking-grid">
         <div>
+          <label for="bk-name">성함</label>
+          <input type="text" id="bk-name" placeholder="홍길동">
+          <label for="bk-phone">연락 가능한 스마트폰 번호</label>
+          <input type="tel" id="bk-phone" placeholder="010-0000-0000">
+
+          <label>상담 희망 일정</label>
+          <input type="date" id="bk-date">
+          <div class="slots" id="bk-slots"><span style="color:#B7BCCC; font-size:12px;">날짜를 먼저 선택해 주세요</span></div>
+        </div>
+
+        <div>
           <label for="bk-type">고객 유형</label>
           <select id="bk-type">
             <option value="사업자 아님">사업자 아님</option>
@@ -242,17 +265,6 @@
             <label class="chk"><input type="checkbox" name="bk-status" value="처음 진행"> 처음 진행</label>
           </div>
         </div>
-
-        <div>
-          <label>상담 희망 일정</label>
-          <input type="date" id="bk-date">
-          <div class="slots" id="bk-slots"><span style="color:#B7BCCC; font-size:12px;">날짜를 먼저 선택해 주세요</span></div>
-
-          <label for="bk-name">성함</label>
-          <input type="text" id="bk-name" placeholder="홍길동">
-          <label for="bk-phone">연락 가능한 스마트폰 번호</label>
-          <input type="tel" id="bk-phone" placeholder="010-0000-0000">
-        </div>
       </div>
 
       <div class="agreement-note">
@@ -262,7 +274,6 @@
           <li>필요시 추가 자료를 요청드릴 수 있습니다</li>
           <li>상담은 유료로 진행되며, 내용에 따라 사전 안내 드립니다</li>
         </ul>
-        <label class="chk"><input type="checkbox" id="bk-agree"> 위 내용을 확인하였습니다</label>
       </div>
 
       <div class="booking-msg" id="bk-msg"></div>
@@ -399,7 +410,34 @@ const dateInput = document.getElementById('bk-date');
 const slotsBox  = document.getElementById('bk-slots');
 const submitBtn = document.getElementById('bk-submit');
 const msgBox    = document.getElementById('bk-msg');
+const sideNav   = document.querySelector('.side-nav');
 let selectedSlot = null;
+
+// 배경색에 따라 사이드 네비 색상 변경
+function updateSideNavColor() {
+  const scrollTop = window.scrollY;
+  let isDarkBg = false;
+
+  const bookingSection = document.getElementById('booking');
+  const processSection = document.getElementById('process');
+  const bookingRect = bookingSection.getBoundingClientRect();
+  const processRect = processSection.getBoundingClientRect();
+
+  if ((bookingRect.top <= window.innerHeight / 2 && bookingRect.bottom > window.innerHeight / 2) ||
+      (processRect.top <= window.innerHeight / 2 && processRect.bottom > window.innerHeight / 2)) {
+    isDarkBg = true;
+  }
+
+  if (isDarkBg) {
+    sideNav.classList.remove('light');
+    sideNav.classList.add('dark');
+  } else {
+    sideNav.classList.remove('dark');
+    sideNav.classList.add('light');
+  }
+}
+
+window.addEventListener('scroll', updateSideNavColor);
 
 const phoneInput = document.getElementById('bk-phone');
 phoneInput.addEventListener('input', () => {
@@ -448,7 +486,6 @@ submitBtn.addEventListener('click', async () => {
   const phone = document.getElementById('bk-phone').value.trim();
   const type  = document.getElementById('bk-type').value;
   const situation = document.getElementById('bk-situation').value.trim();
-  const agree = document.getElementById('bk-agree').checked;
   const statuses = Array.from(document.querySelectorAll('input[name="bk-status"]:checked')).map(el => el.value);
 
   if (!name || !selectedSlot) {
@@ -461,10 +498,6 @@ submitBtn.addEventListener('click', async () => {
   }
   if (!situation) {
     msgBox.textContent = '현재 상황과 문제점을 적어주세요.';
-    return;
-  }
-  if (!agree) {
-    msgBox.textContent = '안내사항 확인에 동의해 주세요.';
     return;
   }
 
