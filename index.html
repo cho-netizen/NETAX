@@ -264,7 +264,10 @@
     .detail-item h3{ font-size:20px; }
     .modal-content{ padding:30px; max-width:90%; }
     .modal-grid{ grid-template-columns:1fr; gap:20px; }
-    .name-phone-grid{ grid-template-columns:1fr; gap:14px; }
+    .name-phone-grid{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+    .name-phone-grid > div{ display:flex; align-items:center; gap:8px; }
+    .name-phone-grid label{ margin-bottom:0; font-size:12px; white-space:nowrap; flex-shrink:0; }
+    .name-phone-grid input{ flex:1; margin-bottom:0 !important; padding:8px 10px !important; font-size:13px !important; }
     .section-head h2{ font-size:20px; }
     footer{ padding:28px 0; }
     .footer-info{ font-size:12px; line-height:1.6; margin-bottom:10px; }
@@ -318,7 +321,7 @@
             <input type="text" id="bk-name" placeholder="홍길동">
           </div>
           <div>
-            <label for="bk-phone">전화번호</label>
+            <label for="bk-phone">전화</label>
             <input type="tel" id="bk-phone" placeholder="010-0000-0000">
           </div>
         </div>
