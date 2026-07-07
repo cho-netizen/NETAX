@@ -34,7 +34,7 @@
   /* ===== Nav ===== */
   header{
     position:sticky; top:0; z-index:50;
-    background:rgba(248,246,242,0.95);
+    background:#ECDAB8;
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
@@ -95,6 +95,7 @@
   .modal-content{ background:var(--navy); color:#EDEFF4; padding:40px; border-radius:8px; max-width:600px; width:90%; max-height:90vh; overflow-y:auto; position:relative; }
   .modal-content h2{ color:#fff; font-size:28px; font-weight:700; margin-bottom:24px; }
   .modal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
+  .name-phone-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
   .modal-close{ position:absolute; top:20px; right:20px; background:transparent; border:none; color:#fff; font-size:24px; cursor:pointer; padding:0; width:30px; height:30px; display:flex; align-items:center; justify-content:center; }
   .modal-close:hover{ color:#FFD700; }
   /* 모달 입력필드 */
@@ -166,14 +167,14 @@
   /* ===== 프로세스 ===== */
   .process{ background:#fff; color:var(--ink); padding:72px 0; }
   .process .section-head h2{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); color:var(--navy); }
-  .steps{ display:flex; gap:0; position:relative; }
-  .step{ flex:1; padding:0 20px; position:relative; }
+  .steps{ display:flex; gap:0; position:relative; align-items:flex-start; }
+  .step{ flex:1; padding:0 20px 0 20px; margin-bottom:0; position:relative; }
   .step:not(:last-child)::after{ content:''; position:absolute; top:14px; right:0; width:1px; height:60px; background:#E3DFD6; }
   .step .num{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:14px; font-weight:700; }
   .step h4{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:10px; font-weight:700; }
-  .step p{ font-size:13.5px; color:#546170; line-height:1.6; }
-  .step .report-btn-inline{ background:transparent; color:#fff; padding:8px 16px; border:1px solid #fff; border-radius:3px; font-weight:600; font-size:11px; cursor:pointer; transition:.2s; white-space:nowrap; margin-top:10px; display:inline-block; }
-  .step .report-btn-inline:hover{ background:rgba(255,255,255,0.1); }
+  .step p{ font-size:13.5px; color:#546170; line-height:1.6; margin-bottom:16px; }
+  .step .report-btn-inline{ background:transparent; color:var(--navy); padding:8px 16px; border:1.5px solid var(--navy); border-radius:3px; font-weight:600; font-size:11px; cursor:pointer; transition:.2s; white-space:nowrap; margin-top:4px; margin-bottom:16px; display:inline-block; }
+  .step .report-btn-inline:hover{ background:var(--navy); color:#fff; }
 
   /* ===== 상세정보 ===== */
   .detail-section{ padding:0; display:grid; grid-template-columns:1fr 1fr; gap:80px 60px; }
@@ -204,9 +205,11 @@
     .profile-section{ order:2; }
     .field-grid{ grid-template-columns:repeat(2,1fr); gap:0; }
     .field-card h4{ font-size:22px; }
-    .steps{ flex-direction:column; gap:24px; }
+    .steps{ flex-direction:column; gap:0; }
+    .step{ padding-bottom:24px; }
+    .step:last-child{ padding-bottom:0; }
     .step h4{ font-size:22px; }
-    .step:nth-child(3){ margin-bottom:-4px; }
+    .step:nth-child(3){ margin-bottom:0; }
     .step:not(:last-child)::after{ display:none; }
     .booking-grid{ grid-template-columns:1fr; gap:20px; }
     .detail-section{ grid-template-columns:1fr; gap:32px; }
@@ -214,6 +217,7 @@
     .side-nav{ right:16px; gap:10px; }
     .side-nav button{ padding:10px 12px; font-size:11px; }
     .modal-grid{ grid-template-columns:1fr; gap:20px; }
+    .name-phone-grid{ grid-template-columns:1fr; gap:14px; }
     .section-head h2{ font-size:26px; }
     footer{ padding:32px 0; }
     .footer-info{ font-size:12px; line-height:1.7; }
@@ -247,9 +251,11 @@
     .booking input, .booking textarea, .booking select{ font-size:13px; padding:10px 11px; margin-bottom:10px; }
     .booking .chk{ font-size:12px; gap:6px; }
     .slot-btn{ font-size:11px; padding:7px 11px; }
-    .steps{ gap:20px; }
+    .steps{ gap:0; }
+    .step{ padding-bottom:20px; }
+    .step:last-child{ padding-bottom:0; }
     .step h4{ font-size:20px; }
-    .step:nth-child(3){ margin-bottom:-3px; }
+    .step:nth-child(3){ margin-bottom:0; }
     .field-grid{ grid-template-columns:1fr; gap:20px; }
     .field-card{ border-right:none !important; border-bottom:1px solid rgba(255,255,255,0.15); padding:0 0 20px 0; margin-bottom:20px; }
     .field-card h4{ font-size:20px; }
@@ -258,6 +264,7 @@
     .detail-item h3{ font-size:20px; }
     .modal-content{ padding:30px; max-width:90%; }
     .modal-grid{ grid-template-columns:1fr; gap:20px; }
+    .name-phone-grid{ grid-template-columns:1fr; gap:14px; }
     .section-head h2{ font-size:20px; }
     footer{ padding:28px 0; }
     .footer-info{ font-size:12px; line-height:1.6; margin-bottom:10px; }
@@ -305,11 +312,16 @@
     <h2 style="margin-top:0; margin-bottom:24px; color:#fff; font-size:28px; font-weight:700;">상담 신청</h2>
     <div class="modal-grid">
       <div>
-        <label for="bk-name">성함</label>
-        <input type="text" id="bk-name" placeholder="홍길동">
-
-        <label for="bk-phone">전화번호</label>
-        <input type="tel" id="bk-phone" placeholder="010-0000-0000">
+        <div class="name-phone-grid">
+          <div>
+            <label for="bk-name">성함</label>
+            <input type="text" id="bk-name" placeholder="홍길동">
+          </div>
+          <div>
+            <label for="bk-phone">전화번호</label>
+            <input type="tel" id="bk-phone" placeholder="010-0000-0000">
+          </div>
+        </div>
 
         <label>상담 희망 일정 선택</label>
         <button type="button" id="bk-date-btn" style="width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px; background:rgba(255,255,255,0.05); color:#fff; cursor:pointer; text-align:left;">날짜 선택</button>
@@ -330,7 +342,7 @@
         <label for="bk-situation">현재 상황과 문제점</label>
         <textarea id="bk-situation" rows="3" placeholder="간략하게 적어주세요"></textarea>
 
-        <label>현재 세무처리는 어떻게 하고 계신가요</label>
+        <label>현재 세무처리 상황</label>
         <div class="checkbox-row">
           <label class="chk"><input type="checkbox" name="bk-status" value="세무사 이용 중"> 세무사 이용 중</label>
           <label class="chk"><input type="checkbox" name="bk-status" value="직접 신고 중"> 직접 신고 중</label>
