@@ -41,10 +41,8 @@
   nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
   .brand{ display:flex; align-items:center; height:100%; gap:12px; }
   .brand img{ height:40px; width:auto; }
-  .brand-text{ display:flex; flex-direction:row; align-items:center; gap:8px; }
+  .brand-text{ display:flex; flex-direction:row; align-items:center; }
   .brand-text .brand-company{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1; }
-  .brand-divider{ width:1px; height:12px; background:var(--gold); }
-  .brand-text .brand-title{ font-family:'Noto Serif KR', serif; font-weight:500; font-size:13px; color:var(--navy); line-height:1; }
   .nav-links{ display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; }
   .nav-links a{ color:var(--navy); display:none; }
   .nav-buttons{ display:flex; align-items:center; gap:12px; }
@@ -83,10 +81,8 @@
   .profile-section{ display:flex; flex-direction:column; align-items:center; gap:24px; }
   .profile-image{ width:160px; height:160px; border-radius:50%; border:3px solid var(--navy); outline:2px solid var(--gold); outline-offset:6px; overflow:hidden; background:#e8e4d8; display:flex; align-items:center; justify-content:center; object-fit:cover; }
   .profile-info{ text-align:center; }
-  .profile-info .name{ font-family:'Noto Serif KR', serif; font-size:20px; font-weight:700; color:var(--navy); margin-bottom:8px; }
-  .profile-info .title{ font-size:13px; letter-spacing:0.08em; color:var(--gold); font-weight:600; margin-bottom:12px; }
+  .profile-info .name-title{ font-family:'Noto Serif KR', serif; font-size:20px; font-weight:700; color:var(--navy); margin-bottom:12px; }
   .profile-info .career{ font-size:14px; color:#546170; line-height:1.6; margin-bottom:14px; }
-  .profile-info .tagline{ font-size:15px; font-weight:600; color:var(--navy); line-height:1.6; }
 
   /* ===== Section shared ===== */
   section{ padding:72px 0; }
@@ -101,6 +97,33 @@
   .modal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
   .modal-close{ position:absolute; top:20px; right:20px; background:transparent; border:none; color:#fff; font-size:24px; cursor:pointer; padding:0; width:30px; height:30px; display:flex; align-items:center; justify-content:center; }
   .modal-close:hover{ color:#FFD700; }
+  /* 모달 입력필드 */
+  .modal-content label{ display:block; font-size:13px; font-weight:700; color:#fff; margin-bottom:8px; }
+  .modal-content input[type="text"], .modal-content input[type="tel"], .modal-content textarea, .modal-content select{
+    width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px;
+    background:rgba(255,255,255,0.05); color:#fff;
+  }
+  .modal-content input[type="text"]::placeholder, .modal-content input[type="tel"]::placeholder, .modal-content textarea::placeholder{ color:rgba(255,255,255,0.5); }
+  .modal-content select{ background:rgba(255,255,255,0.05); cursor:pointer; }
+  .modal-content select option{ background:var(--navy); color:#fff; }
+  .modal-content .checkbox-row{ display:flex; flex-direction:column; gap:4px; margin-bottom:14px; }
+  .modal-content .chk{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:400; color:#EDEFF4; cursor:pointer; margin-bottom:2px; }
+  .modal-content .chk input{ width:auto; margin:0; cursor:pointer; accent-color:var(--gold); }
+  .modal-content .slots{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height:44px; align-content:flex-start; }
+  .modal-content .slot-btn{
+    padding:8px 13px; border:1px solid rgba(255,255,255,0.3); border-radius:2px; font-size:12px; background:transparent; cursor:pointer;
+    color:#fff; font-weight:500; transition:.15s;
+  }
+  .modal-content .slot-btn:hover{ background:rgba(255,255,255,0.1); }
+  .modal-content .slot-btn.selected{ background:var(--gold); color:var(--navy); border-color:var(--gold); }
+  .modal-content .agreement-note{ background:transparent; border:none; padding:0; margin-bottom:18px; font-size:12px; color:#B7BCCC; line-height:1.6; }
+  .modal-content .agreement-note ul{ padding-left:18px; margin-bottom:14px; }
+  .modal-content .agreement-note li{ margin-bottom:4px; }
+  .modal-content .booking-msg{ font-size:12px; color:#FFE5B4; margin-bottom:14px; min-height:18px; }
+  .modal-content .submit-btn{ width:100%; padding:14px; background:var(--gold); color:var(--navy); font-weight:700; font-size:15px; border:none; border-radius:2px; cursor:pointer; transition:.2s; }
+  .modal-content .submit-btn:hover:not(:disabled){ background:#D9B25E; }
+  .modal-content .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+  #bk-date-btn{ width:100%; padding:11px 12px !important; border:1px solid rgba(255,255,255,0.2) !important; border-radius:2px !important; font-size:14px !important; font-family:inherit !important; margin-bottom:14px !important; background:rgba(255,255,255,0.05) !important; color:#fff !important; cursor:pointer !important; text-align:left !important; }
   .booking .section-head h2{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff; }
   .booking-box{ padding:0; }
   .booking-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
@@ -175,6 +198,7 @@
     .side-nav{ right:16px; gap:10px; }
     .side-nav button{ padding:10px 12px; font-size:11px; }
     .modal-grid{ grid-template-columns:1fr; gap:20px; }
+    .section-head h2{ font-size:26px; }
     .hero{ padding:80px 0 60px; }
     .hero h1{ font-size:36px; margin-bottom:20px; }
     section{ padding:60px 0; }
@@ -202,6 +226,8 @@
     .detail-section{ grid-template-columns:1fr; gap:32px; }
     .nav-btn{ padding:9px 16px; font-size:12px; }
     .modal-content{ padding:30px; max-width:90%; }
+    .modal-grid{ grid-template-columns:1fr; gap:20px; }
+    .section-head h2{ font-size:20px; }
   }
 </style>
 </head>
@@ -213,8 +239,6 @@
       <img src="logo-dark.png" alt="NETAX">
       <div class="brand-text">
         <div class="brand-company">이음세무컨설팅</div>
-        <div class="brand-divider"></div>
-        <div class="brand-title">세무사 조종호</div>
       </div>
     </div>
     <div class="nav-buttons">
@@ -233,8 +257,7 @@
     <div class="profile-section">
       <img src="profile.jpg" alt="조종호 세무사" class="profile-image">
       <div class="profile-info">
-        <div class="name">조종호</div>
-        <div class="title">세무사</div>
+        <div class="name-title">조종호 세무사</div>
         <div class="career">국세청 37년 경력<br>세무조사반장 25년</div>
       </div>
     </div>
