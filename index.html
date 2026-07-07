@@ -182,12 +182,13 @@
   .detail-item ul{ padding-left:20px; }
   .detail-item li{ margin-bottom:6px; font-size:13.5px; color:#546170; line-height:1.6; }
 
-  /* ===== Footer ===== */
-  footer{ border-top:1px solid var(--line); padding:44px 0; }
-  footer .wrap{ display:flex; justify-content:space-between; align-items:flex-start; font-size:13px; color:#7A7F91; flex-wrap:wrap; gap:20px; }
-  footer .brand-line{ color:var(--navy); font-weight:700; margin-bottom:6px; font-size:14px; }
+  /* ===== End ===== */
 
   @media (max-width:820px){
+    nav.wrap{ height:64px; }
+    .brand img{ height:36px; }
+    .brand-text .brand-company{ font-size:13px; }
+    .nav-btn{ padding:10px 16px; font-size:12px; }
     .hero .wrap{ grid-template-columns:1fr; }
     .profile-section{ order:2; }
     .field-grid{ grid-template-columns:repeat(2,1fr); gap:0; }
@@ -208,10 +209,10 @@
   }
   @media (max-width:480px){
     body{ font-size:14px; }
-    nav.wrap{ height:60px; }
-    .brand img{ height:32px; }
-    .brand-text .name{ font-size:12px; }
-    .brand-text .title{ font-size:9px; }
+    nav.wrap{ height:52px; }
+    .brand img{ height:28px; }
+    .brand-text .brand-company{ font-size:12px; }
+    .nav-btn{ padding:8px 12px; font-size:11px; }
     .hero h1{ font-size:28px; line-height:1.4; margin-bottom:16px; }
     .hero p.lead{ font-size:14px; margin-bottom:28px; }
     .hero-buttons{ flex-direction:column; gap:12px; }
@@ -429,19 +430,6 @@
     </div>
   </div>
 </section>
-
-<footer>
-  <div class="wrap">
-    <div>
-      <div class="brand-line">NETAX 이음세무컨설팅</div>
-      <div>세무사 조종호 · 031-342-9354</div>
-    </div>
-    <div>
-      <a href="https://card.netax.kr" target="_blank">전자명함 →</a><br>
-      © 2026 NETAX. All rights reserved.
-    </div>
-  </div>
-</footer>
 
 <script>
 const BOOKING_API = "https://script.google.com/macros/s/AKfycby0HSS6KMvcJVVIkHBWORdMFQOKlEehOVw5ckIgZPfS7I3oaREv5MKyRF_lboYQwWU8rw/exec";
