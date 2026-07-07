@@ -41,9 +41,10 @@
   nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
   .brand{ display:flex; align-items:center; height:100%; gap:12px; }
   .brand img{ height:40px; width:auto; }
-  .brand-text{ display:flex; flex-direction:column; justify-content:center; }
-  .brand-text .name{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1.2; }
-  .brand-text .title{ font-size:11px; color:var(--gold); font-weight:600; letter-spacing:0.05em; }
+  .brand-text{ display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; }
+  .brand-text .name{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1; }
+  .brand-text .name::after{ content:''; width:1px; height:10px; background:var(--gold); margin-left:8px; }
+  .brand-text .title{ font-size:11px; color:var(--navy); font-weight:500; letter-spacing:0.05em; }
   .nav-links{ display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; }
   .nav-links a{ color:var(--navy); }
   .btn-cta{
