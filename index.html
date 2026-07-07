@@ -39,8 +39,8 @@
     border-bottom:1px solid var(--line);
   }
   nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
-  .brand{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:20px; letter-spacing:-0.01em; color:var(--navy); }
-  .brand small{ display:block; font-family:'Noto Sans KR', sans-serif; font-weight:500; font-size:11px; letter-spacing:0.12em; color:var(--gold); margin-top:2px; }
+  .brand{ display:flex; align-items:center; height:100%; }
+  .brand img{ height:40px; width:auto; }
   .nav-links{ display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; }
   .nav-links a{ color:var(--navy); }
   .btn-cta{
@@ -84,32 +84,36 @@
   .section-head{ margin-bottom:40px; }
   .section-head h2{ font-size:32px; color:var(--navy); }
 
-  /* ===== 상담신청 ===== */
-  .booking-box{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); padding:40px; border-radius:2px; }
+  /* ===== 상담신청 (다크 배경) ===== */
+  .booking{ background:var(--navy); color:#EDEFF4; padding:72px 0; }
+  .booking .section-head h2{ color:#fff; }
+  .booking-box{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); padding:40px; border-radius:2px; }
   .booking-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
-  label{ display:block; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:8px; }
-  input[type="date"], input[type="text"], input[type="tel"], textarea, select{
-    width:100%; padding:11px 12px; border:1px solid #D8D4C9; border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px;
+  .booking label{ display:block; font-size:13px; font-weight:700; color:#fff; margin-bottom:8px; }
+  .booking input[type="date"], .booking input[type="text"], .booking input[type="tel"], .booking textarea, .booking select{
+    width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px;
+    background:rgba(255,255,255,0.05); color:#fff;
   }
-  textarea{ resize:vertical; }
-  select{ background:#fff; cursor:pointer; }
-  .checkbox-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
-  .chk{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:400; color:#444; cursor:pointer; }
-  .chk input{ width:auto; margin:0; cursor:pointer; }
+  .booking input[type="date"]::placeholder, .booking input[type="text"]::placeholder, .booking input[type="tel"]::placeholder, .booking textarea::placeholder{ color:rgba(255,255,255,0.5); }
+  .booking select{ background:rgba(255,255,255,0.05); cursor:pointer; }
+  .booking select option{ background:var(--navy); color:#fff; }
+  .booking-grid .checkbox-row{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+  .booking .chk{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:400; color:#EDEFF4; cursor:pointer; }
+  .booking .chk input{ width:auto; margin:0; cursor:pointer; accent-color:var(--gold); }
   .slots{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height:44px; align-content:flex-start; }
   .slot-btn{
-    padding:8px 13px; border:1px solid var(--navy); border-radius:2px; font-size:12px; background:#fff; cursor:pointer;
-    color:var(--navy); font-weight:500; transition:.15s;
+    padding:8px 13px; border:1px solid rgba(255,255,255,0.3); border-radius:2px; font-size:12px; background:transparent; cursor:pointer;
+    color:#fff; font-weight:500; transition:.15s;
   }
-  .slot-btn:hover{ background:var(--navy); color:#fff; }
-  .slot-btn.selected{ background:var(--navy); color:#fff; }
+  .slot-btn:hover{ background:rgba(255,255,255,0.1); }
+  .slot-btn.selected{ background:var(--gold); color:var(--navy); border-color:var(--gold); }
   .slot-btn:disabled{ opacity:0.35; cursor:not-allowed; }
-  .agreement{ background:var(--paper); border:1px solid var(--line); padding:16px 18px; margin-bottom:16px; font-size:12px; color:#666C80; border-radius:2px; }
-  .agreement ul{ padding-left:18px; margin-bottom:12px; }
-  .agreement li{ margin-bottom:4px; line-height:1.5; }
-  .booking-msg{ font-size:12px; color:#8A5A2B; margin-bottom:14px; min-height:18px; }
-  .submit-btn{ width:100%; padding:14px; background:var(--navy); color:#fff; font-weight:700; font-size:15px; border:none; border-left:3px solid var(--gold); border-radius:2px; cursor:pointer; transition:.2s; }
-  .submit-btn:hover:not(:disabled){ background:var(--navy-light); }
+  .booking .agreement-note{ background:transparent; border:none; padding:0; margin-bottom:18px; font-size:12px; color:#B7BCCC; line-height:1.6; }
+  .booking .agreement-note ul{ padding-left:18px; margin-bottom:14px; }
+  .booking .agreement-note li{ margin-bottom:4px; }
+  .booking-msg{ font-size:12px; color:#FFE5B4; margin-bottom:14px; min-height:18px; }
+  .submit-btn{ width:100%; padding:14px; background:var(--gold); color:var(--navy); font-weight:700; font-size:15px; border:none; border-radius:2px; cursor:pointer; transition:.2s; }
+  .submit-btn:hover:not(:disabled){ background:#D9B25E; }
   .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
 
   /* ===== 전문분야 ===== */
@@ -149,7 +153,8 @@
     .steps{ flex-direction:column; gap:24px; }
     .step:not(:last-child)::after{ display:none; }
     .booking-grid{ grid-template-columns:1fr; gap:20px; }
-    .side-nav{ display:none; }
+    .side-nav{ right:16px; gap:10px; }
+    .side-nav button{ padding:10px 12px; font-size:11px; }
     .hero{ padding:80px 0 60px; }
     .hero h1{ font-size:36px; margin-bottom:20px; }
     section{ padding:60px 0; }
@@ -157,15 +162,17 @@
   }
   @media (max-width:480px){
     body{ font-size:14px; }
+    nav.wrap{ height:60px; }
+    .brand img{ height:32px; }
     .hero h1{ font-size:28px; line-height:1.4; margin-bottom:16px; }
     .hero p.lead{ font-size:14px; margin-bottom:28px; }
     nav .nav-links a.card-link, nav .nav-links a.report-link{ display:none; }
+    .side-nav{ right:12px; gap:8px; }
+    .side-nav button{ padding:9px 11px; font-size:10px; }
     .profile-image{ width:140px; height:140px; }
-    label{ font-size:12px; margin-bottom:6px; }
-    input, textarea, select{ font-size:13px; padding:10px 11px; margin-bottom:10px; }
-    .agreement{ padding:13px 15px; font-size:11px; }
-    .agreement li{ margin-bottom:3px; }
-    .chk{ font-size:12px; gap:8px; }
+    .booking label{ font-size:12px; margin-bottom:6px; }
+    .booking input, .booking textarea, .booking select{ font-size:13px; padding:10px 11px; margin-bottom:10px; }
+    .booking .chk{ font-size:12px; gap:8px; }
     .slot-btn{ font-size:11px; padding:7px 11px; }
   }
 </style>
@@ -174,7 +181,9 @@
 
 <header>
   <nav class="wrap">
-    <div class="brand">NETAX <small>이음세무컨설팅</small></div>
+    <div class="brand">
+      <img src="logo-dark.png" alt="NETAX 이음세무컨설팅">
+    </div>
     <div class="nav-links">
       <a class="card-link" href="https://card.netax.kr" target="_blank">전자명함</a>
       <a class="report-link" href="https://rpt.netax.kr" target="_blank">전자보고서</a>
@@ -238,7 +247,7 @@
         <div>
           <label>상담 희망 일정</label>
           <input type="date" id="bk-date">
-          <div class="slots" id="bk-slots"><span style="color:#999; font-size:12px;">날짜를 먼저 선택해 주세요</span></div>
+          <div class="slots" id="bk-slots"><span style="color:#B7BCCC; font-size:12px;">날짜를 먼저 선택해 주세요</span></div>
 
           <label for="bk-name">성함</label>
           <input type="text" id="bk-name" placeholder="홍길동">
@@ -247,7 +256,7 @@
         </div>
       </div>
 
-      <div class="agreement">
+      <div class="agreement-note">
         <ul>
           <li>상담은 접수 후 순차적으로 진행됩니다</li>
           <li>정확한 상담을 위해 사실관계를 구체적으로 작성하여 주시기 당부드립니다</li>
@@ -408,12 +417,12 @@ phoneInput.addEventListener('input', () => {
 dateInput.addEventListener('change', async () => {
   selectedSlot = null;
   submitBtn.disabled = true;
-  slotsBox.innerHTML = '<span style="color:#999;font-size:12px;">불러오는 중...</span>';
+  slotsBox.innerHTML = '<span style="color:#B7BCCC;font-size:12px;">불러오는 중...</span>';
   try {
     const res = await fetch(`${BOOKING_API}?action=availability&date=${dateInput.value}`);
     const data = await res.json();
     if (!data.slots || data.slots.length === 0) {
-      slotsBox.innerHTML = '<span style="color:#999;font-size:12px;">해당 날짜는 상담 가능한 시간이 없습니다</span>';
+      slotsBox.innerHTML = '<span style="color:#B7BCCC;font-size:12px;">해당 날짜는 상담 가능한 시간이 없습니다</span>';
       return;
     }
     slotsBox.innerHTML = '';
@@ -431,7 +440,7 @@ dateInput.addEventListener('change', async () => {
       slotsBox.appendChild(btn);
     });
   } catch (err) {
-    slotsBox.innerHTML = '<span style="color:#9E3B3B;font-size:12px;">불러오기 실패. 잠시 후 다시 시도해 주세요</span>';
+    slotsBox.innerHTML = '<span style="color:#FFE5B4;font-size:12px;">불러오기 실패. 잠시 후 다시 시도해 주세요</span>';
   }
 });
 
@@ -473,10 +482,10 @@ submitBtn.addEventListener('click', async () => {
     });
     const data = await res.json();
     if (data.success) {
-      msgBox.style.color = '#2E7D32';
+      msgBox.style.color = '#7FFF7F';
       msgBox.textContent = `신청이 접수되었습니다. 검토 후 연락드려 일정을 확정해 드리겠습니다. (${dateInput.value} ${selectedSlot} 희망)`;
     } else {
-      msgBox.style.color = '#9E3B3B';
+      msgBox.style.color = '#FFB4B4';
       msgBox.textContent = data.error || '신청에 실패했습니다. 다시 시도해 주세요.';
       submitBtn.disabled = false;
     }
