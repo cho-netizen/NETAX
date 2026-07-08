@@ -1,447 +1,635 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="상속준비와 자산승계의 든든한 파트너">
-  <meta name="og:title" content="NETAX 이음세무컨설팅">
-  <title>NETAX 이음세무컨설팅 - 상속 증여 양도소득세 전문</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --navy: #0D1B3D;
-      --gold: #C8A244;
-      --bg: #F8F6F2;
-      --line: #E3DFD6;
-    }
-    body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: #333; }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    
-    header { background: #ECDAB8; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 100; }
-    nav.wrap { display: flex; justify-content: space-between; align-items: center; height: 68px; }
-    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
-    .brand img { height: 40px; }
-    .brand-text { display: flex; flex-direction: column; }
-    .brand-text .brand-company { font-size: 14px; color: #666; }
-    .brand-text .brand-name { font-size: 18px; font-weight: 700; color: var(--navy); }
-    .nav-buttons { display: flex; gap: 8px; }
-    .nav-btn { background: var(--navy); color: #fff; padding: 11px 20px; border: none; border-radius: 3px; cursor: pointer; font-size: 13px; font-weight: 600; text-decoration: none; }
-    .nav-btn:hover { opacity: 0.9; }
-    
-    .hero { background: linear-gradient(135deg, #ECDAB8 0%, #FFF5E6 100%); padding: 60px 0 40px; }
-    .hero .wrap { display: flex; gap: 40px; align-items: center; }
-    .hero-left { flex: 1; }
-    .hero h1 { font-size: 32px; line-height: 1.4; margin-bottom: 16px; color: var(--navy); font-weight: 700; }
-    .hero p.lead { font-size: 16px; color: #546170; margin-bottom: 24px; line-height: 1.6; }
-    .hero-buttons { display: flex; gap: 12px; }
-    .hero-btn { padding: 12px 28px; border: none; border-radius: 3px; cursor: pointer; font-weight: 600; font-size: 14px; }
-    .hero-btn.primary { background: var(--navy); color: #fff; }
-    .hero-btn.primary:hover { opacity: 0.9; }
-    .hero-btn.secondary { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
-    .hero-right { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-    .profile-image { width: 140px; height: 140px; border-radius: 50%; background: #ddd; object-fit: cover; }
-    .profile-section { text-align: center; }
-    .profile-info .name-title { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-    .profile-info .career { font-size: 13px; color: #666; line-height: 1.6; }
-    
-    .section { padding: 60px 0; }
-    .section h2 { font-size: 28px; font-weight: 700; color: var(--navy); margin-bottom: 32px; border-left: 4px solid var(--gold); padding-left: 16px; }
-    
-    .expertise { background: var(--navy); color: #fff; }
-    .expertise h2 { color: #fff; border-left-color: var(--gold); }
-    .expertise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .expertise-item h3 { font-size: 16px; margin-bottom: 12px; color: var(--gold); }
-    .expertise-item p { font-size: 13px; line-height: 1.8; }
-    
-    .process { background: #fff; }
-    .steps { display: flex; gap: 0; }
-    .step { flex: 1; padding: 24px; border-right: 1px solid var(--line); }
-    .step:last-child { border-right: none; }
-    .step-num { font-size: 24px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
-    .step h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
-    .step p { font-size: 13px; color: #546170; line-height: 1.6; margin-bottom: 12px; }
-    .report-btn-inline { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); border-radius: 3px; padding: 8px 16px; font-weight: 600; font-size: 11px; cursor: pointer; margin-top: 8px; display: inline-block; }
-    .report-btn-inline:hover { background: var(--navy); color: #fff; }
-    
-    .history { background: var(--navy); color: #fff; }
-    .history h2 { color: #fff; }
-    .history-list { display: flex; flex-direction: column; gap: 16px; }
-    .history-item { border-left: 3px solid var(--gold); padding-left: 16px; }
-    .history-year { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
-    .history-desc { font-size: 13px; line-height: 1.6; }
-    
-    footer { border-top: 1px solid var(--line); padding: 40px 0; background: #fff; }
-    .footer-info { margin-bottom: 12px; font-size: 13px; color: #546170; line-height: 1.8; }
-    .footer-info strong { color: var(--navy); font-weight: 600; }
-    .footer-copyright { font-size: 12px; color: #7A7F91; }
-    
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; }
-    .modal.active { display: flex; }
-    .modal-content { background: #fff; border-radius: 8px; width: 90%; max-width: 900px; max-height: 90vh; overflow-y: auto; }
-    .modal-header { background: var(--navy); color: #fff; padding: 24px; display: flex; justify-content: space-between; align-items: center; }
-    .modal-header h2 { font-size: 20px; }
-    .modal-close { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
-    .modal-body { padding: 32px; }
-    
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: var(--navy); }
-    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 3px; font-size: 13px; font-family: inherit; }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .name-phone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    .form-submit { background: var(--navy); color: #fff; padding: 12px 32px; border: none; border-radius: 3px; cursor: pointer; font-weight: 600; font-size: 14px; width: 100%; }
-    .form-submit:hover { opacity: 0.9; }
-    
-    .checkbox-group { margin-top: 12px; }
-    .checkbox-item { display: flex; align-items: center; margin-bottom: 8px; }
-    .checkbox-item input { margin-right: 8px; }
-    .checkbox-item label { margin: 0; cursor: pointer; }
-    
-    @media (max-width: 820px) {
-      nav.wrap { height: 60px; }
-      .brand img { height: 32px; }
-      .brand-text .brand-company { font-size: 12px; }
-      .nav-btn { padding: 9px 14px; font-size: 11px; }
-      
-      .hero .wrap { flex-direction: column; gap: 24px; }
-      .hero h1 { font-size: 26px; }
-      .hero p.lead { font-size: 14px; }
-      .profile-image { width: 120px; height: 120px; }
-      
-      .expertise-grid { grid-template-columns: 1fr; }
-      .steps { flex-direction: column; }
-      .step { border-right: none; border-bottom: 1px solid var(--line); padding: 20px; }
-      .step:last-child { border-bottom: none; }
-      
-      .form-grid { grid-template-columns: 1fr; }
-      .name-phone-grid { grid-template-columns: 1fr; }
-    }
-    
-    @media (max-width: 480px) {
-      nav.wrap { height: 46px; padding: 0 16px; }
-      .brand { gap: 6px; }
-      .brand img { height: 22px; }
-      .brand-text .brand-company { font-size: 11px; }
-      .nav-buttons { gap: 6px; }
-      .nav-btn { padding: 5px 8px; font-size: 10px; }
-      
-      .hero { padding: 26px 0 14px; }
-      .hero .wrap { gap: 30px; }
-      .hero h1 { font-size: 28px; line-height: 1.38; margin-bottom: 12px; }
-      .hero p.lead { font-size: 14px; margin-bottom: 18px; }
-      .hero-buttons { flex-direction: column; gap: 11px; }
-      .hero-btn { width: 100%; padding: 10px 18px; font-size: 12px; }
-      .profile-image { width: 120px; height: 120px; }
-      .profile-section { gap: 19px; }
-      .profile-info .name-title { font-size: 20px; margin-bottom: 8px; }
-      .profile-info .career { font-size: 13px; margin-bottom: 10px; line-height: 1.5; }
-      
-      .section { padding: 40px 0; }
-      .section h2 { font-size: 20px; margin-bottom: 24px; }
-      
-      .step p { font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .name-phone-grid { display: flex; flex-direction: column; gap: 8px; }
-      .modal-body { padding: 20px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이음세무컨설팅 NETAX | 세무사 조종호</title>
+<meta name="description" content="상속·증여·양도·세무조사 — 자산승계와 절세 전략의 든든한 파트너. 이음세무컨설팅 NETAX.">
+<meta property="og:title" content="이음세무컨설팅 NETAX">
+<meta property="og:description" content="상속준비와 자산승계의 든든한 파트너, 세무사 조종호">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<style>
+  :root{
+    --navy:#0D1B3D;
+    --navy-light:#1A2B4D;
+    --gold:#C8A244;
+    --ink:#22293A;
+    --paper:#F8F6F2;
+    --line:#E3DFD6;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans KR', 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.7;
+  }
+  h1,h2,h3,.serif{ font-family:'Noto Serif KR', serif; font-weight:700; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  /* ===== Nav ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:#ECDAB8;
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
+  .brand{ display:flex; align-items:center; height:100%; gap:12px; }
+  .brand img{ height:40px; width:auto; }
+  .brand-text{ display:flex; flex-direction:row; align-items:center; }
+  .brand-text .brand-company{ font-family:'Noto Serif KR', serif; font-weight:700; font-size:14px; color:var(--navy); line-height:1; }
+  .nav-links{ display:flex; align-items:center; gap:16px; font-size:14px; font-weight:500; }
+  .nav-links a{ color:var(--navy); display:none; }
+  .nav-buttons{ display:flex; align-items:center; gap:12px; }
+  .nav-btn{ background:var(--navy); color:#fff; padding:11px 20px; border-radius:3px; font-weight:600; font-size:13px; cursor:pointer; border:none; transition:.2s; }
+  .nav-btn:hover{ background:var(--navy-light); }
+  .nav-btn.card-btn{ border-left:3px solid var(--gold); }
+
+  /* ===== Side Nav ===== */
+  .side-nav{
+    position:fixed; right:20px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:12px; z-index:40;
+  }
+  .side-nav button{
+    background:var(--navy); color:#fff; padding:12px 14px; border:1px solid var(--gold);
+    border-radius:3px; font-size:12px; font-weight:600; cursor:pointer;
+    transition:.2s; white-space:nowrap;
+  }
+  .side-nav button:hover{ background:var(--navy-light); }
+  .side-nav.dark button{
+    background:#fff; color:var(--navy); border-color:#fff;
+  }
+  .side-nav.dark button:hover{
+    background:#F0F0F0;
+  }
+
+  /* ===== Hero ===== */
+  .hero{ padding:100px 0 40px; }
+  .hero .wrap{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:52px; align-items:center; }
+  .hero h1{ font-size:44px; font-weight:700; color:var(--navy); line-height:1.42; margin-bottom:28px; }
+  .hero p.lead{ font-size:16px; color:#546170; max-width:48ch; margin-bottom:38px; line-height:1.65; }
+  .hero-buttons{ display:flex; gap:16px; margin-bottom:40px; }
+  .hero-btn{ padding:11px 28px; background:var(--navy); border:1.5px solid var(--navy); border-radius:3px; font-size:13px; font-weight:600; color:#fff; cursor:pointer; transition:.2s; }
+  .hero-btn:hover{ background:var(--navy-light); }
+
+  /* ===== Profile ===== */
+  .profile-section{ display:flex; flex-direction:column; align-items:center; gap:24px; }
+  .profile-image{ width:160px; height:160px; border-radius:50%; border:3px solid var(--navy); outline:2px solid var(--gold); outline-offset:6px; overflow:hidden; background:#e8e4d8; display:flex; align-items:center; justify-content:center; object-fit:cover; }
+  .profile-info{ text-align:center; }
+  .profile-info .name-title{ font-family:'Noto Serif KR', serif; font-size:20px; font-weight:700; color:var(--navy); margin-bottom:12px; }
+  .profile-info .career{ font-size:14px; color:#546170; line-height:1.6; margin-bottom:14px; }
+
+  /* ===== Section shared ===== */
+  section{ padding:72px 0; }
+  .section-head{ margin-bottom:40px; }
+  .section-head h2{ font-size:32px; color:var(--navy); background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); padding:16px 20px; border-radius:2px; display:inline-block; }
+
+  /* ===== 모달 ===== */
+  .modal{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:100; justify-content:center; align-items:center; }
+  .modal.show{ display:flex; }
+  .modal-content{ background:var(--navy); color:#EDEFF4; padding:40px; border-radius:8px; max-width:600px; width:90%; max-height:90vh; overflow-y:auto; position:relative; }
+  .modal-content h2{ color:#fff; font-size:28px; font-weight:700; margin-bottom:24px; }
+  .modal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
+  .name-phone-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  .modal-close{ position:absolute; top:20px; right:20px; background:transparent; border:none; color:#fff; font-size:24px; cursor:pointer; padding:0; width:30px; height:30px; display:flex; align-items:center; justify-content:center; }
+  .modal-close:hover{ color:#FFD700; }
+  /* 모달 입력필드 */
+  .modal-content label{ display:block; font-size:13px; font-weight:700; color:#fff; margin-bottom:8px; }
+  .modal-content input[type="text"], .modal-content input[type="tel"], .modal-content textarea, .modal-content select{
+    width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px;
+    background:rgba(255,255,255,0.05); color:#fff;
+  }
+  .modal-content input[type="text"]::placeholder, .modal-content input[type="tel"]::placeholder, .modal-content textarea::placeholder{ color:rgba(255,255,255,0.5); }
+  .modal-content select{ background:rgba(255,255,255,0.05); cursor:pointer; }
+  .modal-content select option{ background:var(--navy); color:#fff; }
+  .modal-content .checkbox-row{ display:flex; flex-direction:column; gap:4px; margin-bottom:14px; }
+  .modal-content .chk{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:400; color:#EDEFF4; cursor:pointer; margin-bottom:2px; }
+  .modal-content .chk input{ width:auto; margin:0; cursor:pointer; accent-color:var(--gold); }
+  .modal-content .slots{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height:44px; align-content:flex-start; }
+  .modal-content .slot-btn{
+    padding:8px 13px; border:1px solid rgba(255,255,255,0.3); border-radius:2px; font-size:12px; background:transparent; cursor:pointer;
+    color:#fff; font-weight:500; transition:.15s;
+  }
+  .modal-content .slot-btn:hover{ background:rgba(255,255,255,0.1); }
+  .modal-content .slot-btn.selected{ background:var(--gold); color:var(--navy); border-color:var(--gold); }
+  .modal-content .agreement-note{ background:transparent; border:none; padding:0; margin-bottom:18px; font-size:12px; color:#B7BCCC; line-height:1.6; }
+  .modal-content .agreement-note ul{ padding-left:18px; margin-bottom:14px; }
+  .modal-content .agreement-note li{ margin-bottom:4px; }
+  .modal-content .booking-msg{ font-size:12px; color:#FFE5B4; margin-bottom:14px; min-height:18px; }
+  .modal-content .submit-btn{ width:100%; padding:14px; background:var(--gold); color:var(--navy); font-weight:700; font-size:15px; border:none; border-radius:2px; cursor:pointer; transition:.2s; }
+  .modal-content .submit-btn:hover:not(:disabled){ background:#D9B25E; }
+  .modal-content .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+  #bk-date-btn{ width:100%; padding:11px 12px !important; border:1px solid rgba(255,255,255,0.2) !important; border-radius:2px !important; font-size:14px !important; font-family:inherit !important; margin-bottom:14px !important; background:rgba(255,255,255,0.05) !important; color:#fff !important; cursor:pointer !important; text-align:left !important; }
+  .booking .section-head h2{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff; }
+  .booking-box{ padding:0; }
+  .booking-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
+  .booking label{ display:block; font-size:13px; font-weight:700; color:#fff; margin-bottom:8px; }
+  .booking input[type="date"], .booking input[type="text"], .booking input[type="tel"], .booking textarea, .booking select{
+    width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px;
+    background:rgba(255,255,255,0.05); color:#fff;
+  }
+  .booking input[type="date"]::placeholder, .booking input[type="text"]::placeholder, .booking input[type="tel"]::placeholder, .booking textarea::placeholder{ color:rgba(255,255,255,0.5); }
+  .booking select{ background:rgba(255,255,255,0.05); cursor:pointer; }
+  .booking select option{ background:var(--navy); color:#fff; }
+  .booking-grid .checkbox-row{ display:flex; flex-direction:column; gap:4px; margin-bottom:14px; }
+  .booking .chk{ display:flex; align-items:center; gap:9px; font-size:13px; font-weight:400; color:#EDEFF4; cursor:pointer; margin-bottom:2px; }
+  .booking .chk input{ width:auto; margin:0; cursor:pointer; accent-color:var(--gold); }
+  .slots{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; min-height:44px; align-content:flex-start; }
+  .slot-btn{
+    padding:8px 13px; border:1px solid rgba(255,255,255,0.3); border-radius:2px; font-size:12px; background:transparent; cursor:pointer;
+    color:#fff; font-weight:500; transition:.15s;
+  }
+  .slot-btn:hover{ background:rgba(255,255,255,0.1); }
+  .slot-btn.selected{ background:var(--gold); color:var(--navy); border-color:var(--gold); }
+  .slot-btn:disabled{ opacity:0.35; cursor:not-allowed; }
+  .booking .agreement-note{ background:transparent; border:none; padding:0; margin-bottom:18px; font-size:12px; color:#B7BCCC; line-height:1.6; }
+  .booking .agreement-note ul{ padding-left:18px; margin-bottom:14px; }
+  .booking .agreement-note li{ margin-bottom:4px; }
+  .booking-msg{ font-size:12px; color:#FFE5B4; margin-bottom:14px; min-height:18px; }
+  .submit-btn{ width:100%; padding:14px; background:var(--gold); color:var(--navy); font-weight:700; font-size:15px; border:none; border-radius:2px; cursor:pointer; transition:.2s; }
+  .submit-btn:hover:not(:disabled){ background:#D9B25E; }
+  .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+
+  /* ===== 전문분야 ===== */
+  .fields{ background:var(--navy); color:#EDEFF4; padding:72px 0; }
+  .fields .section-head h2{ background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff; }
+  .field-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; background:none; }
+  .field-card{ padding:0 20px 48px 20px; position:relative; border-right:1px solid rgba(255,255,255,0.15); }
+  .field-card:last-child{ border-right:none; }
+  .field-card h4{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:12px; font-weight:700; }
+  .field-card p{ font-size:13.5px; color:#B7BCCC; line-height:1.6; }
+
+  /* ===== 프로세스 ===== */
+  .process{ background:#fff; color:var(--ink); padding:72px 0; }
+  .process .section-head h2{ background:#fff; border:1px solid var(--line); border-left:4px solid var(--gold); color:var(--navy); }
+  .steps{ display:flex; gap:0; position:relative; align-items:flex-start; }
+  .step{ flex:1; padding:0 20px 0 20px; margin-bottom:0; position:relative; }
+  .step:not(:last-child)::after{ content:''; position:absolute; top:14px; right:0; width:1px; height:60px; background:#E3DFD6; }
+  .step .num{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:14px; font-weight:700; }
+  .step h4{ font-family:'Noto Serif KR',serif; font-size:26px; color:var(--gold); margin-bottom:10px; font-weight:700; }
+  .step p{ font-size:13.5px; color:#546170; line-height:1.6; margin-bottom:16px; }
+  .step .report-btn-inline{ background:transparent; color:var(--navy); padding:8px 16px; border:1.5px solid var(--navy); border-radius:3px; font-weight:600; font-size:11px; cursor:pointer; transition:.2s; white-space:nowrap; margin-top:4px; margin-bottom:16px; display:inline-block; }
+  .step .report-btn-inline:hover{ background:var(--navy); color:#fff; }
+
+  /* ===== 상세정보 ===== */
+  .detail-section{ padding:0; display:grid; grid-template-columns:1fr 1fr; gap:80px 60px; }
+  .detail-item{ margin-bottom:0; }
+  .detail-item h3{ font-family:'Noto Serif KR',serif !important; font-size:26px !important; color:#FFD700 !important; margin-bottom:14px; font-weight:700; }
+  .detail-item ul{ padding-left:20px; }
+  .detail-item li{ margin-bottom:6px; font-size:13.5px; color:#546170; line-height:1.6; }
+
+  /* ===== Footer ===== */
+  footer{ border-top:1px solid var(--line); padding:40px 0; background:#fff; }
+  footer .wrap{ }
+  .footer-content{ }
+  .footer-info{ margin-bottom:12px; font-size:13px; color:#546170; line-height:1.8; }
+  .footer-info div{ margin-bottom:4px; }
+  .footer-info strong{ color:var(--navy); font-weight:600; }
+  .footer-copyright{ font-size:12px; color:#7A7F91; }
+
+  /* ===== End ===== */
+
+  @media (max-width:820px){
+    nav.wrap{ height:60px; }
+    .brand{ gap:10px; }
+    .brand img{ height:32px; }
+    .brand-text .brand-company{ font-size:13px; }
+    .nav-buttons{ gap:10px; }
+    .nav-btn{ padding:9px 14px; font-size:11px; }
+    .hero .wrap{ grid-template-columns:1fr; }
+    .profile-section{ order:2; }
+    .field-grid{ grid-template-columns:repeat(2,1fr); gap:0; }
+    .field-card h4{ font-size:22px; }
+    .steps{ flex-direction:column; gap:0; }
+    .step{ padding-bottom:24px; }
+    .step:last-child{ padding-bottom:0; }
+    .step h4{ font-size:22px; }
+    .step:nth-child(3){ margin-bottom:0; }
+    .step:not(:last-child)::after{ display:none; }
+    .booking-grid{ grid-template-columns:1fr; gap:20px; }
+    .detail-section{ grid-template-columns:1fr; gap:32px; }
+    .detail-item h3{ font-size:22px; }
+    .side-nav{ right:16px; gap:10px; }
+    .side-nav button{ padding:10px 12px; font-size:11px; }
+    .modal-grid{ grid-template-columns:1fr; gap:20px; }
+    .name-phone-grid{ grid-template-columns:1fr; gap:14px; }
+    .section-head h2{ font-size:26px; }
+    footer{ padding:32px 0; }
+    .footer-info{ font-size:12px; line-height:1.7; }
+    .footer-copyright{ font-size:11px; }
+    .hero{ padding:80px 0 60px; }
+    .hero h1{ font-size:36px; margin-bottom:20px; }
+    section{ padding:60px 0; }
+  }
+  @media (max-width:480px){
+    body{ font-size:14px; }
+    nav.wrap{ height:46px; padding:0 16px; }
+    .brand{ gap:4px; height:auto; }
+    .brand img{ height:22px; }
+    .brand-text .brand-company{ font-size:11px; line-height:1; }
+    .nav-buttons{ gap:4px; }
+    .nav-btn{ padding:5px 8px; font-size:10px; font-weight:400; line-height:1; border-radius:1px; border-left:none !important; }
+    header{ border-bottom-width:0.5px; }
+    .hero{ padding:26px 0 14px; }
+    .hero .wrap{ gap:30px; }
+    .hero h1{ font-size:28px; line-height:1.38; margin-bottom:12px; }
+    .hero p.lead{ font-size:14px; margin-bottom:18px; max-width:100%; }
+    .hero-buttons{ flex-direction:column; gap:11px; }
+    .hero-btn{ width:100%; padding:10px 18px; font-size:12px; }
+    .profile-image{ width:120px; height:120px; }
+    .profile-section{ gap:19px; }
+    .profile-info .name-title{ font-size:20px; margin-bottom:8px; }
+    .profile-info .career{ font-size:13px; margin-bottom:10px; line-height:1.5; }
+    .side-nav{ right:12px; gap:8px; }
+    .side-nav button{ padding:9px 11px; font-size:10px; }
+    .booking label{ font-size:12px; margin-bottom:6px; }
+    .booking input, .booking textarea, .booking select{ font-size:13px; padding:10px 11px; margin-bottom:10px; }
+    .booking .chk{ font-size:12px; gap:6px; }
+    .slot-btn{ font-size:11px; padding:7px 11px; }
+    .steps{ gap:0; }
+    .step{ padding-bottom:20px; }
+    .step:last-child{ padding-bottom:0; }
+    .step h4{ font-size:20px; }
+    .step:nth-child(3){ margin-bottom:0; }
+    .field-grid{ grid-template-columns:1fr; gap:20px; }
+    .field-card{ border-right:none !important; border-bottom:1px solid rgba(255,255,255,0.15); padding:0 0 20px 0; margin-bottom:20px; }
+    .field-card h4{ font-size:20px; }
+    .field-card:last-child{ border-bottom:none; padding-bottom:0; margin-bottom:0; }
+    .detail-section{ grid-template-columns:1fr; gap:32px; }
+    .detail-item h3{ font-size:20px; }
+    .modal-content{ padding:30px; max-width:90%; }
+    .modal-grid{ grid-template-columns:1fr; gap:20px; }
+    .name-phone-grid{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+    .name-phone-grid > div{ display:flex; align-items:center; gap:8px; }
+    .name-phone-grid label{ margin-bottom:0; font-size:12px; white-space:nowrap; flex-shrink:0; }
+    .name-phone-grid input{ flex:1; margin-bottom:0 !important; padding:8px 10px !important; font-size:13px !important; }
+    .section-head h2{ font-size:20px; }
+    footer{ padding:28px 0; }
+    .footer-info{ font-size:12px; line-height:1.6; margin-bottom:10px; }
+    .footer-info div{ margin-bottom:3px; }
+    .footer-copyright{ font-size:11px; }
+  }
+</style>
 </head>
 <body>
 
 <header>
   <nav class="wrap">
-    <a href="/" class="brand">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230D1B3D'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='24' font-weight='bold' fill='%23C8A244' font-family='Arial'%3EN%3C/text%3E%3C/svg%3E" alt="NETAX">
+    <div class="brand">
+      <img src="logo-dark.png" alt="NETAX">
       <div class="brand-text">
         <div class="brand-company">이음세무컨설팅</div>
-        <div class="brand-name">NETAX</div>
       </div>
-    </a>
+    </div>
     <div class="nav-buttons">
-      <a href="https://card.netax.kr" class="nav-btn">전자명함</a>
-      <button class="nav-btn" onclick="openConsultingModal()">상담신청</button>
+      <button class="nav-btn card-btn" onclick="window.open('https://card.netax.kr', '_blank')">전자명함</button>
+      <button class="nav-btn" onclick="document.getElementById('booking-modal').style.display='flex'">상담신청</button>
     </div>
   </nav>
 </header>
 
-<!-- Hero Section -->
 <section class="hero">
   <div class="wrap">
-    <div class="hero-left">
-      <h1>상속준비와 자산승계의<br>든든한 파트너</h1>
-      <p class="lead">30년 이상의 세무 경험과 전문성으로 고객님의 재산을 지키고, 세금을 최소화하는 맞춤형 전략을 제공합니다.</p>
-      <div class="hero-buttons">
-        <button class="hero-btn primary" onclick="openConsultingModal()">상담신청</button>
-        <a href="https://rpt.netax.kr" class="hero-btn secondary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">자문보고서 조회</a>
-      </div>
+    <div>
+      <h1>상속준비와<br>자산승계의<br>든든한 파트너</h1>
+      <p class="lead">국세청 37년 경력의 세무사가 상속·증여·양도·세무조사까지 체계적으로 준비하고 관리해드립니다.</p>
     </div>
-    <div class="hero-right">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Ccircle cx='70' cy='70' r='70' fill='%23D4AF37'/%3E%3C/svg%3E" alt="조종호 세무사" class="profile-image">
-      <div class="profile-section">
-        <div class="profile-info">
-          <div class="name-title">조종호 세무사</div>
-          <div class="career">
-            국세청 37년 경력<br>
-            현장세무조사반장 25년<br>
-            관리자 12년<br>
-            세무사·행정사 자격
-          </div>
-        </div>
+    <div class="profile-section">
+      <img src="profile.jpg" alt="조종호 세무사" class="profile-image">
+      <div class="profile-info">
+        <div class="name-title">조종호 세무사</div>
+        <div class="career">국세청 37년 경력<br>세무조사반장 25년</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 전문분야 -->
-<section class="expertise section">
-  <div class="wrap">
-    <h2>전문분야</h2>
-    <div class="expertise-grid">
-      <div class="expertise-item">
-        <h3>◇ 상속세</h3>
-        <p>상속재산 평가, 상속세 절세 전략, 사전증여 계획, 증여세 최소화</p>
-      </div>
-      <div class="expertise-item">
-        <h3>◇ 증여세</h3>
-        <p>증여세 과세 판정, 증여 시기 선택, 특례 활용, 과세 회피 전략</p>
-      </div>
-      <div class="expertise-item">
-        <h3>◇ 양도소득세</h3>
-        <p>부동산 양도세 절세, 주식양도세, 보유기간 활용, 특별공제 검토</p>
-      </div>
-      <div class="expertise-item">
-        <h3>◇ 세무조사·불복</h3>
-        <p>세무조사 대응, 이의신청, 심사청구, 조세심판원 청구</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 상담 프로세스 -->
-<section class="process section">
-  <div class="wrap">
-    <h2>상담프로세스</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>초기상담</h3>
-        <p>현황 파악 및 문제점 분석</p>
-        <button class="report-btn-inline" onclick="openConsultingModal()">상담신청</button>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>자료수집</h3>
-        <p>필요 서류 취합 및 분석</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>컨설팅</h3>
-        <p>맞춤형 절세 전략 제시</p>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <h3>실행</h3>
-        <p>계획 실행 및 사후관리</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 상세이력 -->
-<section class="history section">
-  <div class="wrap">
-    <h2>상세이력</h2>
-    <div class="history-list">
-      <div class="history-item">
-        <div class="history-year">1987년 ~ 2024년</div>
-        <div class="history-desc">국세청 근무 (37년) | 현장세무조사반장 (25년), 관리자 (12년)</div>
-      </div>
-      <div class="history-item">
-        <div class="history-year">2024년 ~ 현재</div>
-        <div class="history-desc">이음세무컨설팅 운영 | 세무사·행정사 자격 보유</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 모달: 상담신청 -->
-<div id="consulting-modal" class="modal">
+<div id="booking-modal" class="modal">
   <div class="modal-content">
-    <div class="modal-header">
-      <h2>상담신청</h2>
-      <button class="modal-close" onclick="closeConsultingModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div>
-          <div class="name-phone-grid">
-            <div class="form-group">
-              <label>성함</label>
-              <input type="text" id="consult-name" placeholder="이름 입력">
-            </div>
-            <div class="form-group">
-              <label>전화</label>
-              <input type="tel" id="consult-phone" placeholder="010-0000-0000">
-            </div>
+    <button class="modal-close" onclick="document.getElementById('booking-modal').style.display='none'">✕</button>
+    <h2 style="margin-top:0; margin-bottom:24px; color:#fff; font-size:28px; font-weight:700;">상담 신청</h2>
+    <div class="modal-grid">
+      <div>
+        <div class="name-phone-grid">
+          <div>
+            <label for="bk-name">성함</label>
+            <input type="text" id="bk-name" placeholder="홍길동">
           </div>
-          <div class="form-group">
-            <label>상담희망일정</label>
-            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-              <button onclick="selectDate(this)" style="flex: 1; padding: 8px; background: #f0f0f0; border: 1px solid var(--line); border-radius: 3px; cursor: pointer; font-size: 13px;">오늘</button>
-              <button onclick="selectDate(this)" style="flex: 1; padding: 8px; background: #f0f0f0; border: 1px solid var(--line); border-radius: 3px; cursor: pointer; font-size: 13px;">내일</button>
-              <button onclick="openDatePicker()" style="flex: 1; padding: 8px; background: #f0f0f0; border: 1px solid var(--line); border-radius: 3px; cursor: pointer; font-size: 13px;">날짜선택</button>
-            </div>
-            <input type="date" id="consult-date" style="display: none;">
-          </div>
-          <div class="form-group">
-            <label>고객유형</label>
-            <select id="consult-type">
-              <option value="">선택하세요</option>
-              <option value="개인">개인</option>
-              <option value="법인대표">법인대표</option>
-              <option value="자산가">자산가</option>
-            </select>
+          <div>
+            <label for="bk-phone">전화</label>
+            <input type="tel" id="bk-phone" placeholder="010-0000-0000">
           </div>
         </div>
-        <div>
-          <div class="form-group">
-            <label>현재 상황과 문제점</label>
-            <textarea id="consult-situation" placeholder="현재 상황과 고민사항을 적어주세요"></textarea>
-          </div>
-          <div class="form-group">
-            <label>현재 세무처리 상황</label>
-            <div class="checkbox-group">
-              <div class="checkbox-item">
-                <input type="checkbox" id="tax-none" value="미처리중">
-                <label for="tax-none">미처리중</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="tax-processing" value="세무사진행중">
-                <label for="tax-processing">세무사진행중</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="tax-completed" value="완료됨">
-                <label for="tax-completed">완료됨</label>
-              </div>
-            </div>
-          </div>
+
+        <label>상담 희망 일정 선택</label>
+        <button type="button" id="bk-date-btn" style="width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px; background:rgba(255,255,255,0.05); color:#fff; cursor:pointer; text-align:left;">날짜 선택</button>
+        <input type="date" id="bk-date" style="display:none;">
+        <div class="slots" id="bk-slots" style="display:none;"></div>
+      </div>
+
+      <div>
+        <label for="bk-type">고객 유형</label>
+        <select id="bk-type">
+          <option value="사업자 아님">사업자 아님</option>
+          <option value="개인 사업소득자">개인 사업소득자</option>
+          <option value="개인 사업이외의 소득자(금융,근로,기타)">개인 사업이외의 소득자(금융,근로,기타)</option>
+          <option value="법인 대표자/지배주주">법인 대표자 / 지배주주</option>
+          <option value="법인 임원/관리자">법인 임원 / 관리자</option>
+        </select>
+
+        <label for="bk-situation">현재 상황과 문제점</label>
+        <textarea id="bk-situation" rows="3" placeholder="간략하게 적어주세요"></textarea>
+
+        <label>현재 세무처리 상황</label>
+        <div class="checkbox-row">
+          <label class="chk"><input type="checkbox" name="bk-status" value="세무사 이용 중"> 세무사 이용 중</label>
+          <label class="chk"><input type="checkbox" name="bk-status" value="직접 신고 중"> 직접 신고 중</label>
+          <label class="chk"><input type="checkbox" name="bk-status" value="처음 진행"> 처음 진행</label>
         </div>
       </div>
-      <button class="form-submit" onclick="submitConsultation()">상담신청</button>
     </div>
+
+    <div class="agreement-note">
+      <ul>
+        <li>상담은 접수 후 순차적으로 진행됩니다</li>
+        <li>필요시 추가 자료를 요청드립니다</li>
+        <li>상담은 유료로 진행되며, 내용에 따라 사전 안내 드립니다</li>
+      </ul>
+    </div>
+
+    <div class="booking-msg" id="bk-msg"></div>
+    <button class="submit-btn" id="bk-submit" disabled>상담 신청하기</button>
   </div>
 </div>
 
-<!-- Footer -->
+<section id="fields" class="fields">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>전문분야</h2>
+    </div>
+    <div class="field-grid">
+      <div class="field-card">
+        <h4>상속세</h4>
+        <p>상속재산 평가, 상속세 절세 구조 설계, 상속세 신고 및 납부 전략</p>
+      </div>
+      <div class="field-card">
+        <h4>증여세</h4>
+        <p>증여세 리스크 관리, 부담부증여·일반증여 구조 설계, 증여세 최소화 전략</p>
+      </div>
+      <div class="field-card">
+        <h4>양도소득세</h4>
+        <p>양도소득세 비과세·감면 요건 검토, 부동산 매매 시 절세 전략</p>
+      </div>
+      <div class="field-card">
+        <h4>세무조사·자료제출</h4>
+        <p>세무조사 사전 대비, 조사 중 대응, 자료 제출 및 이의 제기</p>
+      </div>
+      <div class="field-card">
+        <h4>불복청구·경정청구</h4>
+        <p>이의신청, 심사청구, 조세심판원 심판청구, 경정청구 진행</p>
+      </div>
+      <div class="field-card">
+        <h4>가족법인·가업승계</h4>
+        <p>가족법인 설립, 현물출자, 법인전환, 가업승계 구조 설계</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="process">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>상담 프로세스</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h4>상담 신청</h4>
+        <p>위의 신청서를 작성하고 희망 일정을 선택합니다</p>
+      </div>
+      <div class="step">
+        <h4>사실관계 확인</h4>
+        <p>거래 구조와 자료를 바탕으로 세무 쟁점을 정리합니다</p>
+      </div>
+      <div class="step">
+        <h4>자문내용 보고</h4>
+        <p>조문·판례 근거를 담은 세무검토보고서를 발급합니다</p>
+        <button class="report-btn-inline" onclick="window.open('https://rpt.netax.kr', '_blank')">전자보고서</button>
+      </div>
+      <div class="step">
+        <h4>사후관리</h4>
+        <p>신고·납부·불복 등 후속 절차까지 이어서 자문합니다</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="detail" style="background:var(--navy); color:#EDEFF4;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 style="background:transparent; border:1px solid rgba(255,255,255,0.2); border-left:4px solid var(--gold); color:#fff;">상세이력</h2>
+    </div>
+    <div class="detail-section" style="color:#fff !important;">
+      <div class="detail-item">
+        <h3>근무경력</h3>
+        <ul style="color:#ffffff !important;">
+          <li style="color:#ffffff !important;">동안양 세무서장 ('25)</li>
+          <li style="color:#ffffff !important;">원주 세무서장 ('24)</li>
+          <li style="color:#ffffff !important;">제천 세무서장 ('23)</li>
+          <li style="color:#ffffff !important;">영동 세무서장 ('22)</li>
+          <li style="color:#ffffff !important;">국세청 정보보호과장 ('21)</li>
+          <li style="color:#ffffff !important;">대전지방국세청 조사관리과장 조사1과장 ('20)</li>
+          <li style="color:#ffffff !important;">청주 세무서 납세자보호담당관 ('19)</li>
+          <li style="color:#ffffff !important;">충주 세무서 조사과장 ('17)</li>
+        </ul>
+      </div>
+      <div class="detail-item">
+        <h3>수상이력</h3>
+        <ul style="color:#ffffff !important;">
+          <li style="color:#ffffff !important;">홍조근정훈장 수상</li>
+          <li style="color:#ffffff !important;">우수공무원 대통령 표창</li>
+          <li style="color:#ffffff !important;">모범공무원 국세청장 표창</li>
+        </ul>
+      </div>
+      <div class="detail-item">
+        <h3>학력</h3>
+        <ul style="color:#ffffff !important;">
+          <li style="color:#ffffff !important;">제천고등학교 34회 졸업</li>
+          <li style="color:#ffffff !important;">국립세무대학 내국세학과 6회 졸업</li>
+        </ul>
+      </div>
+      <div class="detail-item">
+        <h3>자격</h3>
+        <ul style="color:#ffffff !important;">
+          <li style="color:#ffffff !important;">세무사 자격증</li>
+          <li style="color:#ffffff !important;">행정사 자격증</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <div class="footer-info">
-      <strong>이음세무컨설팅</strong> | 사업자등록번호 112-36-31504
-    </div>
-    <div class="footer-info">
-      경기도 안양시 동안구 시민대로 273, 효성인텔리안 215호<br>
-      전화: 031-342-9354 | 010-6341-9354<br>
-      이메일: tax@netax.kr
-    </div>
-    <div class="footer-copyright">
-      © 2026 NETAX. All rights reserved.
+    <div class="footer-content">
+      <div class="footer-info">
+        <div><strong>상호</strong> : 이음세무컨설팅</div>
+        <div><strong>사업자등록번호</strong> : 112-36-31504</div>
+        <div><strong>사업장</strong> : 경기도 안양시 동안구 시민대로 273, 효성인텔리안 215호</div>
+      </div>
+      <div class="footer-copyright">© 2026 NETAX. All rights reserved.</div>
     </div>
   </div>
 </footer>
 
 <script>
-const BOOKING_API = 'https://script.google.com/macros/s/AKfycbxJNuDRHaElDL5lVcUFzd5fxAagH4Ql7Jtpcnhhc3_tvh8qfOD3LLcI660DkFIbrwoW4A/exec';
+const BOOKING_API = "https://script.google.com/macros/s/AKfycby0HSS6KMvcJVVIkHBWORdMFQOKlEehOVw5ckIgZPfS7I3oaREv5MKyRF_lboYQwWU8rw/exec";
+const dateInput = document.getElementById('bk-date');
+const dateBtn = document.getElementById('bk-date-btn');
+const slotsBox  = document.getElementById('bk-slots');
+const submitBtn = document.getElementById('bk-submit');
+const msgBox    = document.getElementById('bk-msg');
+let selectedSlot = null;
 
-function openConsultingModal() {
-  document.getElementById('consulting-modal').classList.add('active');
-}
-
-function closeConsultingModal() {
-  document.getElementById('consulting-modal').classList.remove('active');
-}
-
-function selectDate(btn) {
-  const dateInput = document.getElementById('consult-date');
-  const today = new Date();
-  if (btn.textContent === '오늘') {
-    dateInput.value = today.toISOString().split('T')[0];
-  } else if (btn.textContent === '내일') {
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    dateInput.value = tomorrow.toISOString().split('T')[0];
+// 페이지 로드 시 첫 예약가능 날짜 찾기
+window.addEventListener('load', async () => {
+  let found = false;
+  for (let i = 0; i < 30; i++) {
+    const checkDate = new Date();
+    checkDate.setDate(checkDate.getDate() + i);
+    const dateStr = checkDate.toISOString().split('T')[0];
+    const dow = checkDate.getDay();
+    if (dow === 0 || dow === 6) continue;
+    
+    try {
+      const res = await fetch(`${BOOKING_API}?action=availability&date=${dateStr}`);
+      const data = await res.json();
+      if (data.slots && data.slots.length > 0) {
+        dateInput.value = dateStr;
+        dateBtn.textContent = dateStr;
+        found = true;
+        break;
+      }
+    } catch (err) {}
   }
-  loadAvailableSlots();
+});
+
+// 버튼 클릭 시 input[type=date] 달력 호출
+dateBtn.addEventListener('click', () => {
+  dateInput.focus();
+  if (dateInput.showPicker) {
+    dateInput.showPicker();
+  } else {
+    dateInput.click();
+  }
+});
+
+// 모달 외부 클릭 시 닫기
+document.getElementById('booking-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'booking-modal') {
+    document.getElementById('booking-modal').style.display = 'none';
+  }
+});
+
+function updateSideNavColor() {
+  // side-nav 제거됨
 }
 
-function openDatePicker() {
-  document.getElementById('consult-date').click();
-}
+const phoneInput = document.getElementById('bk-phone');
+phoneInput.addEventListener('input', () => {
+  let digits = phoneInput.value.replace(/[^0-9]/g, '').slice(0, 11);
+  let formatted = digits;
+  if (digits.length > 3 && digits.length <= 7) {
+    formatted = `${digits.slice(0,3)}-${digits.slice(3)}`;
+  } else if (digits.length > 7) {
+    formatted = `${digits.slice(0,3)}-${digits.slice(3,7)}-${digits.slice(7)}`;
+  }
+  phoneInput.value = formatted;
+});
 
-function loadAvailableSlots() {
-  const dateStr = document.getElementById('consult-date').value;
-  if (!dateStr) return;
-  
-  fetch(BOOKING_API + '?action=availability&date=' + dateStr)
-    .then(r => r.json())
-    .then(data => {
-      console.log('Available slots:', data.slots);
+dateInput.addEventListener('change', async () => {
+  selectedSlot = null;
+  submitBtn.disabled = true;
+  if (dateInput.value) {
+    dateBtn.textContent = dateInput.value;
+  }
+  slotsBox.style.display = 'flex';
+  slotsBox.innerHTML = '<span style="color:#B7BCCC;font-size:12px;">불러오는 중...</span>';
+  try {
+    const res = await fetch(`${BOOKING_API}?action=availability&date=${dateInput.value}`);
+    const data = await res.json();
+    if (!data.slots || data.slots.length === 0) {
+      slotsBox.innerHTML = '<span style="color:#B7BCCC;font-size:12px;">해당 날짜는 상담 가능한 시간이 없습니다</span>';
+      return;
+    }
+    slotsBox.innerHTML = '';
+    data.slots.forEach(time => {
+      const btn = document.createElement('button');
+      btn.className = 'slot-btn';
+      btn.type = 'button';
+      btn.textContent = time;
+      btn.onclick = () => {
+        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedSlot = time;
+        submitBtn.disabled = false;
+      };
+      slotsBox.appendChild(btn);
     });
-}
+  } catch (err) {
+    slotsBox.innerHTML = '<span style="color:#FFE5B4;font-size:12px;">불러오기 실패. 잠시 후 다시 시도해 주세요</span>';
+  }
+});
 
-function submitConsultation() {
-  const name = document.getElementById('consult-name').value;
-  const phone = document.getElementById('consult-phone').value;
-  const date = document.getElementById('consult-date').value;
-  const type = document.getElementById('consult-type').value;
-  const situation = document.getElementById('consult-situation').value;
-  const statuses = [
-    document.getElementById('tax-none').checked ? document.getElementById('tax-none').value : '',
-    document.getElementById('tax-processing').checked ? document.getElementById('tax-processing').value : '',
-    document.getElementById('tax-completed').checked ? document.getElementById('tax-completed').value : ''
-  ].filter(Boolean);
-  
-  if (!name || !phone || !date || !type || !situation) {
-    alert('모든 항목을 입력해 주세요');
+submitBtn.addEventListener('click', async () => {
+  const name  = document.getElementById('bk-name').value.trim();
+  const phone = document.getElementById('bk-phone').value.trim();
+  const type  = document.getElementById('bk-type').value;
+  const situation = document.getElementById('bk-situation').value.trim();
+  const statuses = Array.from(document.querySelectorAll('input[name="bk-status"]:checked')).map(el => el.value);
+
+  if (!name || !selectedSlot) {
+    msgBox.textContent = '성함과 희망 일정을 선택해 주세요.';
     return;
   }
-  
-  // 임시: 시간 선택 (실제론 슬롯 선택)
-  const time = '10:00';
-  
-  fetch(BOOKING_API, {
-    method: 'POST',
-    body: JSON.stringify({
-      action: 'apply',
-      date: date,
-      time: time,
-      name: name,
-      phone: phone,
-      type: type,
-      situation: situation,
-      statuses: statuses
-    })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.success) {
-      alert('상담신청이 완료되었습니다. 확인 후 연락드리겠습니다.');
-      closeConsultingModal();
-      document.getElementById('consult-name').value = '';
-      document.getElementById('consult-phone').value = '';
-      document.getElementById('consult-date').value = '';
-      document.getElementById('consult-type').value = '';
-      document.getElementById('consult-situation').value = '';
-      document.querySelectorAll('.checkbox-group input').forEach(cb => cb.checked = false);
-    } else {
-      alert('신청 실패: ' + (data.error || ''));
-    }
-  })
-  .catch(err => {
-    alert('오류가 발생했습니다');
-    console.error(err);
-  });
-}
-</script>
+  if (!/^01[0-9]-\d{3,4}-\d{4}$/.test(phone)) {
+    msgBox.textContent = '연락처를 010-0000-0000 형식으로 입력해 주세요.';
+    return;
+  }
+  if (!situation) {
+    msgBox.textContent = '현재 상황과 문제점을 적어주세요.';
+    return;
+  }
 
+  submitBtn.disabled = true;
+  msgBox.textContent = '신청을 접수하는 중입니다...';
+
+  try {
+    const res = await fetch(BOOKING_API, {
+      method: 'POST',
+      body: JSON.stringify({
+        action:'apply', date:dateInput.value, time:selectedSlot,
+        name, phone, type, situation, statuses
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      msgBox.style.color = '#7FFF7F';
+      msgBox.textContent = `신청이 접수되었습니다. 검토 후 연락드려 일정을 확정해 드리겠습니다. (${dateInput.value} ${selectedSlot} 희망)`;
+    } else {
+      msgBox.style.color = '#FFB4B4';
+      msgBox.textContent = data.error || '신청에 실패했습니다. 다시 시도해 주세요.';
+      submitBtn.disabled = false;
+    }
+  } catch (err) {
+    msgBox.textContent = '네트워크 오류가 발생했습니다.';
+    submitBtn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
