@@ -92,7 +92,7 @@
   /* ===== 모달 ===== */
   .modal{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:100; justify-content:center; align-items:center; }
   .modal.show{ display:flex; }
-  .modal-content{ background:var(--navy); color:#EDEFF4; padding:40px; border-radius:8px; max-width:600px; width:90%; max-height:90vh; overflow-y:auto; position:relative; }
+  .modal-content{ background:var(--navy); color:#EDEFF4; padding:40px; border-radius:8px; max-width:640px; width:90%; max-height:90vh; overflow-y:auto; position:relative; }
   .modal-content h2{ color:#fff; font-size:28px; font-weight:700; margin-bottom:24px; }
   .modal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
   .name-phone-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
@@ -313,19 +313,19 @@
   <div class="modal-content">
     <button class="modal-close" onclick="document.getElementById('booking-modal').style.display='none'">✕</button>
     <h2 style="margin-top:0; margin-bottom:24px; color:#fff; font-size:28px; font-weight:700;">상담 신청</h2>
+    <div class="name-phone-grid">
+      <div>
+        <label for="bk-name">성함</label>
+        <input type="text" id="bk-name" placeholder="홍길동">
+      </div>
+      <div>
+        <label for="bk-phone">전화</label>
+        <input type="tel" id="bk-phone" placeholder="010-0000-0000">
+      </div>
+    </div>
+
     <div class="modal-grid">
       <div>
-        <div class="name-phone-grid">
-          <div>
-            <label for="bk-name">성함</label>
-            <input type="text" id="bk-name" placeholder="홍길동">
-          </div>
-          <div>
-            <label for="bk-phone">전화</label>
-            <input type="tel" id="bk-phone" placeholder="010-0000-0000">
-          </div>
-        </div>
-
         <label>상담 희망 일정 선택</label>
         <button type="button" id="bk-date-btn" style="width:100%; padding:11px 12px; border:1px solid rgba(255,255,255,0.2); border-radius:2px; font-size:14px; font-family:inherit; margin-bottom:14px; background:rgba(255,255,255,0.05); color:#fff; cursor:pointer; text-align:left;">날짜 선택</button>
         <input type="date" id="bk-date" style="display:none;">
@@ -335,6 +335,7 @@
       <div>
         <label for="bk-type">고객 유형</label>
         <select id="bk-type">
+          <option value="" disabled selected>선택</option>
           <option value="사업자 아님">사업자 아님</option>
           <option value="개인 사업소득자">개인 사업소득자</option>
           <option value="개인 사업이외의 소득자(금융,근로,기타)">개인 사업이외의 소득자(금융,근로,기타)</option>
@@ -493,7 +494,25 @@ const dateBtn = document.getElementById('bk-date-btn');
 const slotsBox  = document.getElementById('bk-slots');
 const submitBtn = document.getElementById('bk-submit');
 const msgBox    = document.getElementById('bk-msg');
+const nameInput = document.getElementById('bk-name');
+const typeSelect = document.getElementById('bk-type');
+const situationInput = document.getElementById('bk-situation');
 let selectedSlot = null;
+
+// 모든 필수항목(성함/전화/고객유형/상황/희망일정)이 채워졌을 때만 신청 버튼 활성화
+function updateSubmitState() {
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const type = typeSelect.value;
+  const situation = situationInput.value.trim();
+  const phoneValid = /^01[0-9]-\d{3,4}-\d{4}$/.test(phone);
+  submitBtn.disabled = !(name && phoneValid && type && situation && selectedSlot);
+}
+
+function formatKoreanDate(dateStr) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return `${y}년 ${m}월 ${d}일`;
+}
 
 // 페이지 로드 시 첫 예약가능 날짜 찾기
 window.addEventListener('load', async () => {
@@ -549,11 +568,16 @@ phoneInput.addEventListener('input', () => {
     formatted = `${digits.slice(0,3)}-${digits.slice(3,7)}-${digits.slice(7)}`;
   }
   phoneInput.value = formatted;
+  updateSubmitState();
 });
+
+nameInput.addEventListener('input', updateSubmitState);
+typeSelect.addEventListener('change', updateSubmitState);
+situationInput.addEventListener('input', updateSubmitState);
 
 dateInput.addEventListener('change', async () => {
   selectedSlot = null;
-  submitBtn.disabled = true;
+  updateSubmitState();
   if (dateInput.value) {
     dateBtn.textContent = dateInput.value;
   }
@@ -576,7 +600,7 @@ dateInput.addEventListener('change', async () => {
         document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
         selectedSlot = time;
-        submitBtn.disabled = false;
+        updateSubmitState();
       };
       slotsBox.appendChild(btn);
     });
@@ -618,8 +642,14 @@ submitBtn.addEventListener('click', async () => {
     });
     const data = await res.json();
     if (data.success) {
+      submitBtn.style.display = 'none';
       msgBox.style.color = '#7FFF7F';
-      msgBox.textContent = `신청이 접수되었습니다. 검토 후 연락드려 일정을 확정해 드리겠습니다. (${dateInput.value} ${selectedSlot} 희망)`;
+      msgBox.style.fontSize = '15px';
+      msgBox.style.fontWeight = '700';
+      msgBox.style.textAlign = 'center';
+      msgBox.style.minHeight = 'auto';
+      msgBox.style.padding = '14px 0';
+      msgBox.textContent = `${formatKoreanDate(dateInput.value)} ${selectedSlot} 상담으로 신청되었습니다.`;
     } else {
       msgBox.style.color = '#FFB4B4';
       msgBox.textContent = data.error || '신청에 실패했습니다. 다시 시도해 주세요.';
