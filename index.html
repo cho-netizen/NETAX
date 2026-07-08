@@ -94,7 +94,7 @@
   .modal.show{ display:flex; }
   .modal-content{ background:var(--navy); color:#EDEFF4; padding:40px; border-radius:8px; max-width:640px; width:90%; max-height:90vh; overflow-y:auto; position:relative; }
   .modal-content h2{ color:#fff; font-size:28px; font-weight:700; margin-bottom:24px; }
-  .modal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; }
+  .modal-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-bottom:24px; align-items:start; }
   .name-phone-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
   .modal-close{ position:absolute; top:20px; right:20px; background:transparent; border:none; color:#fff; font-size:24px; cursor:pointer; padding:0; width:30px; height:30px; display:flex; align-items:center; justify-content:center; }
   .modal-close:hover{ color:#FFD700; }
@@ -120,10 +120,12 @@
   }
   .modal-content .slot-btn:hover{ background:rgba(255,255,255,0.1); }
   .modal-content .slot-btn.selected{ background:var(--gold); color:var(--navy); border-color:var(--gold); }
-  .modal-content .agreement-note{ background:transparent; border:none; padding:0; margin-bottom:18px; font-size:12px; color:#B7BCCC; line-height:1.6; }
+  .modal-content .agreement-note{ background:transparent; border:none; padding:0; margin-top:24px; margin-bottom:18px; font-size:12px; color:#B7BCCC; line-height:1.6; }
   .modal-content .agreement-note ul{ padding-left:18px; margin-bottom:14px; }
   .modal-content .agreement-note li{ margin-bottom:4px; }
   .modal-content .booking-msg{ font-size:12px; color:#FFE5B4; margin-bottom:14px; min-height:18px; }
+  .modal-content .char-counter{ font-size:12px; color:rgba(255,255,255,0.45); text-align:right; margin-top:-10px; margin-bottom:14px; }
+  .modal-content .char-counter.ok{ color:#7FFF7F; }
   .modal-content .submit-btn{ width:100%; padding:14px; background:var(--gold); color:var(--navy); font-weight:700; font-size:15px; border:none; border-radius:2px; cursor:pointer; transition:.2s; }
   .modal-content .submit-btn:hover:not(:disabled){ background:#D9B25E; }
   .modal-content .submit-btn:disabled{ opacity:0.4; cursor:not-allowed; }
@@ -357,6 +359,7 @@
 
         <label for="bk-situation">현재 상황과 문제점</label>
         <textarea id="bk-situation" rows="3" placeholder="간략하게 적어주세요"></textarea>
+        <div class="char-counter" id="situation-counter">0/10자</div>
       </div>
     </div>
 
@@ -505,6 +508,7 @@ const nameInput = document.getElementById('bk-name');
 const typeSelect = document.getElementById('bk-type');
 const statusSelect = document.getElementById('bk-status');
 const situationInput = document.getElementById('bk-situation');
+const situationCounter = document.getElementById('situation-counter');
 let selectedSlot = null;
 
 // 모든 필수항목(성함/전화/고객유형/현재 세무처리 상황/상황/희망일정)이 채워졌을 때만
@@ -516,7 +520,12 @@ function updateSubmitState() {
   const status = statusSelect.value;
   const situation = situationInput.value.trim();
   const phoneValid = /^01[0-9]-\d{3,4}-\d{4}$/.test(phone);
-  const allFilled = name && phoneValid && type && status && situation && selectedSlot;
+  const nameValid = name.length >= 2;
+  const situationValid = situation.length >= 10;
+  const allFilled = nameValid && phoneValid && type && status && situationValid && selectedSlot;
+
+  situationCounter.textContent = `${situation.length}/10자`;
+  situationCounter.classList.toggle('ok', situationValid);
 
   if (allFilled) {
     guideEl.style.display = 'none';
@@ -640,8 +649,8 @@ submitBtn.addEventListener('click', async () => {
   const situation = document.getElementById('bk-situation').value.trim();
   const statuses = status ? [status] : [];
 
-  if (!name || !selectedSlot) {
-    msgBox.textContent = '성함과 희망 일정을 선택해 주세요.';
+  if (!name || name.length < 2 || !selectedSlot) {
+    msgBox.textContent = '성함(2자 이상)과 희망 일정을 선택해 주세요.';
     return;
   }
   if (!/^01[0-9]-\d{3,4}-\d{4}$/.test(phone)) {
@@ -652,8 +661,8 @@ submitBtn.addEventListener('click', async () => {
     msgBox.textContent = '현재 세무처리 상황을 선택해 주세요.';
     return;
   }
-  if (!situation) {
-    msgBox.textContent = '현재 상황과 문제점을 적어주세요.';
+  if (!situation || situation.length < 10) {
+    msgBox.textContent = '현재 상황과 문제점을 10자 이상 구체적으로 적어주세요.';
     return;
   }
 
