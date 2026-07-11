@@ -515,6 +515,7 @@ const submitBtn = document.getElementById('bk-submit');
 const guideEl = document.getElementById('bk-guide');
 const msgBox    = document.getElementById('bk-msg');
 const nameInput = document.getElementById('bk-name');
+const phoneInput = document.getElementById('bk-phone');
 const typeSelect = document.getElementById('bk-type');
 const statusSelect = document.getElementById('bk-status');
 const situationInput = document.getElementById('bk-situation');
@@ -571,7 +572,9 @@ window.addEventListener('load', async () => {
         found = true;
         break;
       }
-    } catch (err) {}
+    } catch (err) {
+      console.error('가용 시간 조회 실패:', dateStr, err);
+    }
   }
 });
 
@@ -596,7 +599,6 @@ function updateSideNavColor() {
   // side-nav 제거됨
 }
 
-const phoneInput = document.getElementById('bk-phone');
 phoneInput.addEventListener('input', () => {
   let digits = phoneInput.value.replace(/[^0-9]/g, '').slice(0, 11);
   let formatted = digits;
