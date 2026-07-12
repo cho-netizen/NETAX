@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Analytics(GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKBTW0W1C8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RKBTW0W1C8');
+</script>
 <title>이음세무컨설팅 NETAX | 세무사 조종호</title>
 <meta name="description" content="상속·증여·양도·세무조사 — 자산승계와 절세 전략의 든든한 파트너. 이음세무컨설팅 NETAX.">
 <meta property="og:title" content="이음세무컨설팅 NETAX">
@@ -303,8 +312,8 @@
       </div>
     </div>
     <div class="nav-buttons">
-      <button class="nav-btn card-btn" onclick="location.href='https://card.netax.kr'">전자명함</button>
-      <button class="nav-btn" onclick="document.getElementById('booking-modal').style.display='flex'">상담신청</button>
+      <button class="nav-btn card-btn" onclick="gtag('event','click_card',{event_category:'engagement',event_label:'전자명함 이동'});location.href='https://card.netax.kr'">전자명함</button>
+      <button class="nav-btn" onclick="gtag('event','open_booking_modal',{event_category:'engagement',event_label:'상담신청 버튼'});document.getElementById('booking-modal').style.display='flex'">상담신청</button>
     </div>
   </nav>
 </header>
@@ -438,7 +447,7 @@
       <div class="step">
         <h4>자문내용 보고</h4>
         <p>조문·판례 근거를 담은 세무검토보고서를 발급합니다</p>
-        <button class="report-btn-inline" onclick="window.open('https://rpt.netax.kr', '_blank')">전자보고서</button>
+        <button class="report-btn-inline" onclick="gtag('event','click_report',{event_category:'engagement',event_label:'전자보고서 보기'});window.open('https://rpt.netax.kr', '_blank')">전자보고서</button>
       </div>
       <div class="step">
         <h4>사후관리</h4>
@@ -691,6 +700,7 @@ submitBtn.addEventListener('click', async () => {
     });
     const data = await res.json();
     if (data.success) {
+      gtag('event','booking_complete',{event_category:'conversion',event_label:'상담예약 완료',value:1});
       submitBtn.style.display = 'none';
       msgBox.style.color = '#7FFF7F';
       msgBox.style.fontSize = '15px';
