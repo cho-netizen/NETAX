@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보고서함 — my.netax.kr</title>
+<style>
+  :root { --header-color: #0D1B3D; --header-color-2: #1A2B4D; --gold: #C8A244; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; background: #F8F6F2; }
+  .topbar {
+    background: linear-gradient(135deg, var(--header-color), var(--header-color-2));
+    border-bottom: 4px solid var(--gold);
+    color: #fff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar h1 { font-size: 16px; margin: 0; }
+  .topbar a { color: #fff; text-decoration: none; font-size: 13px; opacity: 0.85; }
+  .container { max-width: 760px; margin: 24px auto; padding: 0 16px; }
+  .list-card {
+    background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .list-item {
+    padding: 16px 18px; border-bottom: 1px solid #eee; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .list-item:last-child { border-bottom: none; }
+  .list-item:hover { background: #f9fafb; }
+  .list-item .name { font-weight: 600; font-size: 14px; }
+  .list-item .date { font-size: 12px; color: #999; }
+  .empty { padding: 40px 20px; text-align: center; color: #999; font-size: 14px; }
+  #viewerWrap { display: none; }
+  #backBtn { background: none; border: none; color: var(--header-color); font-size: 13px; cursor: pointer; margin-bottom: 12px; }
+  iframe { width: 100%; min-height: 80vh; border: 1px solid #eee; border-radius: 8px; background: #fff; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <h1 id="topTitle">보고서함</h1>
+    <a href="/my/">메인으로</a>
+  </div>
+  <div class="container">
+    <div id="listWrap">
+      <div class="list-card" id="listCard">
+        <div class="empty">불러오는 중입니다...</div>
+      </div>
+    </div>
+    <div id="viewerWrap">
+      <button id="backBtn">← 목록으로</button>
+      <iframe id="reportFrame"></iframe>
+    </div>
+  </div>
+
+  <script src="/my/config.js"></script>
+  <script>
+    const session = requireSessionOrRedirect();
+    if (session) {
+      document.getElementById('topTitle').textContent = (session.case_name || '보고서함');
+      loadReportList();
+    }
+
+    async function loadReportList() {
+      const listCard = document.getElementById('listCard');
+      try {
+        const result = await callGas({
+          action: 'get_report_list',
+          report_id: session.report_id,
+          password_hash: session.password_hash
+        });
+        if (!result.success) {
+          listCard.innerHTML = `<div class="empty">${result.message || '보고서를 불러올 수 없습니다.'}</div>`;
+          return;
+        }
+        if (!result.reports.length) {
+          listCard.innerHTML = `<div class="empty">아직 등록된 보고서가 없습니다.</div>`;
+          return;
+        }
+        listCard.innerHTML = result.reports.map(r => `
+          <div class="list-item" onclick="openReport('${r.id}')">
+            <div>
+              <div class="name">${escapeHtml(r.name.replace(/\.html?$/i, ''))}</div>
+              <div class="date">${new Date(r.updated).toLocaleDateString('ko-KR')}</div>
+            </div>
+            <div>›</div>
+          </div>
+        `).join('');
+      } catch (err) {
+        listCard.innerHTML = `<div class="empty">연결 오류: ${err.message}</div>`;
+      }
+    }
+
+    async function openReport(fileId) {
+      const frame = document.getElementById('reportFrame');
+      document.getElementById('listWrap').style.display = 'none';
+      document.getElementById('viewerWrap').style.display = 'block';
+      frame.srcdoc = '<p style="padding:20px;font-family:sans-serif;color:#999;">불러오는 중입니다...</p>';
+
+      const result = await callGas({
+        action: 'get_report_file',
+        report_id: session.report_id,
+        password_hash: session.password_hash,
+        file_id: fileId
+      });
+      if (result.success) {
+        frame.srcdoc = result.html;
+      } else {
+        frame.srcdoc = `<p style="padding:20px;font-family:sans-serif;color:#c0392b;">${escapeHtml(result.message || '오류')}</p>`;
+      }
+    }
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+      document.getElementById('viewerWrap').style.display = 'none';
+      document.getElementById('listWrap').style.display = 'block';
+    });
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+  </script>
+</body>
+</html>

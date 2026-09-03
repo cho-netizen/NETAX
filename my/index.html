@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>고객포털 — 이음세무컨설팅</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b2a41'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23c9a227' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D1B3D;
+    --navy-light:#1A2B4D;
+    --gold:#C8A244;
+    --ink:#22293A;
+    --paper:#F8F6F2;
+    --line:#E3DFD6;
+    --danger:#c0392b;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    font-family:'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:32px 16px;
+  }
+  h1,h2,.serif{ font-family:'Noto Serif KR', serif; }
+  a{ color:inherit; }
+
+  .back-link{
+    width:100%; max-width:420px; margin-bottom:18px;
+    font-size:13px; color:var(--navy); opacity:0.75; text-decoration:none;
+    display:flex; align-items:center; gap:5px;
+  }
+  .back-link:hover{ opacity:1; text-decoration:underline; }
+
+  .card{
+    background:#fff;
+    width:100%;
+    max-width:420px;
+    border-radius:10px;
+    box-shadow:0 10px 34px rgba(13,27,61,0.14);
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .card-header{
+    background:linear-gradient(135deg, var(--navy), var(--navy-light));
+    border-bottom:3px solid var(--gold);
+    color:#fff;
+    padding:30px 26px 24px;
+    text-align:center;
+  }
+  .card-header .badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11.5px; letter-spacing:0.06em; color:var(--gold);
+    border:1px solid rgba(200,162,68,0.5); border-radius:20px;
+    padding:4px 12px; margin-bottom:14px;
+  }
+  .card-header h1{ font-size:20px; font-weight:700; margin-bottom:6px; }
+  .card-header p{ font-size:12.5px; color:rgba(255,255,255,0.72); line-height:1.5; }
+
+  .card-body{ padding:26px 26px 22px; }
+  .intro{
+    font-size:12.5px; color:#5b6270; line-height:1.6; background:#F8F6F2;
+    border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin-bottom:20px;
+  }
+  .intro b{ color:var(--navy); }
+
+  label{ display:block; font-size:12.5px; font-weight:600; color:#555; margin-bottom:6px; }
+  input{
+    width:100%;
+    padding:13px 14px;
+    font-size:16px;
+    border:1px solid #d9d9d9;
+    border-radius:6px;
+    margin-bottom:16px;
+    letter-spacing:1px;
+    font-family:inherit;
+  }
+  input:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,162,68,0.15); }
+  button{
+    width:100%;
+    padding:14px;
+    font-size:15px;
+    font-weight:700;
+    color:#fff;
+    background:var(--navy);
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  button:hover{ background:var(--navy-light); }
+  button:disabled{ opacity:0.55; cursor:default; }
+
+  .msg{ margin-top:14px; font-size:13px; text-align:center; min-height:18px; }
+  .msg.error{ color:var(--danger); }
+  .msg.info{ color:#555; }
+
+  .footnote{
+    margin-top:22px; padding-top:18px; border-top:1px dashed var(--line);
+    font-size:12px; color:#8a8f99; text-align:center; line-height:1.6;
+  }
+  .footnote a{ color:var(--navy); font-weight:600; text-decoration:underline; }
+
+  .secure-line{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    font-size:11.5px; color:#9aa0aa; margin-top:16px;
+  }
+</style>
+</head>
+<body>
+  <a class="back-link" href="/">← 이음세무컨설팅 홈페이지로</a>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="badge">🔒 고객 전용</div>
+      <h1>고객포털</h1>
+      <p>담당 세무사가 발급한 열람번호로<br>자료 제출과 보고서 확인을 진행합니다.</p>
+    </div>
+    <div class="card-body">
+      <div class="intro">
+        문자로 안내받은 링크로 들어오셨다면 <b>열람번호가 자동으로 입력</b>됩니다. 비밀번호만 입력해 확인해주세요. 처음 접속하시는 경우 비밀번호를 새로 설정하게 됩니다.
+      </div>
+      <form id="loginForm">
+        <label for="reportId">열람번호</label>
+        <input id="reportId" maxlength="4" autocapitalize="characters" placeholder="예: A7YT" required>
+
+        <label for="password" id="pwLabel">비밀번호</label>
+        <input id="password" type="password" placeholder="비밀번호 입력" required>
+
+        <button type="submit" id="submitBtn">확인</button>
+      </form>
+      <div class="msg" id="msg"></div>
+
+      <div class="secure-line">🔒 입력하신 정보는 암호화되어 담당 세무사에게만 전달됩니다</div>
+
+      <div class="footnote">
+        열람번호를 아직 못 받으셨나요?<br>
+        <a href="/">홈페이지에서 상담을 신청</a>해주시면 안내드립니다.
+      </div>
+    </div>
+  </div>
+
+  <script src="/my/config.js"></script>
+  <script>
+    const form = document.getElementById('loginForm');
+    const msgEl = document.getElementById('msg');
+    const pwLabel = document.getElementById('pwLabel');
+    const submitBtn = document.getElementById('submitBtn');
+    let isSetupMode = false;
+
+    // 문자로 보내는 안내 링크(https://netax.kr/my/?report_id=XXXX)를 누르고 들어오면 열람번호를
+    // 직접 입력하지 않아도 되게 자동으로 채워준다.
+    (function prefillReportId(){
+      const params = new URLSearchParams(location.search);
+      const fromUrl = (params.get('report_id') || '').trim().toUpperCase();
+      if (fromUrl) {
+        document.getElementById('reportId').value = fromUrl;
+        document.getElementById('password').focus();
+      }
+    })();
+
+    function showMsg(text, type) {
+      msgEl.textContent = text || '';
+      msgEl.className = 'msg' + (type ? ' ' + type : '');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const reportId = document.getElementById('reportId').value.trim().toUpperCase();
+      const password = document.getElementById('password').value;
+      if (!reportId || !password) return;
+
+      submitBtn.disabled = true;
+      showMsg('확인 중입니다...', 'info');
+
+      try {
+        const passwordHash = await sha256Hex(password);
+        const result = await callGas({ action: 'login', report_id: reportId, password_hash: passwordHash });
+
+        if (result.needs_setup) {
+          isSetupMode = true;
+          pwLabel.textContent = '최초 접속입니다. 사용할 비밀번호를 설정해주세요';
+          showMsg(result.customer_name + '님, 비밀번호를 설정해주세요.', 'info');
+          document.getElementById('password').value = '';
+          submitBtn.disabled = false;
+          return;
+        }
+        if (!result.success) {
+          showMsg(result.message || '오류가 발생했습니다.', 'error');
+          submitBtn.disabled = false;
+          return;
+        }
+
+        saveSession({
+          report_id: reportId,
+          password_hash: passwordHash,
+          customer_name: result.customer_name,
+          case_name: result.case_name
+        });
+
+        showMsg(result.customer_name + '님, 확인되었습니다.', 'info');
+        renderMenu();
+      } catch (err) {
+        showMsg('연결 중 오류가 발생했습니다: ' + err.message, 'error');
+        submitBtn.disabled = false;
+      }
+    });
+
+    function renderMenu() {
+      document.querySelector('.card-body').innerHTML = `
+        <div style="text-align:center;">
+          <p style="margin-bottom:20px;color:#555;font-size:13.5px;">이용하실 메뉴를 선택해주세요.</p>
+          <button style="margin-bottom:12px;" onclick="location.href='/my/upload/'">📤 자료제출함</button>
+          <button style="background:#555;" onclick="location.href='/my/report/'">📄 보고서함</button>
+        </div>
+      `;
+    }
+
+    // 이미 로그인 세션이 있으면 바로 메뉴 표시
+    (function initFromSession() {
+      const s = loadSession();
+      if (s && s.report_id && s.password_hash) {
+        renderMenu();
+      }
+    })();
+  </script>
+</body>
+</html>

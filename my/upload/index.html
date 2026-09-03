@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자료제출함 — my.netax.kr</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<style>
+  :root { --header-color: #0D1B3D; --header-color-2: #1A2B4D; --gold: #C8A244; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; background: #F8F6F2; }
+  .topbar {
+    background: linear-gradient(135deg, var(--header-color), var(--header-color-2));
+    border-bottom: 4px solid var(--gold);
+    color: #fff; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar h1 { font-size: 16px; margin: 0; }
+  .topbar a { color: #fff; text-decoration: none; font-size: 13px; opacity: 0.85; }
+  .container { max-width: 640px; margin: 20px auto; padding: 0 16px 60px; }
+  .item-card {
+    background: #fff; border-radius: 10px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;
+  }
+  .item-head {
+    padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+  }
+  .item-title { font-weight: 600; font-size: 14.5px; }
+  .badge { font-size: 11.5px; padding: 3px 9px; border-radius: 20px; font-weight: 600; }
+  .badge.done { background: #e7f6ec; color: #1a7d3a; }
+  .badge.pending { background: #fdeceb; color: #c0392b; }
+  .item-body { padding: 0 16px 16px; display: none; border-top: 1px solid #f0f0f0; }
+  .item-body.open { display: block; }
+  .file-row {
+    display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 13px;
+  }
+  .file-row .fname { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-row button {
+    background: #f0f0f0; border: none; border-radius: 6px; padding: 5px 8px; font-size: 12px; cursor: pointer;
+  }
+  .add-btn, .submit-btn {
+    width: 100%; padding: 10px; margin-top: 10px; border: none; border-radius: 8px; cursor: pointer; font-size: 13.5px; font-weight: 600;
+  }
+  .add-btn { background: #eef1f5; color: var(--header-color); }
+  .submit-btn { background: var(--header-color); color: #fff; }
+  .submit-btn:disabled { opacity: 0.5; }
+  .status-line { font-size: 12px; color: #888; margin-top: 8px; text-align: center; min-height: 16px; }
+  input[type=file] { display: none; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <h1 id="topTitle">자료제출함</h1>
+    <a href="/my/">메인으로</a>
+  </div>
+  <div class="container" id="container">
+    <div style="text-align:center;color:#999;padding:40px 0;">불러오는 중입니다...</div>
+  </div>
+
+  <script src="/my/config.js"></script>
+  <script>
+    const session = requireSessionOrRedirect();
+    // 항목별 큐: { itemName: [ {name, kind:'image'|'pdf', arrayBuffer, rotation} ] }
+    const queues = {};
+
+    if (session) {
+      document.getElementById('topTitle').textContent = (session.case_name || '자료제출함');
+      init();
+    }
+
+    async function init() {
+      const result = await callGas({
+        action: 'get_checklist_status',
+        report_id: session.report_id,
+        password_hash: session.password_hash
+      });
+      const container = document.getElementById('container');
+      if (!result.success) {
+        container.innerHTML = `<div style="text-align:center;color:#c0392b;padding:40px 0;">${result.message || '불러오기 실패'}</div>`;
+        return;
+      }
+      if (!result.checklist.length) {
+        container.innerHTML = renderVoluntarySection((result.submission_status._extra) || []);
+        return;
+      }
+      container.innerHTML = result.checklist.map((item, idx) => renderItemCard(item, idx, result.submission_status[item])).join('')
+        + renderVoluntarySection((result.submission_status._extra) || []);
+    }
+
+    function renderVoluntarySection(extraList) {
+      const historyHtml = extraList.length
+        ? extraList.map(f => `<div class="file-row" style="border-bottom:1px dashed #eee;"><div class="fname">✔ ${escapeHtml(f.fileName)}</div></div>`).join('')
+        : '';
+      return `
+        <div class="item-card" id="card-voluntary">
+          <div class="item-head" onclick="toggleCard('voluntary')">
+            <div class="item-title">기타 제출 (체크리스트에 없는 자료)</div>
+            <div class="badge pending">추가제출</div>
+          </div>
+          <div class="item-body" id="body-voluntary">
+            <div style="font-size:12.5px;color:#888;margin-bottom:10px;">요청받지 않았지만 함께 내고 싶은 자료가 있으면 여기서 올려주세요.</div>
+            <div id="voluntary-history">${historyHtml}</div>
+            <input id="voluntary-label" placeholder="자료명을 적어주세요 (예: 위임장)"
+              style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:13.5px;margin-top:10px;">
+            <div id="filelist-voluntary"></div>
+            <button class="add-btn" onclick="document.getElementById('fileinput-voluntary').click()">＋ 파일 추가(사진/PDF)</button>
+            <input type="file" id="fileinput-voluntary" accept="image/*,application/pdf" multiple
+                   onchange="handleFiles('voluntary', '__voluntary__', this.files)">
+            <button class="submit-btn" id="submitbtn-voluntary" onclick="submitItem('voluntary', '__voluntary__')" disabled>병합 후 제출</button>
+            <div class="status-line" id="statusline-voluntary"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderItemCard(item, idx, status) {
+      const done = status && status.submitted;
+      return `
+        <div class="item-card" id="card-${idx}">
+          <div class="item-head" onclick="toggleCard(${idx})">
+            <div class="item-title">${escapeHtml(item)}</div>
+            <div class="badge ${done ? 'done' : 'pending'}">${done ? '제출완료' : '미제출'}</div>
+          </div>
+          <div class="item-body" id="body-${idx}">
+            ${done ? `<div style="font-size:12.5px;color:#888;margin-bottom:8px;">이전 제출: ${escapeHtml(status.fileName || '')}</div>` : ''}
+            <div id="filelist-${idx}"></div>
+            <button class="add-btn" onclick="document.getElementById('fileinput-${idx}').click()">＋ 파일 추가(사진/PDF)</button>
+            <input type="file" id="fileinput-${idx}" accept="image/*,application/pdf" multiple
+                   onchange="handleFiles(${idx}, '${escapeAttr(item)}', this.files)">
+            <button class="submit-btn" id="submitbtn-${idx}" onclick="submitItem(${idx}, '${escapeAttr(item)}')" disabled>병합 후 제출</button>
+            <div class="status-line" id="statusline-${idx}"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleCard(idx) {
+      document.getElementById('body-' + idx).classList.toggle('open');
+    }
+
+    async function handleFiles(idx, item, fileList) {
+      if (!queues[item]) queues[item] = [];
+      for (const f of fileList) {
+        const buf = await f.arrayBuffer();
+        const kind = f.type === 'application/pdf' ? 'pdf' : 'image';
+        queues[item].push({ name: f.name, kind, mimeType: f.type, arrayBuffer: buf, rotation: 0 });
+      }
+      renderQueue(idx, item);
+    }
+
+    function renderQueue(idx, item) {
+      const list = queues[item] || [];
+      const el = document.getElementById('filelist-' + idx);
+      el.innerHTML = list.map((f, i) => `
+        <div class="file-row">
+          <div class="fname">${escapeHtml(f.name)}${f.rotation ? ' (' + f.rotation + '°)' : ''}</div>
+          <button onclick="moveFile('${escapeAttr(item)}', ${idx}, ${i}, -1)">↑</button>
+          <button onclick="moveFile('${escapeAttr(item)}', ${idx}, ${i}, 1)">↓</button>
+          <button onclick="rotateFile('${escapeAttr(item)}', ${idx}, ${i})">⟳ 회전</button>
+          <button onclick="removeFile('${escapeAttr(item)}', ${idx}, ${i})">삭제</button>
+        </div>
+      `).join('');
+      document.getElementById('submitbtn-' + idx).disabled = list.length === 0;
+    }
+
+    function moveFile(item, idx, i, dir) {
+      const list = queues[item];
+      const j = i + dir;
+      if (j < 0 || j >= list.length) return;
+      [list[i], list[j]] = [list[j], list[i]];
+      renderQueue(idx, item);
+    }
+    function rotateFile(item, idx, i) {
+      queues[item][i].rotation = (queues[item][i].rotation + 90) % 360;
+      renderQueue(idx, item);
+    }
+    function removeFile(item, idx, i) {
+      queues[item].splice(i, 1);
+      renderQueue(idx, item);
+    }
+
+    // 큐에 쌓인 이미지/PDF들을 하나의 PDF로 병합(회전 반영) 후 업로드
+    async function submitItem(idx, item) {
+      const list = queues[item] || [];
+      if (!list.length) return;
+      const statusLine = document.getElementById('statusline-' + idx);
+      const btn = document.getElementById('submitbtn-' + idx);
+      btn.disabled = true;
+      statusLine.textContent = '병합하는 중입니다...';
+
+      try {
+        const { PDFDocument, degrees } = PDFLib;
+        const mergedPdf = await PDFDocument.create();
+
+        for (const f of list) {
+          if (f.kind === 'pdf') {
+            const src = await PDFDocument.load(f.arrayBuffer);
+            const pageIndices = src.getPageIndices();
+            const copied = await mergedPdf.copyPages(src, pageIndices);
+            copied.forEach(p => {
+              if (f.rotation) p.setRotation(degrees(p.getRotation().angle + f.rotation));
+              mergedPdf.addPage(p);
+            });
+          } else {
+            let img;
+            if (f.mimeType.includes('png')) {
+              img = await mergedPdf.embedPng(f.arrayBuffer);
+            } else {
+              img = await mergedPdf.embedJpg(f.arrayBuffer);
+            }
+            const page = mergedPdf.addPage([img.width, img.height]);
+            page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+            if (f.rotation) page.setRotation(degrees(f.rotation));
+          }
+        }
+
+        const mergedBytes = await mergedPdf.save();
+        const base64 = arrayBufferToBase64(mergedBytes);
+
+        statusLine.textContent = '업로드하는 중입니다...';
+
+        const isVoluntary = (item === '__voluntary__');
+        let fileName, checklistItemToSend;
+        if (isVoluntary) {
+          const labelEl = document.getElementById('voluntary-label');
+          const label = (labelEl.value || '').trim() || ('기타제출_' + Date.now());
+          fileName = label + '.pdf';
+          checklistItemToSend = '';
+        } else {
+          fileName = item + '.pdf';
+          checklistItemToSend = item;
+        }
+
+        const result = await callGas({
+          action: 'upload_file',
+          report_id: session.report_id,
+          password_hash: session.password_hash,
+          filename: fileName,
+          mime_type: 'application/pdf',
+          base64_data: base64,
+          checklist_item: checklistItemToSend
+        });
+
+        if (result.success) {
+          statusLine.textContent = '제출이 완료되었습니다.';
+          if (isVoluntary) {
+            const historyEl = document.getElementById('voluntary-history');
+            historyEl.innerHTML += `<div class="file-row" style="border-bottom:1px dashed #eee;"><div class="fname">✔ ${escapeHtml(fileName)}</div></div>`;
+            document.getElementById('voluntary-label').value = '';
+          } else {
+            document.querySelector(`#card-${idx} .badge`).textContent = '제출완료';
+            document.querySelector(`#card-${idx} .badge`).className = 'badge done';
+          }
+          queues[item] = [];
+          renderQueue(idx, item);
+        } else {
+          statusLine.textContent = result.message || '제출 중 오류가 발생했습니다.';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        statusLine.textContent = '오류: ' + err.message;
+        btn.disabled = false;
+      }
+    }
+
+    function arrayBufferToBase64(buffer) {
+      let binary = '';
+      const bytes = new Uint8Array(buffer);
+      const chunk = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunk) {
+        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+      }
+      return btoa(binary);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function escapeAttr(s) {
+      return String(s).replace(/'/g, "\\'");
+    }
+  </script>
+</body>
+</html>
