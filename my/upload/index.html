@@ -70,7 +70,7 @@
     <h1 id="topTitle">자료제출함</h1>
     <a href="/my/">메인으로</a>
   </div>
-  <div class="hint-bar">여러 장짜리 문서는 촬영 후 <b>이 문서 담기</b>로 한 문서씩 구분해주세요. 서로 다른 문서를 한 번에 스캔해도 각각 별도 파일로 제출됩니다.</div>
+  <div class="hint-bar">서로 다른 문서를 한 번에 스캔할 때는 촬영 후 <b>다른 문서 추가하기</b>로 문서를 구분해주세요. 그러면 각각 별도 파일로 제출됩니다.</div>
   <div class="container" id="container">
     <div style="text-align:center;color:#999;padding:40px 0;">불러오는 중입니다...</div>
   </div>
@@ -299,7 +299,7 @@
 
       try {
         if (isVoluntary) {
-          // 임의제출은 서로 다른 문서를 한 번에 담을 수 있다(스캔모달의 "이 문서 담기"로
+          // 임의제출은 서로 다른 문서를 한 번에 담을 수 있다(스캔모달의 "다른 문서 추가하기"로
           // 구분) — 그래서 하나로 합치지 않고 문서별로 각각 따로 제출한다.
           let okCount = 0, failCount = 0;
           for (let i = 0; i < list.length; i++) {

@@ -35,7 +35,7 @@
 
   var state = {
     docPages: [],          // 지금 촬영 중인 문서의 페이지들 [{type:'image'|'pdf', ...}]
-    scanCompletedDocs: [], // "이 문서 담기"로 확정된 문서들 [{name, bytes, allowRotate}]
+    scanCompletedDocs: [], // "다른 문서 추가하기"로 확정된 문서들 [{name, bytes, allowRotate}]
     scanFileQueue: [],     // 갤러리에서 여러 장을 한 번에 골랐을 때 남은 파일들
     scanImageEl: null, scanDisplayScale: 1, scanDW: 0, scanDH: 0, scanCorners: null,
     opts: null
@@ -135,7 +135,7 @@
       + '    <div class="nxsc-tray" id="nxsc-tray"></div>'
       + '    <div class="nxsc-row" style="border-top:1px solid #eee;padding-top:12px;">'
       + '      <input type="text" id="nxsc-docname" class="nxsc-input" placeholder="이 문서의 이름">'
-      + '      <button type="button" id="nxsc-btn-finishdoc" class="nxsc-btn" disabled>📑 이 문서 담기 (다음 문서 계속 촬영)</button>'
+      + '      <button type="button" id="nxsc-btn-finishdoc" class="nxsc-btn" disabled>📑 다른 문서 추가하기</button>'
       + '    </div>'
       + '    <div class="nxsc-doc-list" id="nxsc-doclist"></div>'
       + '    <div class="nxsc-footer" id="nxsc-footer"></div>'
