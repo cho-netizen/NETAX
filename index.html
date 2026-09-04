@@ -404,8 +404,19 @@
           <option value="처음 진행">처음 진행</option>
         </select>
 
+        <label for="bk-field">관련 분야(짐작되는 대로)</label>
+        <select id="bk-field" required>
+          <option value="" disabled selected>선택</option>
+          <option value="상속">상속</option>
+          <option value="증여">증여</option>
+          <option value="양도">양도</option>
+          <option value="세무조사">세무조사</option>
+          <option value="기타">기타</option>
+          <option value="잘 모름">잘 모름</option>
+        </select>
+
         <label for="bk-situation">현재 상황과 문제점</label>
-        <textarea id="bk-situation" rows="3" placeholder="간략하게 적어주세요"></textarea>
+        <textarea id="bk-situation" rows="3" placeholder="예: 언제, 어떤 문제인지, 관련된 자산·금액을 아시는 대로 적어주세요"></textarea>
         <div class="char-counter" id="situation-counter">0/10자</div>
       </div>
     </div>
@@ -556,22 +567,24 @@ const nameInput = document.getElementById('bk-name');
 const phoneInput = document.getElementById('bk-phone');
 const typeSelect = document.getElementById('bk-type');
 const statusSelect = document.getElementById('bk-status');
+const fieldSelect = document.getElementById('bk-field');
 const situationInput = document.getElementById('bk-situation');
 const situationCounter = document.getElementById('situation-counter');
 let selectedSlot = null;
 
-// 모든 필수항목(성함/전화/고객유형/현재 세무처리 상황/상황/희망일정)이 채워졌을 때만
-// 안내문구를 감추고 그 자리에 신청 버튼을 표시
+// 모든 필수항목(성함/전화/고객유형/현재 세무처리 상황/관련 분야/상황/희망일정)이 채워졌을
+// 때만 안내문구를 감추고 그 자리에 신청 버튼을 표시
 function updateSubmitState() {
   const name = nameInput.value.trim();
   const phone = phoneInput.value.trim();
   const type = typeSelect.value;
   const status = statusSelect.value;
+  const field = fieldSelect.value;
   const situation = situationInput.value.trim();
   const phoneValid = /^01[0-9]-\d{3,4}-\d{4}$/.test(phone);
   const nameValid = name.length >= 2;
   const situationValid = situation.length >= 10;
-  const allFilled = nameValid && phoneValid && type && status && situationValid && selectedSlot;
+  const allFilled = nameValid && phoneValid && type && status && field && situationValid && selectedSlot;
 
   situationCounter.textContent = `${situation.length}/10자`;
   situationCounter.classList.toggle('ok', situationValid);
@@ -652,6 +665,7 @@ phoneInput.addEventListener('input', () => {
 nameInput.addEventListener('input', updateSubmitState);
 typeSelect.addEventListener('change', updateSubmitState);
 statusSelect.addEventListener('change', updateSubmitState);
+fieldSelect.addEventListener('change', updateSubmitState);
 situationInput.addEventListener('input', updateSubmitState);
 
 // 초기 상태: 안내문구 표시, 버튼 숨김
@@ -696,6 +710,7 @@ submitBtn.addEventListener('click', async () => {
   const phone = document.getElementById('bk-phone').value.trim();
   const type  = document.getElementById('bk-type').value;
   const status = document.getElementById('bk-status').value;
+  const field = document.getElementById('bk-field').value;
   const situation = document.getElementById('bk-situation').value.trim();
   const statuses = status ? [status] : [];
 
@@ -711,6 +726,10 @@ submitBtn.addEventListener('click', async () => {
     msgBox.textContent = '현재 세무처리 상황을 선택해 주세요.';
     return;
   }
+  if (!field) {
+    msgBox.textContent = '관련 분야를 선택해 주세요.';
+    return;
+  }
   if (!situation || situation.length < 10) {
     msgBox.textContent = '현재 상황과 문제점을 10자 이상 구체적으로 적어주세요.';
     return;
@@ -724,7 +743,7 @@ submitBtn.addEventListener('click', async () => {
       method: 'POST',
       body: JSON.stringify({
         action:'apply', date:dateInput.value, time:selectedSlot,
-        name, phone, type, situation, statuses, _key: BOOKING_API_KEY
+        name, phone, type, situation, statuses, field, _key: BOOKING_API_KEY
       })
     });
     const data = await res.json();
