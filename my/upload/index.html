@@ -44,6 +44,50 @@
   .submit-btn:disabled { opacity: 0.5; }
   .status-line { font-size: 12px; color: #888; margin-top: 8px; text-align: center; min-height: 16px; }
   input[type=file] { display: none; }
+  .hint-bar {
+    max-width: 640px; margin: 16px auto 0; padding: 0 16px;
+    font-size: 12.5px; color: #6b7280; text-align: center; line-height: 1.6;
+  }
+
+  /* 스캔 모달 — NETAX_Job(관리앱) 증빙확보의 스캔 도구를 고객창구용으로 이식(원근보정·자동인식
+     로직은 동일, PDF관리/서명/워터마크/OCR 등 세무사 전용 도구는 제외). */
+  .modal-overlay{ position:fixed; inset:0; background:rgba(13,27,61,0.55); display:none;
+    align-items:center; justify-content:center; z-index:200; padding:12px; }
+  .modal-overlay.open{ display:flex; }
+  .scan-modal-panel{ width:min(560px, 100%); max-height:92vh; overflow-y:auto; background:#fff;
+    border-radius:10px; box-shadow:0 12px 32px rgba(0,0,0,0.25); }
+  .modal-head{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px;
+    background:var(--header-color); color:#fff; font-weight:700; font-size:15px; border-radius:10px 10px 0 0; }
+  .modal-close{ cursor:pointer; color:#fff; font-size:18px; font-weight:700; line-height:1; width:26px; height:26px;
+    border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .modal-close:hover{ background:rgba(255,255,255,0.18); }
+  .scan-body{ padding:14px 16px; display:flex; flex-direction:column; gap:14px; }
+  .scan-row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .scan-target-label{ font-size:12.5px; color:#555; }
+  #scanStageWrap{ position:relative; display:none; flex-direction:column; gap:10px; }
+  #scanStage{ position:relative; touch-action:none; }
+  #scanStage canvas{ display:block; max-width:100%; border-radius:6px; }
+  .scan-handle{ position:absolute; width:24px; height:24px; margin:-12px 0 0 -12px; border-radius:50%;
+    background:var(--gold); border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.4); touch-action:none; cursor:grab; }
+  .scan-tray-item{ display:flex; align-items:center; gap:8px; padding:6px 8px; border:2px solid var(--gold);
+    border-radius:6px; background:rgba(200,162,68,0.12); }
+  .scan-tray-grip{ display:flex; align-items:center; gap:8px; flex:1; min-width:0; cursor:grab; }
+  .scan-tray-grip img{ width:36px; height:48px; object-fit:cover; border-radius:3px; }
+  .scan-tray-grip .pdf-chip-icon{ font-size:20px; }
+  .scan-tray-item .name{ font-size:12px; color:#333; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .scan-tray-item button{ border:none; background:none; cursor:pointer; font-size:15px; color:#888; padding:2px 6px; }
+  .scan-tray-item button:hover{ color:#c0392b; }
+  #scanTray{ display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; }
+  .ghost-btn{ font-family:inherit; font-size:12.5px; font-weight:600; cursor:pointer; border-radius:6px; padding:8px 12px;
+    border:1px solid var(--gold); background:rgba(200,162,68,0.10); color:var(--header-color); }
+  .ghost-btn:hover{ background:rgba(200,162,68,0.22); }
+  .scan-save-btn{ font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; border-radius:8px; padding:10px 14px;
+    border:none; background:var(--header-color); color:#fff; width:100%; }
+  .scan-save-btn:disabled{ opacity:0.5; }
+  .preview-modal-panel{ width:100%; height:100%; max-width:720px; max-height:100%; background:#525659;
+    border-radius:0; display:flex; flex-direction:column; }
+  @media (min-width:760px){ .preview-modal-panel{ height:92vh; border-radius:10px; overflow:hidden; } }
+  #previewFrame{ flex:1; width:100%; border:none; background:#525659; }
 </style>
 </head>
 <body>
@@ -51,8 +95,65 @@
     <h1 id="topTitle">자료제출함</h1>
     <a href="/my/">메인으로</a>
   </div>
+  <div class="hint-bar">하나의 문서가 2장 이상으로 나뉘어 있다면, 여러 장을 함께 추가한 뒤 <b>병합 후 제출</b>을 이용해주세요.</div>
   <div class="container" id="container">
     <div style="text-align:center;color:#999;padding:40px 0;">불러오는 중입니다...</div>
+  </div>
+
+  <div class="modal-overlay" id="scanOverlay">
+    <div class="scan-modal-panel">
+      <div class="modal-head">
+        <span>📷 스캔</span>
+        <span class="modal-close" id="btnCloseScan">✕</span>
+      </div>
+      <div class="scan-body">
+        <div class="scan-target-label" id="scanTargetLabel"></div>
+        <div class="scan-row">
+          <button type="button" id="btnScanCapture" class="ghost-btn">📷 촬영하기</button>
+          <button type="button" id="btnScanGallery" class="ghost-btn">🖼 갤러리에서 불러오기</button>
+          <button type="button" id="btnScanPdfInsert" class="ghost-btn">📄 기존 PDF 삽입</button>
+          <button type="button" id="btnSkipScanFile" class="ghost-btn" style="display:none;">다음 파일로 건너뛰기</button>
+        </div>
+        <input type="file" id="scanFileInput" accept="image/*" capture="environment" style="display:none;">
+        <input type="file" id="scanGalleryInput" accept="image/*" multiple style="display:none;">
+        <input type="file" id="scanPdfInsertInput" accept="application/pdf" style="display:none;">
+
+        <div id="scanStageWrap">
+          <div id="scanStage">
+            <canvas id="scanPreviewCanvas"></canvas>
+            <svg id="scanQuadSvg" style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none;">
+              <polygon id="scanQuadPoly" fill="rgba(200,162,68,0.25)" stroke="#C8A244" stroke-width="2"></polygon>
+            </svg>
+            <div class="scan-handle" id="handle-tl" data-corner="tl"></div>
+            <div class="scan-handle" id="handle-tr" data-corner="tr"></div>
+            <div class="scan-handle" id="handle-br" data-corner="br"></div>
+            <div class="scan-handle" id="handle-bl" data-corner="bl"></div>
+          </div>
+          <div class="scan-row">
+            <button type="button" id="btnRotateScanSource" class="ghost-btn">↻ 회전</button>
+            <button type="button" id="btnAutoDetect" class="ghost-btn">자동 인식</button>
+            <button type="button" id="btnUseWholeImage" class="ghost-btn">전체 사용</button>
+            <label style="font-size:12px;color:#555;"><input type="checkbox" id="scanGrayscale"> 흑백</label>
+            <label style="font-size:12px;color:#555;">대비 <input type="range" id="scanContrast" min="0" max="100" value="0"></label>
+          </div>
+          <button type="button" id="btnWarpAndAdd" class="scan-save-btn">이 페이지 담기</button>
+        </div>
+
+        <div id="scanTray"></div>
+
+        <button type="button" id="btnFinishScan" class="scan-save-btn" disabled>완료 — 담은 자료를 추가</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="previewOverlay" style="padding:0;">
+    <div class="preview-modal-panel">
+      <div class="modal-head" style="border-radius:0;">
+        <span>📄 제출 전 미리보기</span>
+        <span class="modal-close" id="btnClosePreview">✕</span>
+      </div>
+      <iframe id="previewFrame"></iframe>
+    </div>
   </div>
 
   <script src="/my/config.js"></script>
@@ -92,18 +193,16 @@
       return `
         <div class="item-card" id="card-voluntary">
           <div class="item-head" onclick="toggleCard('voluntary')">
-            <div class="item-title">기타 제출 (체크리스트에 없는 자료)</div>
+            <div class="item-title">임의제출</div>
             <div class="badge pending">추가제출</div>
           </div>
           <div class="item-body" id="body-voluntary">
-            <div style="font-size:12.5px;color:#888;margin-bottom:10px;">요청받지 않았지만 함께 내고 싶은 자료가 있으면 여기서 올려주세요.</div>
             <div id="voluntary-history">${historyHtml}</div>
             <input id="voluntary-label" placeholder="자료명을 적어주세요 (예: 위임장)"
               style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:13.5px;margin-top:10px;">
             <div id="filelist-voluntary"></div>
-            <button class="add-btn" onclick="document.getElementById('fileinput-voluntary').click()">＋ 파일 추가(사진/PDF)</button>
-            <input type="file" id="fileinput-voluntary" accept="image/*,application/pdf" multiple
-                   onchange="handleFiles('voluntary', '__voluntary__', this.files)">
+            <button class="add-btn" onclick="openScanModal('voluntary', '__voluntary__', '임의제출')">📷 스캔으로 자료 추가</button>
+            <button class="add-btn" id="previewbtn-voluntary" onclick="previewItem('voluntary', '__voluntary__')" disabled>👁 제출 전 미리보기</button>
             <button class="submit-btn" id="submitbtn-voluntary" onclick="submitItem('voluntary', '__voluntary__')" disabled>병합 후 제출</button>
             <div class="status-line" id="statusline-voluntary"></div>
           </div>
@@ -122,9 +221,8 @@
           <div class="item-body" id="body-${idx}">
             ${done ? `<div style="font-size:12.5px;color:#888;margin-bottom:8px;">이전 제출: ${escapeHtml(status.fileName || '')}</div>` : ''}
             <div id="filelist-${idx}"></div>
-            <button class="add-btn" onclick="document.getElementById('fileinput-${idx}').click()">＋ 파일 추가(사진/PDF)</button>
-            <input type="file" id="fileinput-${idx}" accept="image/*,application/pdf" multiple
-                   onchange="handleFiles(${idx}, '${escapeAttr(item)}', this.files)">
+            <button class="add-btn" onclick="openScanModal(${idx}, '${escapeAttr(item)}', '${escapeAttr(item)}')">📷 스캔으로 자료 추가</button>
+            <button class="add-btn" id="previewbtn-${idx}" onclick="previewItem(${idx}, '${escapeAttr(item)}')" disabled>👁 제출 전 미리보기</button>
             <button class="submit-btn" id="submitbtn-${idx}" onclick="submitItem(${idx}, '${escapeAttr(item)}')" disabled>병합 후 제출</button>
             <div class="status-line" id="statusline-${idx}"></div>
           </div>
@@ -134,16 +232,6 @@
 
     function toggleCard(idx) {
       document.getElementById('body-' + idx).classList.toggle('open');
-    }
-
-    async function handleFiles(idx, item, fileList) {
-      if (!queues[item]) queues[item] = [];
-      for (const f of fileList) {
-        const buf = await f.arrayBuffer();
-        const kind = f.type === 'application/pdf' ? 'pdf' : 'image';
-        queues[item].push({ name: f.name, kind, mimeType: f.type, arrayBuffer: buf, rotation: 0 });
-      }
-      renderQueue(idx, item);
     }
 
     function renderQueue(idx, item) {
@@ -159,6 +247,7 @@
         </div>
       `).join('');
       document.getElementById('submitbtn-' + idx).disabled = list.length === 0;
+      document.getElementById('previewbtn-' + idx).disabled = list.length === 0;
     }
 
     function moveFile(item, idx, i, dir) {
@@ -177,7 +266,70 @@
       renderQueue(idx, item);
     }
 
-    // 큐에 쌓인 이미지/PDF들을 하나의 PDF로 병합(회전 반영) 후 업로드
+    // 큐에 쌓인 이미지/PDF들을 하나의 PDF로 병합(회전 반영) — 미리보기·제출이 공유해서 쓴다.
+    async function buildMergedPdfBytes(list) {
+      const { PDFDocument, degrees } = PDFLib;
+      const mergedPdf = await PDFDocument.create();
+
+      for (const f of list) {
+        if (f.kind === 'pdf') {
+          const src = await PDFDocument.load(f.arrayBuffer);
+          const pageIndices = src.getPageIndices();
+          const copied = await mergedPdf.copyPages(src, pageIndices);
+          copied.forEach(p => {
+            if (f.rotation) p.setRotation(degrees(p.getRotation().angle + f.rotation));
+            mergedPdf.addPage(p);
+          });
+        } else {
+          let img;
+          if (f.mimeType.includes('png')) {
+            img = await mergedPdf.embedPng(f.arrayBuffer);
+          } else {
+            img = await mergedPdf.embedJpg(f.arrayBuffer);
+          }
+          const page = mergedPdf.addPage([img.width, img.height]);
+          page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+          if (f.rotation) page.setRotation(degrees(f.rotation));
+        }
+      }
+
+      return mergedPdf.save();
+    }
+
+    // 제출 전에 실제로 합쳐질 PDF를 그대로 새 탭에서 열어 확인할 수 있게 한다 — 대충 찍고
+    // 대충 보내는 걸 막고, 본인이 직접 확인한 뒤 보내게 하기 위함.
+    let previewObjectUrl = null;
+    function closePreviewModal() {
+      document.getElementById('previewOverlay').classList.remove('open');
+      document.getElementById('previewFrame').src = 'about:blank';
+      if (previewObjectUrl) { URL.revokeObjectURL(previewObjectUrl); previewObjectUrl = null; }
+    }
+    document.getElementById('btnClosePreview').addEventListener('click', closePreviewModal);
+
+    // 문자 링크를 카카오톡 인앱 브라우저로 여는 경우가 많은데, 그런 웹뷰는 새 탭(window.open)이
+    // 아예 안 열리는 경우가 흔하다 — 그래서 새 탭 대신 페이지 안 모달의 iframe으로 직접 보여준다.
+    async function previewItem(idx, item) {
+      const list = queues[item] || [];
+      if (!list.length) return;
+      const btn = document.getElementById('previewbtn-' + idx);
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '만드는 중…';
+      try {
+        const bytes = await buildMergedPdfBytes(list);
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        if (previewObjectUrl) URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = URL.createObjectURL(blob);
+        document.getElementById('previewFrame').src = previewObjectUrl;
+        document.getElementById('previewOverlay').classList.add('open');
+      } catch (err) {
+        alert('미리보기를 만드는 중 오류: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    }
+
     async function submitItem(idx, item) {
       const list = queues[item] || [];
       if (!list.length) return;
@@ -187,32 +339,7 @@
       statusLine.textContent = '병합하는 중입니다...';
 
       try {
-        const { PDFDocument, degrees } = PDFLib;
-        const mergedPdf = await PDFDocument.create();
-
-        for (const f of list) {
-          if (f.kind === 'pdf') {
-            const src = await PDFDocument.load(f.arrayBuffer);
-            const pageIndices = src.getPageIndices();
-            const copied = await mergedPdf.copyPages(src, pageIndices);
-            copied.forEach(p => {
-              if (f.rotation) p.setRotation(degrees(p.getRotation().angle + f.rotation));
-              mergedPdf.addPage(p);
-            });
-          } else {
-            let img;
-            if (f.mimeType.includes('png')) {
-              img = await mergedPdf.embedPng(f.arrayBuffer);
-            } else {
-              img = await mergedPdf.embedJpg(f.arrayBuffer);
-            }
-            const page = mergedPdf.addPage([img.width, img.height]);
-            page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
-            if (f.rotation) page.setRotation(degrees(f.rotation));
-          }
-        }
-
-        const mergedBytes = await mergedPdf.save();
+        const mergedBytes = await buildMergedPdfBytes(list);
         const base64 = arrayBufferToBase64(mergedBytes);
 
         statusLine.textContent = '업로드하는 중입니다...';
@@ -277,6 +404,474 @@
     function escapeAttr(s) {
       return String(s).replace(/'/g, "\\'");
     }
+
+    // ============================================================
+    // 스캔 — NETAX_Job(관리앱) 증빙확보의 원근보정(호모그래피)·자동인식 로직을 그대로 이식.
+    // 여기서 "담기"한 페이지들은 완료 시 위 큐(queues[item])로 그대로 들어가서, 기존의
+    // 순서변경·회전·병합/제출 로직을 그대로 재사용한다(따로 만들 필요 없음).
+    // ============================================================
+    const scanOverlay = document.getElementById('scanOverlay');
+    const scanTargetLabel = document.getElementById('scanTargetLabel');
+    const scanFileInput = document.getElementById('scanFileInput');
+    const scanGalleryInput = document.getElementById('scanGalleryInput');
+    const scanPdfInsertInput = document.getElementById('scanPdfInsertInput');
+    const scanStageWrap = document.getElementById('scanStageWrap');
+    const scanStage = document.getElementById('scanStage');
+    const scanPreviewCanvas = document.getElementById('scanPreviewCanvas');
+    const scanQuadPoly = document.getElementById('scanQuadPoly');
+    const scanGrayscale = document.getElementById('scanGrayscale');
+    const scanContrast = document.getElementById('scanContrast');
+    const btnAutoDetect = document.getElementById('btnAutoDetect');
+    const btnWarpAndAdd = document.getElementById('btnWarpAndAdd');
+    const scanTray = document.getElementById('scanTray');
+    const btnFinishScan = document.getElementById('btnFinishScan');
+
+    let scanTargetIdx = null, scanTargetItem = null;
+    let scanImageEl = null, scanDisplayScale = 1, scanDW = 0, scanDH = 0, scanCorners = null;
+    let docPages = [];
+    let scanFileQueue = [];
+
+    function openScanModal(idx, item, label) {
+      scanTargetIdx = idx;
+      scanTargetItem = item;
+      scanTargetLabel.textContent = '「' + label + '」에 추가할 자료를 스캔합니다.';
+      docPages = [];
+      scanFileQueue = [];
+      scanImageEl = null;
+      scanStageWrap.style.display = 'none';
+      document.getElementById('btnSkipScanFile').style.display = 'none';
+      renderTray();
+      scanOverlay.classList.add('open');
+    }
+    function closeScanModal() {
+      if (docPages.length && !confirm('담은 페이지가 있습니다. 닫으면 사라집니다. 닫을까요?')) return;
+      scanOverlay.classList.remove('open');
+      docPages = [];
+      scanImageEl = null;
+      scanStageWrap.style.display = 'none';
+    }
+    document.getElementById('btnCloseScan').addEventListener('click', closeScanModal);
+    document.getElementById('btnScanCapture').addEventListener('click', () => scanFileInput.click());
+    document.getElementById('btnScanGallery').addEventListener('click', () => scanGalleryInput.click());
+    document.getElementById('btnScanPdfInsert').addEventListener('click', () => scanPdfInsertInput.click());
+
+    scanFileInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) loadScanImage(file);
+    });
+    scanGalleryInput.addEventListener('change', function (e) {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      scanFileQueue = files.slice(1);
+      loadScanImage(files[0]);
+      updateSkipButtonVisibility();
+    });
+    function loadNextQueuedFileIfAny() {
+      updateSkipButtonVisibility();
+      if (!scanFileQueue.length) return;
+      loadScanImage(scanFileQueue.shift());
+      updateSkipButtonVisibility();
+    }
+    function updateSkipButtonVisibility() {
+      document.getElementById('btnSkipScanFile').style.display = scanFileQueue.length ? '' : 'none';
+    }
+    document.getElementById('btnSkipScanFile').addEventListener('click', loadNextQueuedFileIfAny);
+
+    function loadScanImage(file) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const img = new Image();
+        img.onload = function () { setupScanStage(img); };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function setupScanStage(img) {
+      scanImageEl = img;
+      scanStageWrap.style.display = 'flex';
+      const containerW = scanStageWrap.clientWidth || 400;
+      const maxW = containerW - 4;
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      scanDisplayScale = maxW / iw;
+      scanDW = Math.max(1, Math.round(iw * scanDisplayScale));
+      scanDH = Math.max(1, Math.round(ih * scanDisplayScale));
+      scanPreviewCanvas.width = scanDW;
+      scanPreviewCanvas.height = scanDH;
+      scanStage.style.width = scanDW + 'px';
+      scanStage.style.height = scanDH + 'px';
+      document.getElementById('scanQuadSvg').setAttribute('viewBox', '0 0 ' + scanDW + ' ' + scanDH);
+      const ctx = scanPreviewCanvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, scanDW, scanDH);
+      autoDetectCorners();
+    }
+
+    function toGrayscale(imageData) {
+      const data = imageData.data, width = imageData.width, height = imageData.height;
+      const gray = new Float32Array(width * height);
+      for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+        gray[p] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      }
+      return gray;
+    }
+    function scanEdgeLine(getVal, length) {
+      const startSkip = Math.floor(length * 0.03);
+      let maxDiff = 0, bestIdx = Math.floor(length * 0.06);
+      for (let i = startSkip + 1; i < length * 0.5; i++) {
+        const diff = Math.abs(getVal(i) - getVal(i - 1));
+        if (diff > maxDiff) { maxDiff = diff; bestIdx = i; }
+      }
+      return { idx: bestIdx, strength: maxDiff };
+    }
+    function detectEdgeInset(gray, width, height) {
+      const marginLimit = 0.35, THRESH = 15, N_SAMPLES = 7;
+      const fallback = { top: height * 0.06, bottom: height * 0.06, left: width * 0.06, right: width * 0.06 };
+      function sampleMedian(getVal, perpLength, alongLength) {
+        const hits = [];
+        for (let s = 1; s <= N_SAMPLES; s++) {
+          const t = s / (N_SAMPLES + 1);
+          const along = Math.round(t * (alongLength - 1));
+          const r = scanEdgeLine((p) => getVal(along, p), perpLength);
+          if (r.strength > THRESH && r.idx < perpLength * marginLimit) hits.push(r.idx);
+        }
+        if (!hits.length) return null;
+        hits.sort((a, b) => a - b);
+        return hits[Math.floor(hits.length / 2)];
+      }
+      const top = sampleMedian((along, p) => gray[p * width + along], height, width);
+      const bottom = sampleMedian((along, p) => gray[(height - 1 - p) * width + along], height, width);
+      const left = sampleMedian((along, p) => gray[along * width + p], width, height);
+      const right = sampleMedian((along, p) => gray[along * width + (width - 1 - p)], width, height);
+      return {
+        top: top !== null ? top : fallback.top, bottom: bottom !== null ? bottom : fallback.bottom,
+        left: left !== null ? left : fallback.left, right: right !== null ? right : fallback.right
+      };
+    }
+    function autoDetectCorners() {
+      if (!scanImageEl) return;
+      const ctx = scanPreviewCanvas.getContext('2d');
+      const imageData = ctx.getImageData(0, 0, scanDW, scanDH);
+      const gray = toGrayscale(imageData);
+      const inset = detectEdgeInset(gray, scanDW, scanDH);
+      scanCorners = {
+        tl: { x: inset.left, y: inset.top }, tr: { x: scanDW - inset.right, y: inset.top },
+        br: { x: scanDW - inset.right, y: scanDH - inset.bottom }, bl: { x: inset.left, y: scanDH - inset.bottom }
+      };
+      renderScanHandles();
+    }
+    btnAutoDetect.addEventListener('click', autoDetectCorners);
+
+    document.getElementById('btnUseWholeImage').addEventListener('click', function () {
+      if (!scanImageEl) return;
+      scanCorners = { tl: { x: 0, y: 0 }, tr: { x: scanDW, y: 0 }, br: { x: scanDW, y: scanDH }, bl: { x: 0, y: scanDH } };
+      renderScanHandles();
+    });
+
+    document.getElementById('btnRotateScanSource').addEventListener('click', function () {
+      if (!scanImageEl) return;
+      const off = document.createElement('canvas');
+      off.width = scanImageEl.naturalHeight; off.height = scanImageEl.naturalWidth;
+      const octx = off.getContext('2d');
+      octx.translate(off.width / 2, off.height / 2);
+      octx.rotate(90 * Math.PI / 180);
+      octx.drawImage(scanImageEl, -scanImageEl.naturalWidth / 2, -scanImageEl.naturalHeight / 2);
+      const rotated = new Image();
+      rotated.onload = function () { setupScanStage(rotated); };
+      rotated.src = off.toDataURL('image/jpeg', 0.92);
+    });
+
+    function renderScanHandles() {
+      ['tl', 'tr', 'br', 'bl'].forEach((key) => {
+        const el = document.getElementById('handle-' + key);
+        el.style.left = scanCorners[key].x + 'px';
+        el.style.top = scanCorners[key].y + 'px';
+      });
+      scanQuadPoly.setAttribute('points', ['tl', 'tr', 'br', 'bl'].map((k) => scanCorners[k].x + ',' + scanCorners[k].y).join(' '));
+    }
+
+    document.querySelectorAll('.scan-handle').forEach((handle) => {
+      handle.addEventListener('pointerdown', function (e) {
+        e.preventDefault();
+        handle.setPointerCapture(e.pointerId);
+        const corner = handle.dataset.corner;
+        function onMove(ev) {
+          const rect = scanStage.getBoundingClientRect();
+          const scaleX = scanDW / rect.width, scaleY = scanDH / rect.height;
+          let x = (ev.clientX - rect.left) * scaleX, y = (ev.clientY - rect.top) * scaleY;
+          x = Math.max(0, Math.min(scanDW, x)); y = Math.max(0, Math.min(scanDH, y));
+          scanCorners[corner] = { x, y };
+          renderScanHandles();
+        }
+        function onUp() {
+          handle.removeEventListener('pointermove', onMove);
+          handle.removeEventListener('pointerup', onUp);
+        }
+        handle.addEventListener('pointermove', onMove);
+        handle.addEventListener('pointerup', onUp);
+      });
+    });
+
+    function solveLinearSystem(A, B) {
+      const n = B.length;
+      for (let i = 0; i < n; i++) A[i] = A[i].concat([B[i]]);
+      for (let col = 0; col < n; col++) {
+        let maxRow = col;
+        for (let r = col + 1; r < n; r++) if (Math.abs(A[r][col]) > Math.abs(A[maxRow][col])) maxRow = r;
+        const tmp = A[col]; A[col] = A[maxRow]; A[maxRow] = tmp;
+        const pivot = A[col][col];
+        if (Math.abs(pivot) < 1e-12) continue;
+        for (let r2 = 0; r2 < n; r2++) {
+          if (r2 === col) continue;
+          const factor = A[r2][col] / pivot;
+          for (let c = col; c <= n; c++) A[r2][c] -= factor * A[col][c];
+        }
+      }
+      const x = new Array(n);
+      for (let i2 = 0; i2 < n; i2++) x[i2] = A[i2][n] / (A[i2][i2] || 1e-12);
+      return x;
+    }
+    function computeHomography(srcPts, dstPts) {
+      const A = [], B = [];
+      for (let i = 0; i < 4; i++) {
+        const sx = srcPts[i].x, sy = srcPts[i].y, dx = dstPts[i].x, dy = dstPts[i].y;
+        A.push([sx, sy, 1, 0, 0, 0, -dx * sx, -dx * sy]); B.push(dx);
+        A.push([0, 0, 0, sx, sy, 1, -dy * sx, -dy * sy]); B.push(dy);
+      }
+      const s = solveLinearSystem(A, B);
+      return [s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], 1];
+    }
+    function invert3x3(m) {
+      const a = m[0], b = m[1], c = m[2], d = m[3], e = m[4], f = m[5], g = m[6], h = m[7], i = m[8];
+      const C00 = e * i - f * h, C01 = -(d * i - f * g), C02 = d * h - e * g;
+      const C10 = -(b * i - c * h), C11 = a * i - c * g, C12 = -(a * h - b * g);
+      const C20 = b * f - c * e, C21 = -(a * f - c * d), C22 = a * e - b * d;
+      const det = a * C00 + b * C01 + c * C02;
+      const invDet = 1 / (det || 1e-12);
+      return [C00 * invDet, C10 * invDet, C20 * invDet, C01 * invDet, C11 * invDet, C21 * invDet, C02 * invDet, C12 * invDet, C22 * invDet];
+    }
+    function bilinearSample(imgData, sx, sy) {
+      const w = imgData.width, h = imgData.height, data = imgData.data;
+      if (sx < 0 || sy < 0 || sx > w - 1 || sy > h - 1) return [255, 255, 255];
+      const x0 = Math.floor(sx), y0 = Math.floor(sy);
+      const x1 = Math.min(x0 + 1, w - 1), y1 = Math.min(y0 + 1, h - 1);
+      const fx = sx - x0, fy = sy - y0;
+      const i00 = (y0 * w + x0) * 4, i10 = (y0 * w + x1) * 4, i01 = (y1 * w + x0) * 4, i11 = (y1 * w + x1) * 4;
+      const r = [];
+      for (let k = 0; k < 3; k++) {
+        const top = data[i00 + k] * (1 - fx) + data[i10 + k] * fx;
+        const bottom = data[i01 + k] * (1 - fx) + data[i11 + k] * fx;
+        r.push(top * (1 - fy) + bottom * fy);
+      }
+      return r;
+    }
+    function applyEnhance(ctx, w, h, grayscale, contrastPct) {
+      if (!grayscale && !contrastPct) return;
+      const imgData = ctx.getImageData(0, 0, w, h);
+      const d = imgData.data;
+      const c = (contrastPct / 100) * 80;
+      const factor = (259 * (c + 255)) / (255 * (259 - c));
+      for (let p = 0; p < d.length; p += 4) {
+        let r = d[p], g = d[p + 1], b = d[p + 2];
+        if (grayscale) { const gray = 0.299 * r + 0.587 * g + 0.114 * b; r = g = b = gray; }
+        d[p] = Math.max(0, Math.min(255, factor * (r - 128) + 128));
+        d[p + 1] = Math.max(0, Math.min(255, factor * (g - 128) + 128));
+        d[p + 2] = Math.max(0, Math.min(255, factor * (b - 128) + 128));
+      }
+      ctx.putImageData(imgData, 0, 0);
+    }
+
+    function warpAndAddPage() {
+      const scale = 1 / scanDisplayScale;
+      const srcPts = ['tl', 'tr', 'br', 'bl'].map((k) => ({ x: scanCorners[k].x * scale, y: scanCorners[k].y * scale }));
+      const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+      let outW = Math.round(Math.max(dist(srcPts[0], srcPts[1]), dist(srcPts[3], srcPts[2])));
+      let outH = Math.round(Math.max(dist(srcPts[0], srcPts[3]), dist(srcPts[1], srcPts[2])));
+      const MAX_DIM = 2000;
+      if (outW > MAX_DIM || outH > MAX_DIM) {
+        const s = MAX_DIM / Math.max(outW, outH);
+        outW = Math.round(outW * s); outH = Math.round(outH * s);
+      }
+      outW = Math.max(50, outW); outH = Math.max(50, outH);
+
+      const dstPts = [{ x: 0, y: 0 }, { x: outW, y: 0 }, { x: outW, y: outH }, { x: 0, y: outH }];
+      const M = computeHomography(srcPts, dstPts);
+      const Minv = invert3x3(M);
+
+      const srcCanvas = document.createElement('canvas');
+      srcCanvas.width = scanImageEl.naturalWidth; srcCanvas.height = scanImageEl.naturalHeight;
+      const srcCtx = srcCanvas.getContext('2d');
+      srcCtx.drawImage(scanImageEl, 0, 0);
+      const srcData = srcCtx.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
+
+      const outCanvas = document.createElement('canvas');
+      outCanvas.width = outW; outCanvas.height = outH;
+      const outCtx = outCanvas.getContext('2d');
+      const outData = outCtx.createImageData(outW, outH);
+
+      for (let Y = 0; Y < outH; Y++) {
+        for (let X = 0; X < outW; X++) {
+          const w = Minv[6] * X + Minv[7] * Y + Minv[8];
+          const sx = (Minv[0] * X + Minv[1] * Y + Minv[2]) / w;
+          const sy = (Minv[3] * X + Minv[4] * Y + Minv[5]) / w;
+          const rgb = bilinearSample(srcData, sx, sy);
+          const di = (Y * outW + X) * 4;
+          outData.data[di] = rgb[0]; outData.data[di + 1] = rgb[1]; outData.data[di + 2] = rgb[2]; outData.data[di + 3] = 255;
+        }
+      }
+      outCtx.putImageData(outData, 0, 0);
+      applyEnhance(outCtx, outW, outH, scanGrayscale.checked, Number(scanContrast.value));
+
+      const dataUrl = outCanvas.toDataURL('image/jpeg', 0.88);
+      docPages.push({ type: 'image', dataUrl, rotation: 0, name: String(docPages.length + 1).padStart(3, '0') });
+      renderTray();
+
+      scanFileInput.value = ''; scanGalleryInput.value = '';
+      scanStageWrap.style.display = 'none';
+      scanImageEl = null;
+    }
+
+    btnWarpAndAdd.addEventListener('click', function () {
+      if (!scanImageEl || !scanCorners) { alert('먼저 사진을 불러와주세요.'); return; }
+      btnWarpAndAdd.disabled = true; btnWarpAndAdd.textContent = '처리 중…';
+      setTimeout(function () {
+        try {
+          warpAndAddPage();
+          loadNextQueuedFileIfAny();
+        } catch (err) { alert('처리 중 오류: ' + (err && err.message ? err.message : err)); }
+        finally { btnWarpAndAdd.disabled = false; btnWarpAndAdd.textContent = '이 페이지 담기'; }
+      }, 20);
+    });
+
+    scanPdfInsertInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      file.arrayBuffer().then((buf) => {
+        const bytes = new Uint8Array(buf);
+        return PDFLib.PDFDocument.load(bytes).then((doc) => {
+          docPages.push({ type: 'pdf', name: file.name, bytes, pageCount: doc.getPageCount() });
+          renderTray();
+        });
+      }).catch((err) => alert('PDF를 읽는 중 오류: ' + (err && err.message ? err.message : err)));
+      e.target.value = '';
+    });
+
+    function renderTray() {
+      btnFinishScan.disabled = docPages.length === 0;
+      scanTray.innerHTML = '';
+      docPages.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'scan-tray-item';
+        row.dataset.idx = idx;
+        if (item.type === 'image') {
+          row.innerHTML = '<div class="scan-tray-grip"><img src="' + item.dataUrl + '" style="transform:rotate(' + item.rotation + 'deg)">' +
+            '<span class="name">' + escapeHtml(item.name) + '</span></div>' +
+            '<button data-act="rotate" title="90도 회전">↻</button><button data-act="del" title="삭제">✕</button>';
+        } else {
+          row.innerHTML = '<div class="scan-tray-grip"><span class="pdf-chip-icon">📄</span>' +
+            '<span class="name">' + escapeHtml(item.name) + ' (' + item.pageCount + 'p)</span></div>' +
+            '<button data-act="del" title="삭제">✕</button>';
+        }
+        row.querySelectorAll('button').forEach((btn) => {
+          btn.addEventListener('click', function () {
+            const act = btn.dataset.act;
+            if (act === 'del') docPages.splice(idx, 1);
+            else if (act === 'rotate') item.rotation = (item.rotation + 90) % 360;
+            renderTray();
+          });
+        });
+        setupTrayDrag(row);
+        scanTray.appendChild(row);
+      });
+    }
+
+    function setupTrayDrag(row) {
+      const grip = row.querySelector('.scan-tray-grip');
+      function onMove(e) {
+        const after = getTrayDragAfterElement(e.clientY);
+        if (after == null) scanTray.appendChild(row);
+        else if (after !== row) scanTray.insertBefore(row, after);
+      }
+      function onEnd() {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onEnd);
+        document.removeEventListener('pointercancel', onEnd);
+        row.classList.remove('dragging');
+        const newOrder = Array.from(scanTray.children).map((el) => Number(el.dataset.idx));
+        docPages = newOrder.map((i) => docPages[i]);
+        renderTray();
+      }
+      grip.addEventListener('pointerdown', function (e) {
+        e.preventDefault();
+        row.classList.add('dragging');
+        document.addEventListener('pointermove', onMove);
+        document.addEventListener('pointerup', onEnd);
+        document.addEventListener('pointercancel', onEnd);
+      });
+    }
+    function getTrayDragAfterElement(y) {
+      const items = Array.from(scanTray.querySelectorAll('.scan-tray-item:not(.dragging)'));
+      return items.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) return { offset, element: child };
+        return closest;
+      }, { offset: -Infinity, element: null }).element;
+    }
+
+    function dataUrlToUint8(dataUrl) {
+      const base64 = dataUrl.split(',')[1];
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return bytes;
+    }
+    function getRotatedJpegBytes(item) {
+      if (!item.rotation) return Promise.resolve(dataUrlToUint8(item.dataUrl));
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = function () {
+          const swapped = item.rotation % 180 !== 0;
+          const cw = swapped ? img.height : img.width, ch = swapped ? img.width : img.height;
+          const canvas = document.createElement('canvas');
+          canvas.width = cw; canvas.height = ch;
+          const ctx = canvas.getContext('2d');
+          ctx.translate(cw / 2, ch / 2);
+          ctx.rotate(item.rotation * Math.PI / 180);
+          ctx.drawImage(img, -img.width / 2, -img.height / 2);
+          canvas.toBlob((blob) => { blob.arrayBuffer().then((buf) => resolve(new Uint8Array(buf))); }, 'image/jpeg', 0.9);
+        };
+        img.src = item.dataUrl;
+      });
+    }
+
+    // 스캔에서 담은 페이지들을 이 항목의 제출 큐(queues[item])로 넘긴다 — 이후는 기존
+    // 순서변경·회전·"병합 후 제출" 로직을 그대로 탄다.
+    btnFinishScan.addEventListener('click', async function () {
+      if (scanImageEl && scanCorners && scanStageWrap.style.display !== 'none') {
+        try { warpAndAddPage(); } catch (err) {}
+      }
+      if (!docPages.length) { scanOverlay.classList.remove('open'); return; }
+      btnFinishScan.disabled = true;
+      btnFinishScan.textContent = '추가하는 중…';
+      try {
+        if (!queues[scanTargetItem]) queues[scanTargetItem] = [];
+        for (const p of docPages) {
+          if (p.type === 'image') {
+            const bytes = await getRotatedJpegBytes(p);
+            queues[scanTargetItem].push({ name: p.name + '.jpg', kind: 'image', mimeType: 'image/jpeg', arrayBuffer: bytes, rotation: 0 });
+          } else {
+            queues[scanTargetItem].push({ name: p.name, kind: 'pdf', mimeType: 'application/pdf', arrayBuffer: p.bytes, rotation: 0 });
+          }
+        }
+        docPages = [];
+        renderTray();
+        renderQueue(scanTargetIdx, scanTargetItem);
+        scanOverlay.classList.remove('open');
+      } finally {
+        btnFinishScan.disabled = false;
+        btnFinishScan.textContent = '완료 — 담은 자료를 추가';
+      }
+    });
   </script>
 </body>
 </html>
