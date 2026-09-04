@@ -128,28 +128,36 @@
             handler: async function (docs) {
               // 모바일 브라우저의 공유 기능(Web Share API) — 카카오톡·문자·이메일 등
               // 기기에 설치된 어떤 앱으로든 바로 보낼 수 있게 선택창을 띄운다.
+              // 파일을 한꺼번에 묶어서 공유하면 기종에 따라(특히 아이폰) 여러 파일 공유가
+              // 불안정하거나 아예 안 되는 경우가 있어, 파일마다 하나씩 순서대로 시도한다 —
+              // 그래야 문서 하나는 성공하고 다른 하나만 실패하는 상황도 놓치지 않는다.
               const files = docs.map(function (doc) {
                 return new File([doc.bytes], doc.name + '.pdf', { type: 'application/pdf' });
               });
-              if (navigator.canShare && navigator.canShare({ files: files })) {
-                try {
-                  await navigator.share({ files: files, title: '스캔한 문서' });
-                } catch (err) {
-                  if (err && err.name !== 'AbortError') {
-                    alert('보내기 중 오류가 발생했습니다. 대신 "기기에 저장"을 이용해주세요.');
+              let shareCount = 0, downloadCount = 0;
+              for (const file of files) {
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                  try {
+                    await navigator.share({ files: [file], title: file.name });
+                    shareCount++;
+                    continue;
+                  } catch (err) {
+                    if (err && err.name === 'AbortError') continue; // 이 파일만 취소 — 나머지 계속 진행
+                    // 취소가 아닌 실제 오류면 이 파일만 다운로드로 대신한다(아래로 이어짐)
                   }
                 }
-                return false; // 성공하든 취소하든 창은 그대로 둔다(아래 이유 참고)
-              }
-              // 공유 기능을 지원하지 않는 브라우저(주로 PC)에서는 다운로드로 대신한다.
-              files.forEach(function (file) {
                 const url = URL.createObjectURL(file);
                 const a = document.createElement('a');
                 a.href = url; a.download = file.name;
                 a.click();
                 URL.revokeObjectURL(url);
-              });
-              alert('이 브라우저는 바로 보내기를 지원하지 않아 기기에 저장했습니다.');
+                downloadCount++;
+              }
+              if (downloadCount && shareCount) {
+                alert(downloadCount + '개 파일은 보내기가 지원되지 않아 대신 기기에 저장했습니다.');
+              } else if (downloadCount && !shareCount) {
+                alert('이 브라우저는 바로 보내기를 지원하지 않아 기기에 저장했습니다.');
+              }
               return false;
             }
           }
