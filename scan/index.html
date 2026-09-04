@@ -115,7 +115,10 @@
                 a.click();
                 URL.revokeObjectURL(url);
               });
-              return true;
+              // 저장/보내기는 그냥 내보내기 동작일 뿐이라 창을 닫지 않는다 — 두 가지를
+              // 다 해보거나, 실패해서 다시 시도하려는데 작업한 내용이 사라지면 안 되니까.
+              // 다 끝났으면 사용자가 직접 ✕로 닫는다.
+              return false;
             }
           },
           {
@@ -131,12 +134,12 @@
               if (navigator.canShare && navigator.canShare({ files: files })) {
                 try {
                   await navigator.share({ files: files, title: '스캔한 문서' });
-                  return true;
                 } catch (err) {
-                  if (err && err.name === 'AbortError') return false; // 사용자가 공유를 취소함
-                  alert('보내기 중 오류가 발생했습니다. 대신 "기기에 저장"을 이용해주세요.');
-                  return false;
+                  if (err && err.name !== 'AbortError') {
+                    alert('보내기 중 오류가 발생했습니다. 대신 "기기에 저장"을 이용해주세요.');
+                  }
                 }
+                return false; // 성공하든 취소하든 창은 그대로 둔다(아래 이유 참고)
               }
               // 공유 기능을 지원하지 않는 브라우저(주로 PC)에서는 다운로드로 대신한다.
               files.forEach(function (file) {
@@ -147,7 +150,7 @@
                 URL.revokeObjectURL(url);
               });
               alert('이 브라우저는 바로 보내기를 지원하지 않아 기기에 저장했습니다.');
-              return true;
+              return false;
             }
           }
         ]
