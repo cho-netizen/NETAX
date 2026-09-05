@@ -365,7 +365,10 @@
           }
         }
       } catch (err) {
-        statusLine.textContent = '오류: ' + err.message;
+        // [2026.09 버그수정] 네트워크 오류 등 예상 못한 문제가 나면 예전엔 영어 기술 메시지가
+        // 그대로 노출됐다 — 콘솔에만 상세를 남기고 고객에게는 친절한 안내만 보여준다.
+        console.error('업로드 오류:', err);
+        statusLine.textContent = '제출 중 문제가 발생했습니다. 잠시 후 다시 시도하시거나 담당 세무사에게 문의해주세요.';
         btn.disabled = false;
       }
     }
